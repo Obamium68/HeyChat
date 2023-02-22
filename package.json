@@ -1,0 +1,7 @@
+{
+  "type":"commonjs",
+  "dependencies": {
+    "ws": "^8.12.1",
+    "yarn": "^1.22.19"
+  }
+}
