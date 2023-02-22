@@ -1,5 +1,5 @@
-import { Server } from 'ws';
-const server = new Server({ port: 8080 });
+const WebSocket = require('ws');
+const server = new WebSocket.Server({ port: 8080 });
 
 class User {
   constructor(name, surname, username, id) {
