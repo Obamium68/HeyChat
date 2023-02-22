@@ -1,95 +1,50 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Web Chat</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="./js/switch.js"></script>
+    <title>Benvenuto</title>
 </head>
-
 <body>
-  <h2 id="myID"></h2>
-  <input type="text" id="to" placeholder="Recipient ID" />
-  <input type="text" id="message" placeholder="Message" />
-  <button onclick="sendMessage()">Send</button><br><br>
-  <input type="file" id="file" multiple>
-  <button onclick="sendImage()">Send</button>
-  <ul id="messages"></ul>
-
-  <script>
-    const socket = new WebSocket('ws://localhost:8080');
-
-    var myID = "UNDEFINED";
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      //Set Id if server asks
-      if (data.message == 'الأسود أسود') {
-        myID = data.from;
-        document.getElementById('myID').innerHTML = myID;
-
-      } else {
-        const messages = document.getElementById('messages');
-        console.log(data);
-        switch (data.type) {
-          case 'text':
-          console.log('in text');
-          const li = document.createElement('li');
-          li.textContent = `${data.from==myID? "You": data.from}: ${data.message}`;
-          messages.appendChild(li);
-          break;
-          case 'image':
-          console.log('in img');
-            const img = document.createElement('img');
-            img.src = data.message;
-            messages.appendChild(img);
-            break;
-        }
-      }
-    };
-
-    function sendMessage() {
-      const from = myID;
-      const to = document.getElementById('to').value;
-      const message = document.getElementById('message').value;
-      const type='text';
-      const data = { message, from, type};
-
-      if (to) {
-        data.to = to;
-      }
-
-      socket.send(JSON.stringify(data));
-    }
-
-
-    function sendImage() {
-      const to = document.getElementById('to').value;
-      const file = document.getElementById('file').files[0];
-
-      if (!file) {
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const data = {
-          from: myID,
-          type: 'image',
-          message: reader.result,
-        };
-
-        if (to) {
-          data.to = to;
-        }
-
-        socket.send(JSON.stringify(data));
-      };
-    }
-
-  </script>
+    <div class="container" id="abcd">
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Registrati</h1>
+                <span>ed inizia a chattare con i tuoi amici</span>
+                <input type="text" placeholder="Nome" />
+                <input type="text" placeholder="Cognome" />
+                <input type="text" placeholder="Nickname" />
+                <button>Registrati</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Login</h1>
+                <span>e contiuna a chattare con i tuoi amici</span>
+                <input type="text" placeholder="Nickname" />
+                <input type="password" placeholder="Password" />
+                <button>Entra in heychat</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Rieccoti!</h1>
+                    <p>Hai già con chi chattare?</p>
+                    <button class="ghost" id="signIn">Effettua il login</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Non hai un account?</h1>
+                    <p>È il momento giusto per crearne uno!</p>
+                    <button class="ghost" id="signUp">Registrati</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

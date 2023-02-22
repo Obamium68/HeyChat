@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+	background-image: url("../img/background.png");
+	height: 100vh;
+	margin: 0;
+    font-family: 'Inter', sans-serif;
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+	margin: 0;
+}
+
+.mostra{
+    display: block;
+}
+
+.nascondi{
+    display: none;
+}
+
+.centra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat-box{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 75%;
+}
+
+#lat-bar{
+    background: #FAFAFA;
+    box-shadow: 10px 0px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 0px;
+    width: 25%;
+    min-width: 300px;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+#logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 80%;
+    height: 50px;
+    border-bottom: 1px solid #8E8FA0;
+}
+
+#logo img{
+    width: 45px;
+    height: 45px;
+    margin-right: 6px;
+}
+
+#logo span{
+    font-size: 33px;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+
+#contatti-box{
+    padding-top: 20px;
+    width: 100%;
+}
+
+#contatti-box span{
+    width: 100%;
+    text-align: left;
+    font-size: 23px;
+    font-weight: 500;
+    margin-left: 12px;
+}
+
+.chat{
+    height: 80px;
+    width: 100%;
+    background: hsla(0, 0%, 85%, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user{
+    margin-left: 15px;
+    display: flex;
+}
+
+.user img{
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    width: 55px;
+    height: 55px;
+}
+
+.user .dati{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.user .nome{
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.user .nickname{
+    font-size: 14px;
+    font-weight: 300;
+    color: #B0AFAF;
+}
+
+.state{
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 17px;
+}
+
+.point-state{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%; 
+    background-color: green;
+}
