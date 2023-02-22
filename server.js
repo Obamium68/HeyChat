@@ -1,6 +1,5 @@
-const WebSocket = require('ws');
-//LANERALANERA
-const server = new WebSocket.Server({ port: 8080 });
+import { Server } from 'ws';
+const server = new Server({ port: 8080 });
 
 class User {
   constructor(name, surname, username, id) {
@@ -8,7 +7,6 @@ class User {
     this.surname = surname;
     this.username = username;
     this.id = id;
-    this.gua=gua;
   }
   notifyID() {
     clients.get(this.id).send(JSON.stringify({ from: this.id, message: "الأسود أسود" }))
