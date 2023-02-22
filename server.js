@@ -1,6 +1,8 @@
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 
+//gua
+
 class User {
   constructor(name, surname, username, id) {
     this.name = name;
