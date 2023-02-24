@@ -1,15 +1,21 @@
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 
+const debug=true;
+
 class User {
-  constructor(name, surname, username, id) {
+  constructor(name, surname, username, id, online) {
     this.name = name;
     this.surname = surname;
     this.username = username;
     this.id = id;
+    this.online=online;
+  }
+  toString(){
+    return this.username+','+this.id;
   }
   notifyID() {
-    clients.get(this.id).send(JSON.stringify({ from: this.id, message: "الأسود أسود" }))
+    clients.get(this.id).send(JSON.stringify({ message: this.id, from: 'كنية' }))
   }
 }
 
@@ -17,37 +23,44 @@ class User {
 const clients = new Map();
 var users = [];
 
+function sendConnected(){
+  str="";
+  users.forEach(u => {
+    str+=u.toString()+',';
+  });
+  console.log(str);
+  users.forEach(u => {
+    clients.get(u.id).send(JSON.stringify({ message: str, from: 'хозяева' }));
+  });
+}
+
 server.on('connection', (socket) => {
-  // Generate a unique id for the client
-  const id = Date.now().toString();
-
-  // Add the new client to the clients Map
-  clients.set(id, socket);
-
+  const id = Date.now().toString();     //  Client id actually is timestamp of its start connection 
+  clients.set(id, socket);              //  Link id to ws connection
   users.push(
-    new User("Mario", "Rossi", "MarioRossi" + Math.floor(Math.random() * 100), id)
+    new User("Mario", "Rossi", "MarioRossi" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
   )
-  users[users.length - 1].notifyID();
+  users[users.length - 1].notifyID();   //  ACK clients of its ID
+  if(debug) console.log(`[${Date.now()}]:(${users[users.length - 1].username}:${users[users.length - 1].id}) connected`);    //Log message
 
-  console.log(`Client [${users[users.length - 1].username}:${users[users.length - 1].id}] connected`);
+  sendConnected();
 
   socket.on('message', (message) => {
-    // Parse the message as JSON
     const data = JSON.parse(message);
-    console.log(data);
-    // Send the message to a specific client
-    const fromSocket = clients.get(data.from);
-    const toSocket = clients.get(data.to);
+    if(debug) console.log(data);
+    
+    const fromSocket = clients.get(data.from);    // Get sender ws from its id
+    const toSocket = clients.get(data.to);        // Get receiver ws from its id
 
     errormsg = "[Error] Client not found";
     
     switch (true) {
-      case toSocket != null:
-        toSocket.send(JSON.stringify({ from: id, message: data.message, type: data.type }));
-        if(fromSocket!=toSocket) fromSocket.send(JSON.stringify({ from: id,  message: data.message, type: data.type}));
+      case toSocket != null:        // If receiver ws exists
+        toSocket.send(JSON.stringify({ from: id, message: data.message, type: data.type }));       // Send the message
+        if(fromSocket!=toSocket) fromSocket.send(JSON.stringify({ from: id,  message: data.message, type: data.type}));   // If I'm not sending the message to myself resend the message to me
         break;
-      case data.to && toSocket == null:
-        fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error'}));
+      case data.to && toSocket == null:   // If the user gave in input the receiver but it doesnt exists
+        fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error'}));   // Throw an error message to the sender
         break;
     }
   });

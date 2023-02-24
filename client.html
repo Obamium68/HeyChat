@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Web Chat</title>
+  <script src="client.js"></script>
 </head>
 
 <body>
@@ -14,82 +15,5 @@
   <input type="file" id="file" multiple>
   <button onclick="sendImage()">Send</button>
   <ul id="messages"></ul>
-
-  <script>
-    const socket = new WebSocket('ws://localhost:8080');
-
-    var myID = "UNDEFINED";
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      //Set Id if server asks
-      if (data.message == 'الأسود أسود') {
-        myID = data.from;
-        document.getElementById('myID').innerHTML = myID;
-
-      } else {
-        const messages = document.getElementById('messages');
-        console.log(data);
-        switch (data.type) {
-          case 'text':
-          console.log('in text');
-          const li = document.createElement('li');
-          li.textContent = `${data.from==myID? "You": data.from}: ${data.message}`;
-          messages.appendChild(li);
-          break;
-          case 'image':
-          console.log('in img');
-            const img = document.createElement('img');
-            img.src = data.message;
-            messages.appendChild(img);
-            break;
-        }
-      }
-    };
-
-    function sendMessage() {
-      const from = myID;
-      const to = document.getElementById('to').value;
-      const message = document.getElementById('message').value;
-      const type='text';
-      const data = { message, from, type};
-
-      if (to) {
-        data.to = to;
-      }
-
-      socket.send(JSON.stringify(data));
-    }
-
-
-    function sendImage() {
-      const to = document.getElementById('to').value;
-      const file = document.getElementById('file').files[0];
-
-      if (!file) {
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        const data = {
-          from: myID,
-          type: 'image',
-          message: reader.result,
-        };
-
-        if (to) {
-          data.to = to;
-        }
-
-        socket.send(JSON.stringify(data));
-      };
-    }
-
-  </script>
 </body>
-
 </html>
