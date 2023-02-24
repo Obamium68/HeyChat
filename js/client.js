@@ -29,7 +29,6 @@ socket.onmessage = (event) => {
                 case 'image':
                     const img = document.createElement('img');
                     img.src = data.message;
-                    console.log('sda');
                     messages.appendChild(img);
                     break;
             }
