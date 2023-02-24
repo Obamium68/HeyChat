@@ -12,7 +12,7 @@ class User {
     this.online=online;
   }
   toString(){
-    return this.username+','+this.id;
+    return this.id;
   }
   notifyID() {
     clients.get(this.id).send(JSON.stringify({ message: this.id, from: 'كنية' }))
@@ -23,14 +23,9 @@ class User {
 const clients = new Map();
 var users = [];
 
-function sendConnected(){
-  str="";
+function getUserFromUsername(un){
   users.forEach(u => {
-    str+=u.toString()+',';
-  });
-  console.log(str);
-  users.forEach(u => {
-    clients.get(u.id).send(JSON.stringify({ message: str, from: 'хозяева' }));
+    if(u.username==un) return u;
   });
 }
 
@@ -43,7 +38,6 @@ server.on('connection', (socket) => {
   users[users.length - 1].notifyID();   //  ACK clients of its ID
   if(debug) console.log(`[${Date.now()}]:(${users[users.length - 1].username}:${users[users.length - 1].id}) connected`);    //Log message
 
-  sendConnected();
 
   socket.on('message', (message) => {
     const data = JSON.parse(message);

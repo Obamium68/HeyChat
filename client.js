@@ -1,21 +1,21 @@
 const socket = new WebSocket('ws://localhost:8080');
 
-var myID = "UNDEFINED69";
+var myID = "UNDEFINED";
 
 var connectedHosts = [];    //Host connected to the same server
 
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log(data);
     switch (true) {
         case data.from == 'كنية':             // If server is sending you your ID
             myID = data.message;              // Set your id
             document.getElementById('myID').innerHTML = myID;
             break;
         case data.from == 'хозяева':          // If server is sending you the connected hosts
-            const hosts=data.message.split(',');
-            connectedHosts=hosts;
+            const hosts = data.message.split(',');
+            connectedHosts = hosts;
+            console.log(connectedHosts);
             break;
         default:
             const messages = document.getElementById('messages');
@@ -32,7 +32,7 @@ socket.onmessage = (event) => {
                     messages.appendChild(img);
                     break;
             }
-        break;
+            break;
     }
 }
 
@@ -52,6 +52,9 @@ function formatMessage(from, type, message, to) {
     return data;
 }
 
+/**
+ * Takes the input message in #message and the receiver in #to (optional)
+ */
 function sendMessage() {
     const to = document.getElementById('to').value;
     const message = document.getElementById('message').value;
@@ -59,6 +62,10 @@ function sendMessage() {
 }
 
 
+/**
+ * send to #to the image loaded from the input form
+ * @returns null if not image charged
+ */
 function sendImage() {
     const file = document.getElementById('file').files[0];
     if (!file) {
