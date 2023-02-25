@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,16 +11,18 @@
     <script src="../js/switch.js"></script>
     <title>Benvenuto</title>
 </head>
+
 <body>
     <div class="container" id="abcd">
         <div class="form-container sign-up-container">
             <form action="../php/register.php" method="POST">
                 <h1>Registrati</h1>
                 <span>ed inizia a chattare con i tuoi amici</span>
-                <input type="text" name="name" id="name" placeholder="Nome" />
-                <input type="text" name="surname" id="surname" placeholder="Cognome" />
-                <input type="text" name="username" id="username" placeholder="Username" />
-                <input type="submit">
+                <input type="text" name="name" id="name" placeholder="Nome" required />
+                <input type="text" name="surname" id="surname" placeholder="Cognome" required />
+                <input type="text" name="username" id="username" placeholder="Username" required />
+                <input type="password" name="password" id="password" placeholder="Password" required />
+                <input type="submit"  value="Registrati">
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -48,6 +51,7 @@
     </div>
 </body>
 <script>
-    
+
 </script>
+
 </html>
