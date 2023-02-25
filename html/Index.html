@@ -12,26 +12,26 @@
     <title>Benvenuto</title>
 </head>
 
-<body>
+<body onload="clearInputs()">
     <div class="container" id="abcd">
         <div class="form-container sign-up-container">
             <form action="../php/register.php" method="POST">
                 <h1>Registrati</h1>
                 <span>ed inizia a chattare con i tuoi amici</span>
-                <input type="text" name="name" id="name" placeholder="Nome" required />
-                <input type="text" name="surname" id="surname" placeholder="Cognome" required />
-                <input type="text" name="username" id="username" placeholder="Username" required />
-                <input type="password" name="password" id="password" placeholder="Password" required />
+                <input type="text" name="name" id="nameSignUp" placeholder="Nome" required />
+                <input type="text" name="surname" id="surnameSignUp" placeholder="Cognome" required />
+                <input type="text" name="username" id="usernameSignUp" placeholder="Username" required />
+                <input type="password" name="password" id="passwordSignUp" placeholder="Password" required />
                 <input type="submit"  value="Registrati">
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form action="../php/login.php" method="POST">
                 <h1>Login</h1>
                 <span>e contiuna a chattare con i tuoi amici</span>
-                <input type="text" placeholder="Nickname" />
-                <input type="password" placeholder="Password" />
-                <button>Entra in heychat</button>
+                <input type="text" name="name" id="nameLogin" placeholder="Nickname" required/>
+                <input type="password" name="password" id="passwordLogin" placeholder="Password" required/>
+                <input type="submit"  value="Entra in HeyChat">
             </form>
         </div>
         <div class="overlay-container">
@@ -51,7 +51,14 @@
     </div>
 </body>
 <script>
-
+    function clearInputs(){
+        $('#nameSignUp').val('');
+        $('#surnameSignUp').val('');
+        $('#usernameSignUp').val('');
+        $('#passwordSignUp').val('');
+        $('#nameLogin').val('');
+        $('#passwordLogin').val('');
+    }
 </script>
 
 </html>
