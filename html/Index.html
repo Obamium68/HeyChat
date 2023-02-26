@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/common.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="../js/switch.js"></script>
@@ -15,24 +15,24 @@
 <body onload="clearInputs()">
     <div class="container" id="abcd">
         <div class="form-container sign-up-container">
-            <form action="#" method="POST">
+            <div class="form-data">
                 <h1>Registrati</h1>
                 <span>ed inizia a chattare con i tuoi amici</span>
-                <input type="text" name="name" id="nameSignUp" placeholder="Nome" required />
-                <input type="text" name="surname" id="surnameSignUp" placeholder="Cognome" required />
-                <input type="text" name="username" id="usernameSignUp" placeholder="Username" required />
-                <input type="password" name="password" id="passwordSignUp" placeholder="Password" required />
+                <input type="text" id="nameSignUp" placeholder="Nome" required />
+                <input type="text" id="surnameSignUp" placeholder="Cognome" required />
+                <input type="text" id="usernameSignUp" placeholder="Username" required />
+                <input type="password" id="passwordSignUp" placeholder="Password" required />
                 <button onclick="signUp()">Sign-Up</button>
-            </form>
+            </div>
         </div>
         <div class="form-container sign-in-container">
-            <form action="../php/login.php" method="POST">
+            <div class="form-data">
                 <h1>Login</h1>
                 <span>e contiuna a chattare con i tuoi amici</span>
                 <input type="text" name="name" id="nameLogin" placeholder="Nickname" required/>
                 <input type="password" name="password" id="passwordLogin" placeholder="Password" required/>
-                <input type="submit"  value="Entra in HeyChat">
-            </form>
+                <button onclick="signUp()">Sign-In</button>
+            </div>
         </div>
         <div class="overlay-container">
             <div class="overlay">
@@ -61,10 +61,27 @@
     }
 
     function signUp(){
-        $.ajax({url: "../php/register.php", success: function(result){
-          
-        }});
-      };
+        let name = $("#nameSignUp").val();
+        let surname = $("#surnameSignUp").val();
+        let username = $("#usernameSignUp").val();
+        let psw = $("#passwordSignUp").val();
+
+        $.ajax(
+        {
+            url: '../php/register.php',
+            data : {'name': name, 'surname': surname,'username': username, 'password': psw},
+            method: 'POST',
+            success: function(risposta){
+                console.log(risposta);
+            // risposta= JSON.parse(risposta);
+            // setMessage(risposta.err, 'Query eseguita correttamente','Compila tutti i campi', "Errore nell'inserimento");
+            },
+            error:function(response){
+                console.log(response);
+            }
+        }
+        );
+    }
 </script>
 
 </html>
