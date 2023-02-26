@@ -1,5 +1,6 @@
 <?php
-$servername = "heychat";
+//$servername = "heychat";
+$servername = "localhost";
 $dbname="heychat";
 $username = "root";
 $password = "";
