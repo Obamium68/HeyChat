@@ -29,9 +29,9 @@
             <div class="form-data">
                 <h1>Login</h1>
                 <span>e contiuna a chattare con i tuoi amici</span>
-                <input type="text" name="name" id="nameLogin" placeholder="Nickname" required/>
-                <input type="password" name="password" id="passwordLogin" placeholder="Password" required/>
-                <button onclick="signUp()">Sign-In</button>
+                <input type="text" name="name" id="usernameSignIn" placeholder="Username" required />
+                <input type="password" name="password" id="passwordSignIn" placeholder="Password" required />
+                <button onclick="signIn()">Sign-In</button>
             </div>
         </div>
         <div class="overlay-container">
@@ -51,35 +51,74 @@
     </div>
 </body>
 <script>
-    function clearInputs(){
+    function clearInputs() {
         $('#nameSignUp').val('');
         $('#surnameSignUp').val('');
         $('#usernameSignUp').val('');
         $('#passwordSignUp').val('');
-        $('#nameLogin').val('');
-        $('#passwordLogin').val('');
+        $('#usernameSignIn').val('');
+        $('#passwordSignIn').val('');
     }
 
-    function signUp(){
+    function signIn() {
+        let username = $("#usernameSignIn").val();
+        let psw = $("#passwordSignIn").val();
+
+        $.ajax(
+            {
+                url: '../php/login.php',
+                data: { ':username': username, ':password': psw },
+                method: 'POST',
+                success: function (response) {  //3: non corrette; 4:correttamente
+                    data = JSON.parse(response);
+                    let id = (data['Id'] ? data['Id'] : null);
+                    SignManager(data['State'], id);
+                },
+                error: function () {
+                    console.log("Sono qui");
+                }
+            }
+        );
+    }
+
+    function signUp() {
         let name = $("#nameSignUp").val();
         let surname = $("#surnameSignUp").val();
         let username = $("#usernameSignUp").val();
         let psw = $("#passwordSignUp").val();
 
         $.ajax(
-        {
-            url: '../php/register.php',
-            data : {'name': name, 'surname': surname,'username': username, 'password': psw},
-            method: 'POST',
-            success: function(risposta){
-                console.log(risposta);
-            },
-            error:function(){
-                console.log("Sono qui");
+            {
+                url: '../php/register.php',
+                data: { ':name': name, ':surname': surname, ':username': username, ':password': psw },
+                method: 'POST',
+                success: function (response) {      //1: duplicato; 2:registrato
+                    data = JSON.parse(response);
+                    let id = (data['Id'] ? data['Id'] : null);
+                    SignManager(data['State'], id);
+                },
+                error: function () {
+                    console.log("Sono qui");
+                }
             }
-        }
         );
     }
+
+    function SignManager(state, id) {
+        switch (state) {
+            case 1:
+                break;
+            case 2:
+                window.location.replace("../html/chat.html?new=true&id="+id);
+                break;
+            case 3:
+                break;
+            case 4:
+                window.location.replace("../html/chat.html?new=false&id="+id);
+                break;
+        }
+    }
+
 </script>
 
 </html>
