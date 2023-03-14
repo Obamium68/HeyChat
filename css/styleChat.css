@@ -11,12 +11,13 @@ body {
 	margin: 0;
 }
 
+/*----- Classi generali ----- */
 .mostra{
     display: block;
 }
 
 .nascondi{
-    display: none;
+    display: none !important;
 }
 
 .centra{
@@ -25,12 +26,16 @@ body {
     align-items: center;
 }
 
+/*----- Lato destro -----*/
+
 #chat-box{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 75%;
 }
+
+/*----- Barra laterale -----*/
 
 #lat-bar{
     background: #FAFAFA;
@@ -83,57 +88,59 @@ body {
     margin-left: 12px;
 }
 
-.chat{
-    height: 80px;
-    width: 100%;
-    background: hsla(0, 0%, 85%, 0.3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    /*---- Classi barra laterale ----*/
 
-.user{
-    margin-left: 15px;
-    display: flex;
-}
+    .chat{
+        height: 80px;
+        width: 100%;
+        background: hsla(0, 0%, 85%, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.user img{
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-    width: 55px;
-    height: 55px;
-}
+    .user{
+        margin-left: 15px;
+        display: flex;
+    }
 
-.user .dati{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-left: 5px;
-}
+    .user img{
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        width: 55px;
+        height: 55px;
+    }
 
-.user .nome{
-    font-size: 25px;
-    font-weight: 400;
-}
+    .user .dati{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 5px;
+    }
 
-.user .nickname{
-    font-size: 14px;
-    font-weight: 300;
-    color: #B0AFAF;
-}
+    .user .nome{
+        font-size: 25px;
+        font-weight: 400;
+    }
 
-.state{
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 17px;
-}
+    .user .nickname{
+        font-size: 14px;
+        font-weight: 300;
+        color: #B0AFAF;
+    }
 
-.point-state{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%; 
-    background-color: green;
-}
+    .state{
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 17px;
+    }
+
+    .point-state{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%; 
+        background-color: green;
+    }
