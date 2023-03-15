@@ -247,3 +247,27 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+
+.mostra{
+    display: block;
+}
+
+.nascondi{
+    display: none !important;
+}
+
+#user-error{
+	font-size: 14px;
+	color: #df0000;
+	padding: 2px 0px 8px 0px;
+	display: flex;
+	align-items: center;
+}
+
+#username-error{
+	font-size: 11px;
+	color: #df0000;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}

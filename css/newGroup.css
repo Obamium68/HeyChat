@@ -113,21 +113,82 @@
 }
 
 .check-item .checkbutton{
-    padding: 8px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0B192F;
+    border-radius: 5px;
     color: #FAFAFA;
     background-color: #0B192F;
-    width: 25px;
-    height: 25px;
+    width: 33px;
+    height: 33px;
     border-radius: 3px;
-    font-size: 25px;
-    line-height: 22px;
-    font-weight: 500;
     margin: 0px 15px;
     text-align: center;
     cursor: pointer;
 }
 
-.wrapper{height:auto;display:flex;justify-content:center;align-items:center;background-color:#eee}
-/*.checkmark__circle{stroke-dasharray: 166;stroke-dashoffset: 166;stroke-width: 2;stroke-miterlimit: 10;stroke: #7ac142;fill: none;animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards}
-*/.checkmark{width: 56px;height: 56px;border-radius: 3px;display: block;stroke-width: 2;stroke: #fff;stroke-miterlimit: 10;margin: 10% auto;box-shadow: inset 0px 0px 0px #7ac142;animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both}
-.checkmark__check{transform-origin: 50% 50%;stroke-dasharray: 48;stroke-dashoffset: 48;animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards}@keyframes stroke{100%{stroke-dashoffset: 0}}@keyframes scale{0%, 100%{transform: none}50%{transform: scale3d(1.1, 1.1, 1)}}@keyframes fill{100%{box-shadow: inset 0px 0px 0px 30px #7ac142}}
+.checkmark {
+    width: 33px;
+    height: 33px;
+    border-radius: 3px;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #7ac142;
+}
+
+.remove-item{
+    box-shadow: inset 0px 0px 30px red !important;
+}
+
+.square-click{
+    animation: fill .4s ease-in-out .3s forwards, scale .3s ease-in-out .8s both
+}
+
+.spunta-click{
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0
+    }
+}
+
+@keyframes scale {
+
+    0%,
+    100% {
+        transform: none
+    }
+
+    50% {
+        transform: scale3d(1.1, 1.1, 1)
+    }
+}
+
+
+
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #7ac142
+    }
+}
+
+@keyframes fill-reverse {
+    0% {
+        box-shadow: inset 0px 0px 0px 30px #7ac142
+    }
+    100%{
+        box-shadow: inset 0px 0px 0px 0px #7ac142
+    }
+}
