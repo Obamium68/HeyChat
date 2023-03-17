@@ -91,7 +91,7 @@
 
     function addUser() {
         const username = $("#inputTag").val();
-        $.post('../php/getUser.php', {user: username}, function(response) {
+        $.post('../php/getUsers.php', {user: username}, function(response) {
             // Gestire la risposta del server qui
             console.log(response);
           });

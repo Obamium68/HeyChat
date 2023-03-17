@@ -27,6 +27,11 @@ class User {
 const clients = new Map();
 var users = [];
 
+$.post('../php/getUser.php', function(response) {
+  // Gestire la risposta del server qui
+  console.log(response);
+});
+
 function getUserFromUsername(un){
   users.forEach(u => {
     if(u.username==un) return u;
