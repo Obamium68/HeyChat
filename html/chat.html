@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,10 +10,15 @@
     <link rel="stylesheet" href="../css/chatSearch.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../js/client.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <title>HeyChat</title>
 </head>
-<body>
+
+<body onload="getUsernames()">
     <div id="lat-bar">
         <div id="logo">
             <img src="../img/logo.png">
@@ -22,38 +28,74 @@
         <div id="contatti-box">
             <span>Contatti</span>
             <div id="list-chat" class="zerochat centra">
-                
+
                 <h2 id="nochats" class="mostra">Nessuna chat attiva</h2>
-                
+
             </div>
         </div>
     </div>
     <div id="chat-box">
 
-        <!--
+
         <div id="hellocontainter" class="nascondi">
             <div id="hellotopbox">
-              <div id="helloMessage">Benvenuto!</div> 
-              <img src="../img/hey.png"> 
+                <div id="helloMessage">Benvenuto!</div>
+                <img src="../img/hey.png">
             </div>
             <div class="line"></div>
             <div id="helloDescription">Cerca i tuoi amici e inizia a chattare con HeyChat</div>
             <div id="addUser">+ &nbsp;&nbsp;Aggiungi contatto</div>
         </div>
-        -->
 
-        <!--
+
+
         <div id="searchTAG" class="nascondi">
             <span>Cerca tramite tag</span>
             <div id="searchbar">
                 <span>@</span>
-                <input type="text">
-                <div id="buttonPlus">+</div>
+                <input id="inputTag" type="text">
+                <div id="buttonPlus" onclick="addUser()">+</div>
             </div>
         </div>
-        -->
-
-        
     </div>
 </body>
+<script>
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('new') == 'true') {
+        $('#hellocontainer').removeClass('nascondi');
+        $('#hellocontainer').addClass('mostra');
+    } else {
+        $('#searchTAG').removeClass('nascondi');
+        $('#searchTAG').addClass('mostra');
+    }
+
+    /** get all usrnames from the php page and set autocomplete for the search bar
+    *
+    */
+    function getUsernames() {
+        $.ajax({
+            url: "../php/getTags.php", success: function (result) {
+                result = JSON.parse(result);
+                const tags = [];
+                for (var key in result) {
+                    tags.push(result[key].Username);
+                }
+                $("#inputTag").autocomplete({
+                    minLength: 3,
+                    source: tags,
+                });
+            }
+        });
+    }
+
+    function addUser() {
+        const username = $("#inputTag").val();
+        $.post('../php/getUser.php', {user: username}, function(response) {
+            // Gestire la risposta del server qui
+            console.log(response);
+          });
+    }
+</script>
+
 </html>

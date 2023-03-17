@@ -10,7 +10,6 @@ socket.onmessage = (event) => {
     switch (true) {
         case data.from == 'كنية':             // If server is sending you your ID
             myID = data.message;              // Set your id
-            document.getElementById('myID').innerHTML = myID;
             break;
         case data.from == 'хозяева':          // If server is sending you the connected hosts
             const hosts = data.message.split(',');
