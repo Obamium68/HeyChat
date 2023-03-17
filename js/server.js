@@ -17,6 +17,7 @@ class User {
   toString(){
     return this.id;
   }
+  //send clients their id
   notifyID() {
     clients.get(this.id).send(JSON.stringify({ message: this.id, from: 'كنية' }))
   }
