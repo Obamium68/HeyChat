@@ -21,7 +21,20 @@
                 <input type="text" id="nameSignUp" placeholder="Nome" required />
                 <input type="text" id="surnameSignUp" placeholder="Cognome" required />
                 <input type="text" id="usernameSignUp" placeholder="Username" required />
-                <div id="username-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px" fill-rule="nonzero"><g fill="#df0000" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8.53333,8.53333)"><path d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM16,21h-2v-7h2zM15,11.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5z"></path></g></g></svg> &nbsp;Username gi&aacute; utilizzato</div>
+                <div id="username-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px"
+                        fill-rule="nonzero">
+                        <g fill="#df0000" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(8.53333,8.53333)">
+                                <path
+                                    d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM16,21h-2v-7h2zM15,11.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg> &nbsp;Username gi&aacute; utilizzato</div>
                 <input type="password" id="passwordSignUp" placeholder="Password" required />
                 <button onclick="signUp()">Sign-Up</button>
             </div>
@@ -32,7 +45,20 @@
                 <span>e contiuna a chattare con i tuoi amici</span>
                 <input type="text" name="name" id="usernameSignIn" placeholder="Username" required />
                 <input type="password" name="password" id="passwordSignIn" placeholder="Password" required />
-                <div id="user-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px" fill-rule="nonzero"><g fill="#df0000" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8.53333,8.53333)"><path d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM16,21h-2v-7h2zM15,11.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5z"></path></g></g></svg> &nbsp;Nome utente o password errato</div>
+                <div id="user-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px"
+                        fill-rule="nonzero">
+                        <g fill="#df0000" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(8.53333,8.53333)">
+                                <path
+                                    d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM16,21h-2v-7h2zM15,11.5c-0.828,0 -1.5,-0.672 -1.5,-1.5c0,-0.828 0.672,-1.5 1.5,-1.5c0.828,0 1.5,0.672 1.5,1.5c0,0.828 -0.672,1.5 -1.5,1.5z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg> &nbsp;Nome utente o password errato</div>
                 <button onclick="signIn()">Sign-In</button>
             </div>
         </div>
@@ -94,7 +120,7 @@
                 url: '../php/register.php',
                 data: { ':name': name, ':surname': surname, ':username': username, ':password': psw },
                 method: 'POST',
-                success: function (response) {      //1: duplicato; 2:registrato
+                success: function (response) {      //-1: Vlank username 1: duplicato; 2:registrato
                     console.log(response);
                     data = JSON.parse(response);
                     let id = (data['Id'] ? data['Id'] : null);
@@ -118,7 +144,7 @@
             case 2:
                 $("#username-error").removeClass("mostra");
                 $("#username-error").addClass("nascondi");
-                window.location.replace("../html/chat.html?new=true&id="+id);
+                window.location.replace("../html/chat.html?new=true&id=" + id);
                 break;
             case 3:
                 $("#user-error").removeClass("nascondi");
@@ -131,7 +157,7 @@
             case 4:
                 $("#user-error").removeClass("mostra");
                 $("#user-error").addClass("nascondi");
-                window.location.replace("../html/chat.html?new=false&id="+id);
+                window.location.replace("../html/chat.html?new=false&id=" + id);
                 break;
         }
     }

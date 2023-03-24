@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 
-const debug=true;
+const debug = true;
 
 class User {
   constructor(name, surname, username, id, online, LastAccess, pwd) {
@@ -10,12 +10,15 @@ class User {
     this.username = username;
     this.id = id;
     this.online = online;
-    this.LastAccess=LastAccess;
+    this.LastAccess = LastAccess;
     this.pwd = pwd;
   }
-  
-  toString(){
+
+  toString() {
     return this.id;
+  }
+  setUsername(user) {
+    this.username = user;
   }
   //send clients their id
   notifyID() {
@@ -27,14 +30,9 @@ class User {
 const clients = new Map();
 var users = [];
 
-$.post('../php/getUser.php', function(response) {
-  // Gestire la risposta del server qui
-  console.log(response);
-});
-
-function getUserFromUsername(un){
+function getUserFromUsername(un) {
   users.forEach(u => {
-    if(u.username==un) return u;
+    if (u.username == un) return u;
   });
 }
 
@@ -45,25 +43,33 @@ server.on('connection', (socket) => {
     new User("Mario", "Rossi", "MarioRossi" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
   )
   users[users.length - 1].notifyID();   //  ACK clients of its ID
-  if(debug) console.log(`[${Date.now()}]:(${users[users.length - 1].username}:${users[users.length - 1].id}) connected`);    //Log message
+  if (debug) console.log(`[${Date.now()}]:(${users[users.length - 1].username}:${users[users.length - 1].id}) connected`);    //Log message
 
 
   socket.on('message', (message) => {
     const data = JSON.parse(message);
-    if(debug) console.log(data);
-    
+    if (debug) console.log(data);
+
     const fromSocket = clients.get(data.from);    // Get sender ws from its id
     const toSocket = clients.get(data.to);        // Get receiver ws from its id
 
     errormsg = "[Error] Client not found";
-    
+
     switch (true) {
       case toSocket != null:        // If receiver ws exists
         toSocket.send(JSON.stringify({ from: id, message: data.message, type: data.type }));       // Send the message
-        if(fromSocket!=toSocket) fromSocket.send(JSON.stringify({ from: id,  message: data.message, type: data.type}));   // If I'm not sending the message to myself resend the message to me
+        if (fromSocket != toSocket) fromSocket.send(JSON.stringify({ from: id, message: data.message, type: data.type }));   // If I'm not sending the message to myself resend the message to me
         break;
       case data.to && toSocket == null:   // If the user gave in input the receiver but it doesnt exists
-        fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error'}));   // Throw an error message to the sender
+        fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error' }));   // Throw an error message to the sender
+        break;
+      case toSocket == fromSocket:    //If sender and receiver coincide set the username sent in the message
+        users.forEach(u => {
+          if (u.id == data.from) {
+            u.setUsername(data.message);
+            console.log(u);
+          };
+        });
         break;
     }
   });

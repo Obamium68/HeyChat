@@ -19,6 +19,7 @@
 </head>
 
 <body onload="getUsernames()">
+    <input type="hidden" id="me" value="">
     <div id="lat-bar">
         <div id="logo">
             <img src="../img/logo.png">
@@ -60,7 +61,6 @@
     </div>
 </body>
 <script>
-
     const params = new URLSearchParams(window.location.search);
     if (params.get('new') == 'true') {
         $('#hellocontainer').removeClass('nascondi');
@@ -69,33 +69,5 @@
         $('#searchTAG').removeClass('nascondi');
         $('#searchTAG').addClass('mostra');
     }
-
-    /** get all usrnames from the php page and set autocomplete for the search bar
-    *
-    */
-    function getUsernames() {
-        $.ajax({
-            url: "../php/getTags.php", success: function (result) {
-                result = JSON.parse(result);
-                const tags = [];
-                for (var key in result) {
-                    tags.push(result[key].Username);
-                }
-                $("#inputTag").autocomplete({
-                    minLength: 3,
-                    source: tags,
-                });
-            }
-        });
-    }
-
-    function addUser() {
-        const username = $("#inputTag").val();
-        $.post('../php/getUsers.php', {user: username}, function(response) {
-            // Gestire la risposta del server qui
-            console.log(response);
-          });
-    }
 </script>
-
 </html>

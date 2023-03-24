@@ -1,9 +1,37 @@
+/** get all usrnames from the php page and set autocomplete for the search bar
+*
+*/
+function getUsernames() {
+    $.ajax({
+        url: "../php/getTags.php", success: function (result) {
+            result = JSON.parse(result);
+            const tags = [];
+            for (var key in result) {
+                tags.push(result[key].Username);
+            }
+            $("#inputTag").autocomplete({
+                minLength: 3,
+                source: tags,
+            });
+        }
+    });
+}
+
+function addUser() {
+    const username = $("#inputTag").val();
+    $.post('../php/getUsers.php', { user: username }, function (response) {
+        // Gestire la risposta del server qui
+        console.log(response);
+    });
+}
+
+
 const socket = new WebSocket('ws://localhost:8080');
-
+if(socket){
+    sendUsername()
+}
 var myID = "UNDEFINED";
-
 var connectedHosts = [];    //Host connected to the same server
-
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -49,6 +77,13 @@ function formatMessage(from, type, message, to) {
         data.to = to;
     }
     return data;
+}
+
+/**
+ * Sends the server the username
+ */
+function sendUsername(user) {
+    socket.send(JSON.stringify(formatMessage(myID, 'text', user, myID)));
 }
 
 /**
