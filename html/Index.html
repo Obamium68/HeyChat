@@ -120,7 +120,7 @@
                 url: '../php/register.php',
                 data: { ':name': name, ':surname': surname, ':username': username, ':password': psw },
                 method: 'POST',
-                success: function (response) {      //-1: Vlank username 1: duplicato; 2:registrato
+                success: function (response) {      //-1: Blank username 1: duplicato; 2:registrato
                     console.log(response);
                     data = JSON.parse(response);
                     let id = (data['Id'] ? data['Id'] : null);

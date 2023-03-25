@@ -1,9 +1,10 @@
+
 /** get all usrnames from the php page and set autocomplete for the search bar
 *
 */
 function getUsernames() {
     $.ajax({
-        url: "../php/getTags.php", success: function (result) {
+        url: "../php/get_username(s).php", success: function (result) {
             result = JSON.parse(result);
             const tags = [];
             for (var key in result) {
@@ -19,7 +20,7 @@ function getUsernames() {
 
 function addUser() {
     const username = $("#inputTag").val();
-    $.post('../php/getUsers.php', { user: username }, function (response) {
+    $.post('../php/get_username(s).php', { user: username }, function (response) {
         // Gestire la risposta del server qui
         console.log(response);
     });
