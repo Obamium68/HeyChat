@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-        session_start();
-        $my_username = $_SESSION["Username"];
+session_start();
+$my_username = $_SESSION["Username"];
 ?>
 
 <head>
@@ -57,14 +57,37 @@
             <span>Cerca tramite tag</span>
             <div id="searchbar">
                 <span>@</span>
-                <input id="inputTag" type="text"  oninput="getUsersList()">
+                <input id="inputTag" type="text" oninput="getUsersList()">
                 <div style="position: absolute;">AAA</div>
-                <div id="buttonPlus" onclick="addUser()">+</div>
+                <div id="buttonPlus" onclick="startChat(document.getElementById('inputTag').value)">
+                    +</div>
             </div>
         </div>
     </div>
 </body>
 <script>
+    var me = '<?php echo $my_username; ?>';
+    setUsername(me);
+
+    /**
+     * send the parameters to the DB to store the chat that is gonna be created if no error is thrown
+     */
+    function startChat(receiver) {
+        ids = [];
+        $.post('../php/get_id_from_username.php', { username: me }, function (responseID) {
+            // Gestire la risposta del server qui
+            ids[0] = JSON.parse(responseID)['Id'];
+            $.post('../php/get_id_from_username.php', { username: receiver }, function (responseID) {
+                // Gestire la risposta del server qui
+                ids[1] = JSON.parse(responseID)['Id'];
+                saveChat(ids[0], ids[1], "chatProva");
+            });
+        });
+
+        //** Gianlù qui vanno le tue cose di rendering :) */
+    }
+
+
     const params = new URLSearchParams(window.location.search);
     if (params.get('new') == 'true') {
         $('#hellocontainer').removeClass('nascondi');
@@ -75,16 +98,16 @@
     }
 
     function getUsersList() {
-        console.log("GUA");
         let data = $("#inputTag").val();
         $.post('../php/get_user.php', { search: data }, function (response) {
             // Gestire la risposta del server qui
             utenti = JSON.parse(response);
 
             utenti.forEach(utente => {
-                
+                console.log(utente);
             });
         });
     }
 </script>
+
 </html>

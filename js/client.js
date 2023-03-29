@@ -1,17 +1,39 @@
 
 
+/** Takes the following parameters and 
+ * 
+ * @param {*} ownerID chat's owner ID
+ * @param {*} receiverID other chat partecipant ID
+ * @param {*} chatName chat name
+ */
+function saveChat(ownerID, receiverID, chatName) {
+    $.post('../php/create_chat.php', { participants: 2, ownerId: ownerID, receiverID: receiverID, chatName: chatName }, function (response) {
+        // Gestire la risposta del server qui
+        console.log(response);
+    });
+}
+
+
 const socket = new WebSocket('ws://localhost:8080');
-if(socket){
+if (socket) {
     sendUsername()
 }
-var myID = "UNDEFINED";
+var myUsername = "UNDEFINED";
 var connectedHosts = [];    //Host connected to the same server
+
+/**Set the username of the client
+ * 
+ * @param {*} username 
+ */
+function setUsername(username) {
+    myUsername = username;
+}
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     switch (true) {
         case data.from == 'كنية':             // If server is sending you your ID
-            myID = data.message;              // Set your id
+            myUsername = data.message;              // Set your id
             break;
         case data.from == 'хозяева':          // If server is sending you the connected hosts
             const hosts = data.message.split(',');
@@ -24,7 +46,7 @@ socket.onmessage = (event) => {
             switch (data.type) {
                 case 'text':
                     const li = document.createElement('li');
-                    li.textContent = `${data.from == myID ? "You" : data.from}: ${data.message}`;
+                    li.textContent = `${data.from == myUsername ? "You" : data.from}: ${data.message}`;
                     messages.appendChild(li);
                     break;
                 case 'image':
@@ -57,7 +79,7 @@ function formatMessage(from, type, message, to) {
  * Sends the server the username
  */
 function sendUsername(user) {
-    socket.send(JSON.stringify(formatMessage(myID, 'text', user, myID)));
+    socket.send(JSON.stringify(formatMessage(myUsername, 'text', user, myUsername)));
 }
 
 /**
@@ -66,7 +88,7 @@ function sendUsername(user) {
 function sendMessage() {
     const to = document.getElementById('to').value;
     const message = document.getElementById('message').value;
-    socket.send(JSON.stringify(formatMessage(myID, 'text', message, to)));
+    socket.send(JSON.stringify(formatMessage(myUsername, 'text', message, to)));
 }
 
 
@@ -83,7 +105,7 @@ function sendImage() {
     reader.readAsDataURL(file);
     reader.onload = () => {
         const to = document.getElementById('to').value;
-        socket.send(JSON.stringify(formatMessage(myID, 'image', reader.result, to)));
+        socket.send(JSON.stringify(formatMessage(myUsername, 'image', reader.result, to)));
     };
 }
 
