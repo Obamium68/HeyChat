@@ -56,3 +56,11 @@
     display: inline-block;
     cursor: pointer;
 }
+
+.ui-helper-hidden-accessible{
+    display: none;
+}
+
+#ui-id-1{
+    height: 200px;
+}

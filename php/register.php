@@ -13,10 +13,12 @@ $query = "INSERT INTO USERS(Username, Name, Surname, Pwd) VALUES (:username,:nam
 try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);
+    session_start();
+    $_SESSION['Username']=$stmt->fetch()['Username'];
+    header('Location: ../views/chat.php');
 } catch (PDOException $e) {
-    echo '{"State":1}'; //STATE 1: Username duplicato
+    header('Location: ../views/Index.html?err=1');
     die();
 }
-echo '{"State":2,"Id":"' . hash('md5', $conn->lastInsertId()) . '"}'; //STATE 2: Registrazione avvenuta correttamente
 $conn = null;
 ?>

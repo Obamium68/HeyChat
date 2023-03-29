@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+        session_start();
+        $my_username = $_SESSION["Username"];
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +22,7 @@
     <title>HeyChat</title>
 </head>
 
-<body onload="getUsernames()">
+<body>
     <input type="hidden" id="me" value="">
     <div id="lat-bar">
         <div id="logo">
@@ -37,7 +41,6 @@
     </div>
     <div id="chat-box">
 
-
         <div id="hellocontainter" class="nascondi">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
@@ -50,11 +53,12 @@
 
 
 
-        <div id="searchTAG" class="nascondi">
+        <div id="searchTAG" class="mostra">
             <span>Cerca tramite tag</span>
             <div id="searchbar">
                 <span>@</span>
-                <input id="inputTag" type="text">
+                <input id="inputTag" type="text"  oninput="getUsersList()">
+                <div style="position: absolute;">AAA</div>
                 <div id="buttonPlus" onclick="addUser()">+</div>
             </div>
         </div>
@@ -68,6 +72,19 @@
     } else {
         $('#searchTAG').removeClass('nascondi');
         $('#searchTAG').addClass('mostra');
+    }
+
+    function getUsersList() {
+        console.log("GUA");
+        let data = $("#inputTag").val();
+        $.post('../php/get_user.php', { search: data }, function (response) {
+            // Gestire la risposta del server qui
+            utenti = JSON.parse(response);
+
+            utenti.forEach(utente => {
+                
+            });
+        });
     }
 </script>
 </html>

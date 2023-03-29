@@ -1,31 +1,4 @@
 
-/** get all usrnames from the php page and set autocomplete for the search bar
-*
-*/
-function getUsernames() {
-    $.ajax({
-        url: "../php/get_username(s).php", success: function (result) {
-            result = JSON.parse(result);
-            const tags = [];
-            for (var key in result) {
-                tags.push(result[key].Username);
-            }
-            $("#inputTag").autocomplete({
-                minLength: 3,
-                source: tags,
-            });
-        }
-    });
-}
-
-function addUser() {
-    const username = $("#inputTag").val();
-    $.post('../php/get_username(s).php', { user: username }, function (response) {
-        // Gestire la risposta del server qui
-        console.log(response);
-    });
-}
-
 
 const socket = new WebSocket('ws://localhost:8080');
 if(socket){

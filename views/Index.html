@@ -18,9 +18,10 @@
             <div class="form-data">
                 <h1>Registrati</h1>
                 <span>ed inizia a chattare con i tuoi amici</span>
-                <input type="text" id="nameSignUp" placeholder="Nome" required />
-                <input type="text" id="surnameSignUp" placeholder="Cognome" required />
-                <input type="text" id="usernameSignUp" placeholder="Username" required />
+                <form action="../php/register.php" method="post">
+                <input type="text" id="nameSignUp" placeholder="Nome" name=":name" required />
+                <input type="text" id="surnameSignUp" placeholder="Cognome" name=":surname" required />
+                <input type="text" id="usernameSignUp" placeholder="Username" name=":username" required />
                 <div id="username-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px"
                         fill-rule="nonzero">
@@ -35,16 +36,18 @@
                             </g>
                         </g>
                     </svg> &nbsp;Username gi&aacute; utilizzato</div>
-                <input type="password" id="passwordSignUp" placeholder="Password" required />
-                <button onclick="signUp()">Sign-Up</button>
+                <input type="password" id="passwordSignUp" placeholder="Password" name=":password" required />
+                <button type="submit">Sign-Up</button>
+                </form>
             </div>
         </div>
         <div class="form-container sign-in-container">
             <div class="form-data">
                 <h1>Login</h1>
                 <span>e contiuna a chattare con i tuoi amici</span>
-                <input type="text" name="name" id="usernameSignIn" placeholder="Username" required />
-                <input type="password" name="password" id="passwordSignIn" placeholder="Password" required />
+                <form action="../php/login.php" method="post">
+                <input type="text" name=":username" id="usernameSignIn" placeholder="Username" required />
+                <input type="password" name=":password" id="passwordSignIn" placeholder="Password" required />
                 <div id="user-error" class="nascondi"><svg xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="15px" height="15px"
                         fill-rule="nonzero">
@@ -59,7 +62,8 @@
                             </g>
                         </g>
                     </svg> &nbsp;Nome utente o password errato</div>
-                <button onclick="signIn()">Sign-In</button>
+                <button type="submit">Sign-In</button>
+                </form>
             </div>
         </div>
         <div class="overlay-container">
@@ -88,50 +92,6 @@
         $('#passwordSignIn').val('');
     }
 
-    function signIn() {
-        let username = $("#usernameSignIn").val();
-        let psw = $("#passwordSignIn").val();
-
-        $.ajax(
-            {
-                url: '../php/login.php',
-                data: { ':username': username, ':password': psw },
-                method: 'POST',
-                success: function (response) {  //3: non corrette; 4:correttamente
-                    data = JSON.parse(response);
-                    let id = (data['Id'] ? data['Id'] : null);
-                    SignManager(data['State'], id);
-                },
-                error: function () {
-                    console.log("Sono qui");
-                }
-            }
-        );
-    }
-
-    function signUp() {
-        let name = $("#nameSignUp").val();
-        let surname = $("#surnameSignUp").val();
-        let username = $("#usernameSignUp").val();
-        let psw = $("#passwordSignUp").val();
-
-        $.ajax(
-            {
-                url: '../php/register.php',
-                data: { ':name': name, ':surname': surname, ':username': username, ':password': psw },
-                method: 'POST',
-                success: function (response) {      //-1: Blank username 1: duplicato; 2:registrato
-                    console.log(response);
-                    data = JSON.parse(response);
-                    let id = (data['Id'] ? data['Id'] : null);
-                    SignManager(data['State'], id);
-                },
-                error: function () {
-                    console.log("Sono qui");
-                }
-            }
-        );
-    }
 
     function SignManager(state, id) {
         switch (state) {
@@ -144,7 +104,6 @@
             case 2:
                 $("#username-error").removeClass("mostra");
                 $("#username-error").addClass("nascondi");
-                window.location.replace("../html/chat.html?new=true&id=" + id);
                 break;
             case 3:
                 $("#user-error").removeClass("nascondi");
@@ -157,7 +116,6 @@
             case 4:
                 $("#user-error").removeClass("mostra");
                 $("#user-error").addClass("nascondi");
-                window.location.replace("../html/chat.html?new=false&id=" + id);
                 break;
         }
     }

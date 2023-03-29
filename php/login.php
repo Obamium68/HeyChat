@@ -14,18 +14,16 @@ try {
 }
 switch ($stmt->rowCount()) {
     case 0:
-        echo '{"State":3}'; //STATE 3 : Utente non trovato
+        header('Location: ../views/Index.html?err=2');
         break;
     case 1:
-        echo '{"State":4,"Id":"' . hash('md5', $stmt->fetch()[0]) . '"}'; //STATE 4 : Credenziali corrette
+        session_start();
+        $_SESSION['Username']=$stmt->fetch()['Username'];
+        header('Location: ../views/chat.php');
         break;
 }
 $conn = null;
-
-
-
-
-
+die();
 
 
 ?>
