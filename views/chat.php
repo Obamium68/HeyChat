@@ -27,7 +27,7 @@ $my_username = $_SESSION["Username"];
     <input type="hidden" id="me" value="">
     <div id="lat-bar">
         <div id="logo">
-            <img src="../img/logo.png">
+            <img src="../img/ui/logo.png">
             <span>HeyChat</span>
         </div>
 
@@ -45,7 +45,7 @@ $my_username = $_SESSION["Username"];
         <div id="hellocontainter" class="nascondi">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
-                <img src="../img/hey.png">
+                <img src="../img/ui/hey.png">
             </div>
             <div class="line"></div>
             <div id="helloDescription">Cerca i tuoi amici e inizia a chattare con HeyChat</div>
