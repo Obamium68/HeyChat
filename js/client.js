@@ -10,6 +10,14 @@ function saveChat(ownerID, receiverID, chatName) {
     $.post('../php/create_chat.php', { participants: 2, ownerId: ownerID, receiverID: receiverID, chatName: chatName }, function (response) {
         // Gestire la risposta del server qui
         console.log(response);
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Nuova chat aggiunta',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        $("#searchTAG").fadeOut(600);
     });
 }
 

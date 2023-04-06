@@ -14,6 +14,7 @@ $my_username = $_SESSION["Username"];
     <link rel="stylesheet" href="../css/chatSearch.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="../js/client.js"></script>
@@ -58,9 +59,11 @@ $my_username = $_SESSION["Username"];
             <div id="searchbar">
                 <span>@</span>
                 <input id="inputTag" type="text" oninput="getUsersList()">
-                <div style="position: absolute;">AAA</div>
                 <div id="buttonPlus" onclick="startChat(document.getElementById('inputTag').value)">
                     +</div>
+            </div>
+            <div id="userTrovati">
+
             </div>
         </div>
     </div>
@@ -102,12 +105,21 @@ $my_username = $_SESSION["Username"];
         $.post('../php/get_user.php', { search: data }, function (response) {
             // Gestire la risposta del server qui
             utenti = JSON.parse(response);
-
+            $("#userTrovati").empty();
             utenti.forEach(utente => {
-                console.log(utente);
+                nomeUser = utente["Name"]+" "+utente["Surname"];
+                nickUser = utente["Username"];
+                image = ""; //da aggiungere
+                $("#userTrovati").append("<div data-name='"+nickUser+"' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='"+image+"'></div> <div class='newUserData'> <div class='newUserName'>"+nomeUser+"</div> <div class='newUserNick'>@"+nickUser+"</div> </div> </div>");
             });
         });
     }
+
+    function riempiCampo(name){
+        $("#inputTag").val(name);
+    }
+
+
 </script>
 
 </html>

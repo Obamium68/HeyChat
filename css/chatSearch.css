@@ -64,3 +64,54 @@
 #ui-id-1{
     height: 200px;
 }
+
+#userTrovati{
+    background: rgba(217, 217, 217, 0.01);
+    box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#userTrovati::-webkit-scrollbar {
+    display: none;
+}
+
+.newUser{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px 0px;
+    border-bottom: 1px solid #B0AFAF;
+    cursor: pointer;
+}
+
+.newUserImage{
+    width: 50px;
+    height: 50px;
+    margin: 0px 8px;
+    border-radius: 50%;
+    background-color: aquamarine;
+}
+
+.newUserData{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.newUserName{
+    font-weight: 500;
+    font-size: 18px;
+    color: #0B192F;
+}
+
+.newUserNick{
+    color: #B0AFAF;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    width: max-content;
+}
