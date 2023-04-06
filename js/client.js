@@ -1,29 +1,42 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE PHP PAGES     -Loaded in chat.php*/
 
+
+var myUsername = "UNDEFINED";
+var myID = 0;
+
 /**Set the username of the client
  * 
  * @param {*} username 
  */
 function setUsername(username) {
+    console.log(username);
     myUsername = username;
 }
+
+/**Set the id of the client
+ * 
+ * @param {*} id 
+ */
+function setID(id) {
+    myID = id;
+}
+
 
 /**
      * send the parameters to the DB to store the chat that is gonna be created if no error is thrown
      */
 function startChat(receiver) {
-    ids = [];
-    $.post('../php/get_id_from_username.php', { username: me }, function (response) {
-        // Gestire la risposta del server qui
-        ids[0] = JSON.parse(response)['Id'];
-        $.post('../php/get_id_from_username.php', { username: receiver }, function (response) {
-            // Gestire la risposta del server qui
-            ids[1] = JSON.parse(response)['Id'];
-            saveChat(ids[0], ids[1], "chatProva");
+    if (receiver) {
+        let ids = [];
+        $.post('../php/get_id_from_username.php', { username: me }, function (response) {
+            ids[0] = JSON.parse(response)['Id'];
+            $.post('../php/get_id_from_username.php', { username: receiver }, function (response) {
+                ids[1] = JSON.parse(response)['Id'];
+                saveChat(ids[0], ids[1], me + "ラネラ" + receiver);
+            });
         });
-    });
-
-    //**!!!!!!!Gianlù qui vanno le tue cose di rendering :)!!!!!!!*/
+        //**!!!!!!!Gianlù qui vanno le tue cose di rendering :)!!!!!!!*/
+    }
 }
 
 function loadChats() {

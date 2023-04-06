@@ -19,11 +19,11 @@ switch ($stmt->rowCount()) {
     case 1:
         session_start();
         $_SESSION['Username']=$stmt->fetch()['Username'];
+        $_SESSION['Id']=$stmt->fetch()['Id'];
+        $_SESSION['State']='NotNew';
         header('Location: ../views/chat.php');
         break;
 }
 $conn = null;
 die();
-
-
 ?>

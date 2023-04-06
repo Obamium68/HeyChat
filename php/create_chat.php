@@ -18,14 +18,14 @@ try {
 $chatId = $conn->lastInsertId();
 $query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
  try {
-     $stmt = $conn->prepare($query);
-     $stmt->bindParam(':userId', $data[':ownerId']);
-     $stmt->bindParam(':chatId', $chatId);
-     $stmt->execute();
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':userId', $data[':ownerId']);
+    $stmt->bindParam(':chatId', $chatId);
+    $stmt->execute();
 
-     $stmt->bindParam(':userId', $_POST['receiverID']);
-     $stmt->bindParam(':chatId', $chatId);
-     $stmt->execute();
+    $stmt->bindParam(':userId', $_POST['receiverID']);
+    $stmt->bindParam(':chatId', $chatId);
+    $stmt->execute();
  } catch (PDOException $e) {
      echo $e;
  }

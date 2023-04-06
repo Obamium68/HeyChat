@@ -14,7 +14,9 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);
     session_start();
-    $_SESSION['Username']=$stmt->fetch()['Username'];
+    $_SESSION['State'] = 'New';
+    $_SESSION['Username'] = $stmt->fetch()['Username'];
+    $_SESSION['Id'] = $conn->lastInsertId();
     header('Location: ../views/chat.php');
 } catch (PDOException $e) {
     header('Location: ../views/Index.html?err=1');

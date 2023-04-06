@@ -2,7 +2,18 @@
 <html lang="en">
 <?php
 session_start();
-$my_username = $_SESSION["Username"];
+if (isset($_SESSION["Username"])) {
+    var_dump($_SESSION);
+    $my_username = $_SESSION["Username"];
+    $my_id = $_SESSION["Id"];
+    $newSession = False;
+    if ($_SESSION["State"] == "New") {
+        $newSession = True;
+    }
+} else {
+    header("Location: ../views/Index.html");
+}
+
 ?>
 
 <head>
@@ -43,23 +54,23 @@ $my_username = $_SESSION["Username"];
     </div>
     <div id="chat-box">
 
-        <div id="hellocontainter" class="nascondi">
+        <div id="hellocontainer" class="mostra">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
                 <img src="../img/ui/hey.png">
             </div>
             <div class="line"></div>
             <div id="helloDescription">Cerca i tuoi amici e inizia a chattare con HeyChat</div>
-            <div id="addUser">+ &nbsp;&nbsp;Aggiungi contatto</div>
+            <div id="addUser" onclick="showInput()">+ &nbsp;&nbsp;Aggiungi contatto</div>
         </div>
 
 
 
-        <div id="searchTAG" class="mostra">
+        <div id="searchTAG" class="nascondi">
             <span>Cerca tramite tag</span>
             <div id="searchbar">
                 <span>@</span>
-                <input id="inputTag" type="text" oninput="getUsersList()">
+                <input id="inputTag" type="text" oninput="displayUsers()">
                 <div id="buttonPlus" onclick="startChat(document.getElementById('inputTag').value)">
                     +</div>
             </div>
@@ -70,34 +81,44 @@ $my_username = $_SESSION["Username"];
     </div>
 </body>
 <script>
-    var me = '<?php echo $my_username; ?>';
-    setUsername(me);
 
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('new') == 'true') {
-        $('#hellocontainer').removeClass('nascondi');
-        $('#hellocontainer').addClass('mostra');
+    var isNew = '<?php echo $newSession; ?>';
+    setUsername('<?php echo $my_username; ?>');
+    setID('<?php echo $my_id; ?>');
+    
+
+    if (isNew) {
+        $('#helloMessage').html('Benvenuto');
     } else {
-        $('#searchTAG').removeClass('nascondi');
-        $('#searchTAG').addClass('mostra');
+        $('#helloMessage').html('Bentornato');
     }
 
-    function getUsersList() {
+    function showInput(){
+        $('#searchTAG').removeClass('nascondi');
+        $('#hellocontainer').removeClass('mostra');
+
+        $('#searchTAG').addClass('mostra');
+        $('#hellocontainer').addClass('nascondi');
+    }
+
+
+    function displayUsers() {
         let data = $("#inputTag").val();
         $.post('../php/get_user.php', { search: data }, function (response) {
             // Gestire la risposta del server qui
             utenti = JSON.parse(response);
             $("#userTrovati").empty();
             utenti.forEach(utente => {
-                nomeUser = utente["Name"]+" "+utente["Surname"];
+                id=utente['Id'];
+                nomeUser = utente["Name"] + " " + utente["Surname"];
                 nickUser = utente["Username"];
-                image = "../img/data/propics/lowRes/"+utente["PropicPath"];
-                $("#userTrovati").append("<div data-name='"+nickUser+"' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='"+image+"'></div> <div class='newUserData'> <div class='newUserName'>"+nomeUser+"</div> <div class='newUserNick'>@"+nickUser+"</div> </div> </div>");
+                image = "../img/data/propics/lowRes/" + utente["PropicPath"];
+                $("#userTrovati").append("<div data-id='"+id+"' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
             });
         });
     }
 
-    function riempiCampo(name){
+    function riempiCampo(name) {
         $("#inputTag").val(name);
     }
 

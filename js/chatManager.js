@@ -1,8 +1,5 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE SERVER     -Loaded in chat.php*/
 
-
-
-var myUsername = "UNDEFINED";
 var connectedHosts = [];    //Host connected to the same server
 
 const socket = new WebSocket('ws://localhost:8080');

@@ -11,14 +11,14 @@
     margin: 8px 0px 8px 0px;
 }
 
-#hellocontainter{
+#hellocontainer{
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#hellocontainter img{
+#hellocontainer img{
     width: 80px;
     height: 80px;
     display: inline;
