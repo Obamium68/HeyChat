@@ -1,6 +1,6 @@
 <?php
 /**
- * Return the id of the user whom username is given by POST under ':username' index
+ * Returns the id of the user whom username is given by POST under ':username' index
  */
 require('connection.php');
 $query = "SELECT Id FROM users WHERE Username =:username";

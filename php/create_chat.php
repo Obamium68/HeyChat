@@ -30,9 +30,5 @@ $query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
      echo $e;
  }
 
-
-
-
-
 $conn = null;
 ?>

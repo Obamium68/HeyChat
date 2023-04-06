@@ -18,12 +18,13 @@ $my_username = $_SESSION["Username"];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="../js/client.js"></script>
+    <script src="../js/chatManager.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <title>HeyChat</title>
 </head>
 
-<body>
+<body onload="loadChats()">
     <input type="hidden" id="me" value="">
     <div id="lat-bar">
         <div id="logo">
@@ -72,25 +73,6 @@ $my_username = $_SESSION["Username"];
     var me = '<?php echo $my_username; ?>';
     setUsername(me);
 
-    /**
-     * send the parameters to the DB to store the chat that is gonna be created if no error is thrown
-     */
-    function startChat(receiver) {
-        ids = [];
-        $.post('../php/get_id_from_username.php', { username: me }, function (responseID) {
-            // Gestire la risposta del server qui
-            ids[0] = JSON.parse(responseID)['Id'];
-            $.post('../php/get_id_from_username.php', { username: receiver }, function (responseID) {
-                // Gestire la risposta del server qui
-                ids[1] = JSON.parse(responseID)['Id'];
-                saveChat(ids[0], ids[1], "chatProva");
-            });
-        });
-
-        //** Gianlù qui vanno le tue cose di rendering :) */
-    }
-
-
     const params = new URLSearchParams(window.location.search);
     if (params.get('new') == 'true') {
         $('#hellocontainer').removeClass('nascondi');
@@ -109,7 +91,7 @@ $my_username = $_SESSION["Username"];
             utenti.forEach(utente => {
                 nomeUser = utente["Name"]+" "+utente["Surname"];
                 nickUser = utente["Username"];
-                image = ""; //da aggiungere
+                image = "../img/data/propics/lowRes/"+utente["PropicPath"];
                 $("#userTrovati").append("<div data-name='"+nickUser+"' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='"+image+"'></div> <div class='newUserData'> <div class='newUserName'>"+nomeUser+"</div> <div class='newUserNick'>@"+nickUser+"</div> </div> </div>");
             });
         });
