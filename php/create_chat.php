@@ -16,7 +16,7 @@ try {
     echo $e;
 }
 $chatId = $conn->lastInsertId();
-$query = "INSERT INTO partecipations(UserID, ChatID) VALUES (:userId,:chatId)";
+$query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
  try {
      $stmt = $conn->prepare($query);
      $stmt->bindParam(':userId', $data[':ownerId']);
