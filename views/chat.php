@@ -3,9 +3,8 @@
 <?php
 session_start();
 if (isset($_SESSION["Username"])) {
-    var_dump($_SESSION);
     $my_username = $_SESSION["Username"];
-    $my_id = $_SESSION["Id"];
+    $my_id = $_SESSION['Id'];
     $newSession = False;
     if ($_SESSION["State"] == "New") {
         $newSession = True;
@@ -71,7 +70,7 @@ if (isset($_SESSION["Username"])) {
             <div id="searchbar">
                 <span>@</span>
                 <input id="inputTag" type="text" oninput="displayUsers()">
-                <div id="buttonPlus" onclick="startChat(document.getElementById('inputTag').value)">
+                <div id="buttonPlus" onclick="startChat('',document.getElementById('inputTag').value)">
                     +</div>
             </div>
             <div id="userTrovati">
@@ -88,9 +87,12 @@ if (isset($_SESSION["Username"])) {
     
 
     if (isNew) {
-        $('#helloMessage').html('Benvenuto');
+        $('#helloMessage').html('Benvenuto!');
+        $('#helloDescription').html('Cerca i tuoi amici e inizia a chattare con HeyChat');
     } else {
-        $('#helloMessage').html('Bentornato');
+        $('#helloMessage').html('Bentornato!');
+        $('#helloDescription').html('Clicca su una chat per iniziare a messaggiare');
+        $('#addUser').addClass('nascondi');
     }
 
     function showInput(){
@@ -106,13 +108,15 @@ if (isset($_SESSION["Username"])) {
         let data = $("#inputTag").val();
         $.post('../php/get_user.php', { search: data }, function (response) {
             // Gestire la risposta del server qui
+            console.log(response);
             utenti = JSON.parse(response);
             $("#userTrovati").empty();
             utenti.forEach(utente => {
                 id=utente['Id'];
                 nomeUser = utente["Name"] + " " + utente["Surname"];
                 nickUser = utente["Username"];
-                image = "../img/data/propics/lowRes/" + utente["PropicPath"];
+                //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
+                image = "../img/data/propics/lowRes/default.png";
                 $("#userTrovati").append("<div data-id='"+id+"' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
             });
         });

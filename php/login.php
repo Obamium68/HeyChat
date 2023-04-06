@@ -18,8 +18,9 @@ switch ($stmt->rowCount()) {
         break;
     case 1:
         session_start();
-        $_SESSION['Username']=$stmt->fetch()['Username'];
-        $_SESSION['Id']=$stmt->fetch()['Id'];
+        $row = $stmt->fetch();
+        $_SESSION['Username']=$row['Username'];
+        $_SESSION['Id']=$row['Id'];
         $_SESSION['State']='NotNew';
         header('Location: ../views/chat.php');
         break;

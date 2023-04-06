@@ -18,16 +18,26 @@ try {
 $chatId = $conn->lastInsertId();
 $query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
  try {
+     
     $stmt = $conn->prepare($query);
+    
+    //Aggiungo la partecipazione del proprietario
     $stmt->bindParam(':userId', $data[':ownerId']);
     $stmt->bindParam(':chatId', $chatId);
     $stmt->execute();
+    
+    //Aggiungo la partecipazione per ogni utente
+    $receivers = $_POST['receivers'];
+    var_dump($receivers);
+    foreach($receivers as $receiver){
+        $stmt->bindParam(':userId', $receiver);
+        $stmt->bindParam(':chatId', $chatId);
+        $stmt->execute();
+    }
 
-    $stmt->bindParam(':userId', $_POST['receiverID']);
-    $stmt->bindParam(':chatId', $chatId);
-    $stmt->execute();
  } catch (PDOException $e) {
      echo $e;
+     die($e);
  }
 
 $conn = null;
