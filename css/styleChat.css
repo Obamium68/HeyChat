@@ -88,23 +88,41 @@ body {
     margin-left: 12px;
 }
 
+#list-chat{
+    height: calc(100vh - 190px);
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#list-chat::-webkit-scrollbar {
+    display: none;
+}
+
     /*---- Classi barra laterale ----*/
 
     .chat{
         height: 80px;
         width: 100%;
-        background: hsla(0, 0%, 85%, 0.3);
+        background: #FAFAFA;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
     }
 
-    .user{
+    .chat:hover{
+        background: hsla(0, 0%, 85%, 0.3);
+    }
+
+    .user,
+    .group{
         margin-left: 15px;
         display: flex;
     }
 
-    .user img{
+    .user img,
+    .group img{
         border-radius: 50%;
         display: inline-block;
         margin-right: 8px;
@@ -119,7 +137,16 @@ body {
         margin-left: 5px;
     }
 
-    .user .nome{
+    .group .dati{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 5px;
+    }
+
+    .user .nome,
+    .group .nome{
         font-size: 25px;
         font-weight: 400;
     }
@@ -145,4 +172,47 @@ body {
         background-color: green;
     }
 
-    
+    /*---   BOTTONI DI AZIONE   ---*/
+
+    #actions{
+        position: absolute;
+        bottom: 0;
+        width: 25%;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        box-shadow: 0px -4px 13px rgba(0, 0, 0, 0.25);
+        min-width: 300px;
+        z-index: 100;
+        background-color: #FAFAFA;
+    }
+
+    #actions div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding: 0px 8px;
+    }
+
+    #actions div span{
+        font-size: 17px;
+        font-weight: 500;
+        margin-left: 5px;
+    }
+
+    #actions .buttonaction{
+        padding: 6px;
+        background-color: #0B192F;
+        width: 25px;
+        height: 25px;
+        border-radius: 5px;
+    }
+
+    #actions .buttonaction img{
+        width: 25px;
+        height: 25px;
+    }
+        

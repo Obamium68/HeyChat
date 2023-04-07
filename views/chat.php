@@ -22,11 +22,13 @@ if (isset($_SESSION["Username"])) {
     <link rel="stylesheet" href="../css/styleChat.css">
     <link rel="stylesheet" href="../css/newuser.css">
     <link rel="stylesheet" href="../css/chatSearch.css">
+    <link rel="stylesheet" href="../css/newGroup.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../js/newGroupManager.js"></script>
     <script src="../js/client.js"></script>
     <script src="../js/chatManager.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -48,6 +50,17 @@ if (isset($_SESSION["Username"])) {
 
                 <h2 id="nochats" class="mostra">Nessuna chat attiva</h2>
 
+            </div>
+        </div>
+
+        <div id="actions">
+            <div id="newContatto" onclick="showFormContact()">
+                <div class="buttonaction"><img src="../img/ui/newCont.png"/></div>
+                <span>Nuovo contatto</span>
+            </div>
+            <div id="newGruppo" onclick="showFormGroup()">
+                <div class="buttonaction"><img src="../img/ui/newGroup.png"/></div>
+                <span>Nuovo gruppo</span>
             </div>
         </div>
     </div>
@@ -77,6 +90,20 @@ if (isset($_SESSION["Username"])) {
 
             </div>
         </div>
+
+        <div id="group-box" class="nascondi">
+            <div id="newGroup">
+                <span>Crea nuovo gruppo</span>
+                <div id="nameGroup">
+                    <span>Nome: </span>
+                    <input type="text" id="inputNameGroup" oninput="checkNewButton()">
+                </div>
+
+                <div id="peopleList"></div>
+                <div id="createNewGruop" onclick="startGroup()">Crea nuovo gruppo</div>
+            </div>
+        </div>
+
     </div>
 </body>
 <script>
@@ -95,12 +122,22 @@ if (isset($_SESSION["Username"])) {
         $('#addUser').addClass('nascondi');
     }
 
-    function showInput(){
+    function showFormContact(){
+        svuotaChatBox();
         $('#searchTAG').removeClass('nascondi');
-        $('#hellocontainer').removeClass('mostra');
-
         $('#searchTAG').addClass('mostra');
-        $('#hellocontainer').addClass('nascondi');
+    }
+
+    function showFormGroup(){
+        svuotaChatBox();
+        getMyContacts()
+        $('#group-box').removeClass('nascondi');
+        $('#group-box').addClass('mostra');
+    }
+
+    function svuotaChatBox(){
+        $('#chat-box > div').removeClass('mostra');
+        $('#chat-box > div').addClass('nascondi');
     }
 
 

@@ -192,3 +192,14 @@
         box-shadow: inset 0px 0px 0px 0px #7ac142
     }
 }
+
+#createNewGruop{
+    padding: 8px;
+    text-align: center;
+    color: #FAFAFA;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #2f3f5a;
+    margin-top: 10px;
+    cursor: pointer;
+}

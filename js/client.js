@@ -23,8 +23,8 @@ function setID(id) {
 
 
 /**
-     * send the parameters to the DB to store the chat that is gonna be created if no error is thrown
-     */
+ * send the parameters to the DB to store the chat that is gonna be created if no error is thrown
+ */
 function startChat(name,receiver) {
     if (receiver) {
         let ownerID = myID;
@@ -33,12 +33,12 @@ function startChat(name,receiver) {
         let receivers=[];
         //Se mi è passato un array allora è un gruppo, se no è una chat privata
         if(Array.isArray(receiver)){
-            receivers = receiver.split(",");
-            partecipants = receivers.length;
+            receivers= receiver;
+            partecipants = receivers.length+1;
         }else{
             console.log($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
             receivers.push($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
-            chatName=myUsername+"ラネラ"+receiver;
+            chatName="Private chat";
             partecipants = 2;
         }
 
@@ -47,21 +47,30 @@ function startChat(name,receiver) {
 }
 
 function loadChats() {
-    $.post('../php/get_id_from_username.php', { username: myUsername }, function (response) {
-        let myID = JSON.parse(response)['Id'];
-        $.post('../php/get_chats.php', { myID: myID }, function (response) {
-            console.log(response);
-            chats = JSON.parse(response);
-            chats.forEach(chat => {
-               //displayChatBar(,chat["Name"]);
-            });
+    $.post('../php/get_chats.php', { myID: myID }, function (response) {
+        chats = JSON.parse(response);
+        if(chats.length>0){
+            $("#list-chat").empty();
+            $("#list-chat").removeClass("zerochat");
+            $("#list-chat").removeClass("centra");
+        }
+        chats.forEach(chat => {
+            if("Username" in chat){
+                displayChatBar(chat["ChatID"], chat["Name"]+" "+chat["Surname"], chat["Username"],0);
+            }else{
+                displayGroupBar(chat["Id"],chat["Name"])
+            }
         });
     });
 }
 
 function displayChatBar(id,nome, username,state){
     //bisogna gestire lo state
-    $("list-chat").append("<div data-id='"+id+"' class='chat'> <div class='user'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>"+nome+"</div> <div class='nickname'>@"+username+"</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
+    $("#list-chat").append("<div data-id='"+id+"' class='chat'> <div class='user'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>"+nome+"</div> <div class='nickname'>@"+username+"</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
+}
+
+function displayGroupBar(id, nome){
+    $("#list-chat").append("<div data-id='"+id+"' class='chat'> <div class='group'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>"+nome+"</div> </div></div> <div class='state'><div class='point-state'>&nbsp;</div></div> </div>");
 }
 
 /** Takes the following parameters and 

@@ -28,7 +28,6 @@ $query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
     
     //Aggiungo la partecipazione per ogni utente
     $receivers = $_POST['receivers'];
-    var_dump($receivers);
     foreach($receivers as $receiver){
         $stmt->bindParam(':userId', $receiver);
         $stmt->bindParam(':chatId', $chatId);
