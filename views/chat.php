@@ -55,11 +55,11 @@ if (isset($_SESSION["Username"])) {
 
         <div id="actions">
             <div id="newContatto" onclick="showFormContact()">
-                <div class="buttonaction"><img src="../img/ui/newCont.png"/></div>
+                <div class="buttonaction"><img src="../img/ui/newCont.png" /></div>
                 <span>Nuovo contatto</span>
             </div>
             <div id="newGruppo" onclick="showFormGroup()">
-                <div class="buttonaction"><img src="../img/ui/newGroup.png"/></div>
+                <div class="buttonaction"><img src="../img/ui/newGroup.png" /></div>
                 <span>Nuovo gruppo</span>
             </div>
         </div>
@@ -111,7 +111,7 @@ if (isset($_SESSION["Username"])) {
     var isNew = '<?php echo $newSession; ?>';
     setUsername('<?php echo $my_username; ?>');
     setID('<?php echo $my_id; ?>');
-    
+
 
     if (isNew) {
         $('#helloMessage').html('Benvenuto!');
@@ -122,20 +122,20 @@ if (isset($_SESSION["Username"])) {
         $('#addUser').addClass('nascondi');
     }
 
-    function showFormContact(){
+    function showFormContact() {
         svuotaChatBox();
         $('#searchTAG').removeClass('nascondi');
         $('#searchTAG').addClass('mostra');
     }
 
-    function showFormGroup(){
+    function showFormGroup() {
         svuotaChatBox();
         getMyContacts()
         $('#group-box').removeClass('nascondi');
         $('#group-box').addClass('mostra');
     }
 
-    function svuotaChatBox(){
+    function svuotaChatBox() {
         $('#chat-box > div').removeClass('mostra');
         $('#chat-box > div').addClass('nascondi');
     }
@@ -149,12 +149,12 @@ if (isset($_SESSION["Username"])) {
             utenti = JSON.parse(response);
             $("#userTrovati").empty();
             utenti.forEach(utente => {
-                id=utente['Id'];
+                id = utente['Id'];
                 nomeUser = utente["Name"] + " " + utente["Surname"];
                 nickUser = utente["Username"];
                 //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
                 image = "../img/data/propics/lowRes/default.png";
-                $("#userTrovati").append("<div data-id='"+id+"' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
+                $("#userTrovati").append("<div data-id='" + id + "' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
             });
         });
     }

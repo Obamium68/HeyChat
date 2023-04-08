@@ -1,50 +1,50 @@
 /*--- Stile per la box di benvenuto per un nuovo utente ---*/
 
-.zerochat{
+.zerochat {
     height: 80vh;
 }
 
-.line{
+.line {
     width: 100%;
     background-color: white;
     height: 2px;
     margin: 8px 0px 8px 0px;
 }
 
-#hellocontainer{
+#hellocontainer {
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#hellocontainer img{
+#hellocontainer img {
     width: 80px;
     height: 80px;
     display: inline;
 }
 
-#hellotopbox{
+#hellotopbox {
     display: flex;
 }
 
-#nochats{
+#nochats {
     font-size: 20px;
     font-weight: 300;
     color: #8E8FA0;
 }
 
-#helloMessage{
+#helloMessage {
     font-size: 70px;
     font-weight: 700
 }
 
-#helloDescription{
+#helloDescription {
     width: 100%;
     text-align: center;
 }
 
-#addUser{
+#addUser {
     padding: 12px;
     margin-top: 18px;
     background-color: #0B192F;

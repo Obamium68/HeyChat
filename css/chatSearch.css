@@ -1,33 +1,33 @@
-#searchTAG{
+#searchTAG {
     background: #FAFAFA;
     box-shadow: 0px 0px 60px 22px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    width:fit-content;
+    width: fit-content;
     padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#searchTAG span{
+#searchTAG span {
     font-weight: 700;
     font-size: 50px;
     line-height: 73px;
     color: #0B192F
 }
 
-#searchTAG #searchbar{
+#searchTAG #searchbar {
     width: 100%;
     text-align: center;
 }
 
-#searchbar span{
+#searchbar span {
     font-size: 30px;
     font-weight: 400;
     color: #8E8FA0;
 }
 
-#searchbar input{
+#searchbar input {
     display: inline-block;
     width: 75%;
     height: 35px;
@@ -41,11 +41,11 @@
     font-weight: 400;
 }
 
-#searchbar #buttonPlus{
+#searchbar #buttonPlus {
     display: inline-block;
 }
 
-#searchbar #buttonPlus{
+#searchbar #buttonPlus {
     width: 34px;
     height: 34px;
     background: #0B192F;
@@ -57,29 +57,31 @@
     cursor: pointer;
 }
 
-.ui-helper-hidden-accessible{
+.ui-helper-hidden-accessible {
     display: none;
 }
 
-#ui-id-1{
+#ui-id-1 {
     height: 200px;
 }
 
-#userTrovati{
+#userTrovati {
     background: rgba(217, 217, 217, 0.01);
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 150px;
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #userTrovati::-webkit-scrollbar {
     display: none;
 }
 
-.newUser{
+.newUser {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -88,7 +90,7 @@
     cursor: pointer;
 }
 
-.newUserImage img{
+.newUserImage img {
     width: 50px;
     height: 50px;
     margin: 0px 8px;
@@ -96,19 +98,19 @@
     background-color: aquamarine;
 }
 
-.newUserData{
+.newUserData {
     width: 80%;
     display: flex;
     justify-content: space-between;
 }
 
-.newUserName{
+.newUserName {
     font-weight: 500;
     font-size: 18px;
     color: #0B192F;
 }
 
-.newUserNick{
+.newUserNick {
     color: #B0AFAF;
     font-size: 15px;
     font-weight: 400;

@@ -4,7 +4,7 @@
 
 /*---   PER LA PARTE DEI MESSAGGI   ---*/
 
-#chat{
+#chat {
     width: 90%;
     display: flex;
     justify-content: center;
@@ -13,7 +13,7 @@
 
 /*---   BOTTONI DI AZIONE   ---*/
 
-#actions{
+#actions {
     position: absolute;
     bottom: 0;
     width: 25%;
@@ -26,7 +26,7 @@
     min-width: 300px;
 }
 
-#actions div{
+#actions div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,13 +34,13 @@
     padding: 0px 8px;
 }
 
-#actions div span{
+#actions div span {
     font-size: 17px;
     font-weight: 500;
     margin-left: 5px;
 }
 
-#actions .buttonaction{
+#actions .buttonaction {
     padding: 6px;
     background-color: #0B192F;
     width: 25px;
@@ -48,7 +48,7 @@
     border-radius: 5px;
 }
 
-#actions .buttonaction img{
+#actions .buttonaction img {
     width: 25px;
     height: 25px;
 }
@@ -56,19 +56,19 @@
 
 /*---   BARRA INVIA MESSAGGIO   ---*/
 
-#sendbox{
+#sendbox {
     width: 65%;
     z-index: 3;
-    position:absolute;
+    position: absolute;
     bottom: 20px;
-    
+
     display: flex;
     align-items: center;
     justify-content: flex-start;
 
 }
 
-#dataMessage{
+#dataMessage {
     width: 85%;
     height: 4vh;
     border-radius: 40px 0px 0px 40px;
@@ -79,14 +79,14 @@
     justify-content: flex-start;
 }
 
-#sendbox #other{
+#sendbox #other {
     display: flex;
     padding-right: 8px;
     border-right: 1px solid #B0AFAF;
     max-width: fit-content;
 }
 
-#sendbox #other img{
+#sendbox #other img {
     width: 4vh;
     min-width: 3vh;
     height: 4vh;
@@ -95,7 +95,7 @@
     cursor: pointer;
 }
 
-#dataMessage input{
+#dataMessage input {
     margin-left: 5px;
     background-color: transparent;
     border: none;
@@ -107,7 +107,7 @@
     padding: 2px;
 }
 
-#sendButton{
+#sendButton {
     width: 15%;
     min-width: 50px;
     max-width: 80px;
@@ -120,7 +120,7 @@
     align-items: center;
 }
 
-#sendButton img{
+#sendButton img {
     width: 4vh;
     min-width: 3vh;
     height: 4vh;
@@ -130,7 +130,7 @@
 
 /*---   BARRA CONTATTO IN ALTO   ---*/
 
-#contatto{
+#contatto {
     width: 60%;
     height: 10vh;
     background-color: #fafafa;
@@ -142,44 +142,44 @@
     border-radius: 70px;
 }
 
-#utente{
+#utente {
     margin-left: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#utente img{
+#utente img {
     border-radius: 50%;
     height: 9vh;
     width: 9vh;
     margin-right: 8px;
 }
 
-#utente span{
+#utente span {
     font-weight: 500;
     font-size: 27px;
 }
 
-#status{
+#status {
     margin-right: 6%;
     text-align: center;
 }
 
-.isonline{
+.isonline {
     color: #267020;
 }
 
-.notonline{
+.notonline {
     color: red;
 }
 
-#status #online{
+#status #online {
     font-size: 20px;
     font-weight: 400;
 }
 
-#status #nickname{
+#status #nickname {
     font-size: 12px;
     font-weight: 300;
     color: #B0AFAF;
@@ -189,44 +189,46 @@
 
 /*---   LISTA MESSAGGI   ---*/
 
-#messages{
+#messages {
     width: 80%;
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #messages::-webkit-scrollbar {
     display: none;
 }
 
-#messages:first-child{
+#messages:first-child {
     padding-top: 5%;
 }
 
-#messages:last-child{
+#messages:last-child {
     padding-bottom: 40px;
 }
 
 .fmessage,
-.mymessage{
+.mymessage {
     width: 100%;
     margin-bottom: 2px;
 }
 
-.fmessage{
+.fmessage {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-.mymessage{
+.mymessage {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.mymessage > div{
+.mymessage>div {
     width: auto;
     height: auto;
     max-width: 30%;
@@ -239,7 +241,7 @@
     word-wrap: break-word;
 }
 
-.fmessage > div{
+.fmessage>div {
     width: auto;
     height: auto;
 
@@ -255,7 +257,7 @@
 /*---   BOX EMOJI   ---*/
 
 #emojibox,
-#imagebox{
+#imagebox {
     position: absolute;
     background-color: #FAFAFA;
     border-radius: 10px;
@@ -265,7 +267,7 @@
 }
 
 #emojibox #titoloEmo,
-#imagebox #titoloImg{
+#imagebox #titoloImg {
     width: 100%;
     height: 50px;
     display: flex;
@@ -276,22 +278,24 @@
     color: #0B192F;
 }
 
-#emojibox #containeremoji{
+#emojibox #containeremoji {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     height: 250px;
     padding: 5px;
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #emojibox #containeremoji::-webkit-scrollbar {
     display: none;
 }
 
-.emoji{
+.emoji {
     padding: 3px;
     margin: 1px;
     cursor: pointer;
@@ -299,13 +303,13 @@
     border-radius: 5px;
 }
 
-.emoji:hover{
+.emoji:hover {
     background-color: #a0a0ae;
 }
 
 /*---   CONTAINER IMAGES   ---*/
 
-#imagebox #containerImg{
+#imagebox #containerImg {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -314,19 +318,21 @@
     height: 300px;
     padding: 5px;
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #imagebox #containerImg::-webkit-scrollbar {
     display: none;
 }
 
-#imagebox input{
+#imagebox input {
     display: none;
 }
 
-#imagebox #caricafirst{
+#imagebox #caricafirst {
     cursor: pointer;
     width: 97%;
     height: 295px;
@@ -339,11 +345,11 @@
     border: 2px dashed #0B192F;
 }
 
-#imagebox #caricafirst:hover{
+#imagebox #caricafirst:hover {
     background-color: #aad0f7;
 }
 
-#moreImg{
+#moreImg {
     width: 34px;
     height: 34px;
     background: #cde6ff;
@@ -356,11 +362,11 @@
     margin-left: 8px;
 }
 
-#moreImg:hover{
+#moreImg:hover {
     background-color: #aad0f7;
 }
 
-.photo{
+.photo {
     width: 200px;
     height: 300px;
     text-align: right;
@@ -368,9 +374,9 @@
     margin-bottom: 25px;
 }
 
-.nophoto{
+.nophoto {
     padding: 5px;
-    
+
     background-color: #ff4949;
     color: #ffc3c3;
     font-size: 10px;
@@ -381,22 +387,22 @@
     display: inline-block;
 }
 
-.nophoto:hover{
+.nophoto:hover {
     /*background-color: #fe6a6a;*/
     background-color: #ffc3c3;
     color: red;
 }
 
-    
-#footerImgbox{
-    width: 100%; 
+
+#footerImgbox {
+    width: 100%;
     height: 48px;
-    text-align: right; 
-    background-color: #d9d9d94d; 
+    text-align: right;
+    background-color: #d9d9d94d;
     border-radius: 0px 0px 10px 10px;
 }
 
-#sendImg{
+#sendImg {
     padding: 8px 12px;
     background-color: #0B192F;
     color: #FAFAFA;

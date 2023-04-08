@@ -1,5 +1,5 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
     let signUpButton = document.getElementById('signUp');
     let signInButton = document.getElementById('signIn');
     let container = document.getElementById("abcd");;

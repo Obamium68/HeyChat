@@ -1,19 +1,20 @@
 /*---- Stile per popup per creazione nuovo gruppo ----*/
 
 /*DA ELIMINARE*/
-#group-box{
+#group-box {
     display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 85%;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
 }
+
 /*-------------*/
 
-.nascondi{
+.nascondi {
     display: none !important;
 }
 
-#newGroup{
+#newGroup {
     background: #FAFAFA;
     box-shadow: 0px 0px 60px 22px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -26,23 +27,23 @@
 
 
 
-#nameGroup{
+#nameGroup {
     width: 90%;
     margin: 15px 0px 15px 0px;
 }
 
-#newGroup span{
+#newGroup span {
     font-weight: 700;
     font-size: 45px;
     color: #0B192F;
 }
 
-#nameGroup span{
+#nameGroup span {
     font-size: 16px;
     font-weight: 500;
 }
 
-#nameGroup input{
+#nameGroup input {
     display: inline-block;
     width: 80%;
     height: 20px;
@@ -57,21 +58,23 @@
 
 
 
-#peopleList{
+#peopleList {
     background: rgba(217, 217, 217, 0.01);
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
     width: 100%;
     height: 200px;
     overflow-y: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 #peopleList::-webkit-scrollbar {
     display: none;
 }
 
-#peopleList .item-new-group{
+#peopleList .item-new-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -79,32 +82,32 @@
     border-bottom: 1px solid #B0AFAF;
 }
 
-#peopleList .name-item{
+#peopleList .name-item {
     width: 50%;
     display: flex;
     align-items: center;
     align-self: flex-start;
 }
 
-#peopleList .name-item span{
+#peopleList .name-item span {
     font-weight: 500;
     font-size: 18px;
     color: #0B192F;
 }
 
-#peopleList img{
+#peopleList img {
     border-radius: 50%;
     margin-right: 8px;
     margin-left: 12px;
 }
 
-.check-item{
+.check-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.check-item .nickname-item{
+.check-item .nickname-item {
     color: #B0AFAF;
     font-size: 15px;
     font-weight: 400;
@@ -112,7 +115,7 @@
     width: max-content;
 }
 
-.check-item .checkbutton{
+.check-item .checkbutton {
     height: auto;
     display: flex;
     justify-content: center;
@@ -140,15 +143,15 @@
     box-shadow: inset 0px 0px 0px #7ac142;
 }
 
-.remove-item{
+.remove-item {
     box-shadow: inset 0px 0px 30px red !important;
 }
 
-.square-click{
+.square-click {
     animation: fill .4s ease-in-out .3s forwards, scale .3s ease-in-out .8s both
 }
 
-.spunta-click{
+.spunta-click {
     animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 
@@ -188,12 +191,13 @@
     0% {
         box-shadow: inset 0px 0px 0px 30px #7ac142
     }
-    100%{
+
+    100% {
         box-shadow: inset 0px 0px 0px 0px #7ac142
     }
 }
 
-#createNewGruop{
+#createNewGruop {
     padding: 8px;
     text-align: center;
     color: #FAFAFA;

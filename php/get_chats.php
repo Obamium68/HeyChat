@@ -3,8 +3,8 @@
  * Returns all chats and their related info the user having 'userID' [via POST] joined
  */
 require('connection.php');
-$myID[':myID']=$_POST['myID'];
-$result;  //conterrà il risultato finale
+$myID[':myID'] = $_POST['myID'];
+$result; //conterrà il risultato finale
 
 $query = "SELECT chats.Name, chats.Id FROM participations JOIN chats ON participations.chatID = chats.Id WHERE participations.UserID=:myID and chats.nPart>2";
 try {
@@ -33,7 +33,7 @@ try {
 $result = array_merge($result1, $result2);
 
 // Codifica l'array come JSON
-echo(json_encode($result));
+echo (json_encode($result));
 
 $conn = null;
 ?>

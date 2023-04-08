@@ -1,7 +1,8 @@
 <?php
 require('connection.php');
 
-if($_POST['search']=="") die("{}"); 
+if ($_POST['search'] == "")
+    die("{}");
 
 //$query = "SELECT Id, Name, Surname, Username, PropicPath FROM users WHERE Username LIKE CONCAT(:username, '%')";
 $query = "SELECT Id, Name, Surname, Username FROM users WHERE Username LIKE CONCAT(:username, '%')";

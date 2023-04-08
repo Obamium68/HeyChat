@@ -7,7 +7,7 @@ $query = "SELECT Id FROM users WHERE Username =:username";
 try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);
-    if($stmt->rowCount()==0){
+    if ($stmt->rowCount() == 0) {
         die();
     }
     echo json_encode($stmt->fetch());
