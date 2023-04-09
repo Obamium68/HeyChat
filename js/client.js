@@ -58,19 +58,31 @@ function loadChats() {
             if ("Username" in chat) {
                 displayChatBar(chat["ChatID"], chat["Name"] + " " + chat["Surname"], chat["Username"], 0);
             } else {
-                displayGroupBar(chat["Id"], chat["Name"])
+                displayGroupBar(chat["Id"], chat["Name"]);
             }
         });
+        
     });
+}
+
+/** Given a chat id manage all messages sent in that chat
+ * 
+ * @param {*} chatID 
+ */
+function fetchMessages(chatID){
+    $.post('../php/get_chat_message.php', {chatID: chatID}, function (response) {
+        //!!!!!GIANLU FAI LE TUE COSE :)))
+    });
+
 }
 
 function displayChatBar(id, nome, username, state) {
     //bisogna gestire lo state
-    $("#list-chat").append("<div data-id='" + id + "' class='chat'> <div class='user'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
 }
 
 function displayGroupBar(id, nome) {
-    $("#list-chat").append("<div data-id='" + id + "' class='chat'> <div class='group'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'><div class='point-state'>&nbsp;</div></div> </div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'><div class='point-state'>&nbsp;</div></div> </div>");
 }
 
 /** Takes the following parameters and 
