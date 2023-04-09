@@ -66,7 +66,7 @@ server.on('connection', (socket) => {
       case toSocket == fromSocket:    //If sender and receiver coincide set the username sent in the message
         users.forEach(u => {
           if (u.id == data.from) {
-            u.setUsername(data.message);
+            u.setUsername(data.message); ///BRO LO HAI FATTO
             console.log(u);
           };
         });
