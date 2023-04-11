@@ -1,7 +1,32 @@
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: 8080 });
+const http = require('http');
 
+const server = new WebSocket.Server({ port: 8080 });
 const debug = true;
+
+
+function fetchData() {
+
+  const options = {
+    hostname: 'localhost',
+    port: 80,
+    path: '/heychat/php/get_all_users.php',
+    method: 'GET'
+  };
+
+  const req = http.request(options, (res) => {
+
+    res.on('data', (chunk) => {
+      return JSON.parse(chunk);
+    });
+  });
+
+  req.on('error', (error) => {
+    window.location.replace("../views/error_page.html");
+  });
+
+  req.end();
+}
 
 class User {
   constructor(name, surname, username, id, online, LastAccess, pwd) {
@@ -14,36 +39,38 @@ class User {
     this.pwd = pwd;
   }
 
-  toString() {
-    return this.id;
-  }
-  setUsername(user) {
-    this.username = user;
-  }
   //send clients their id
   notifyID() {
     clients.get(this.id).send(JSON.stringify({ message: this.id, from: 'كنية' }))
   }
 }
 
-// We'll use a Map to keep track of connected clients
-const clients = new Map();
-var users = [];
-
-function getUserFromUsername(un) {
-  users.forEach(u => {
-    if (u.username == un) return u;
+function getUserByID(id) {
+  connected.forEach(user => {
+    try {
+      if (user.id == id) return user;
+    } catch (error) {
+      return null;
+    }
   });
 }
 
+
+//console.log(users.map(users => users.username));
+// We'll use a Map to keep track of connected clients
+
+const users = [];
+const clients = new Map();
+const connected = [];
+
+console.log(users);
+
+
 server.on('connection', (socket) => {
   const id = Date.now().toString();     //  Client id actually is timestamp of its start connection 
-  clients.set(id, socket);              //  Link id to ws connection
-  users.push(
-    new User("Mario", "Rossi", "MarioRossi" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
-  )
-  users[users.length - 1].notifyID();   //  ACK clients of its ID
-  if (debug) console.log(`[${Date.now()}]:(${users[users.length - 1].username}:${users[users.length - 1].id}) connected`);    //Log message
+  let tempUser = new User("TempName", "TempSurname", "TemporaryUser" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
+  clients.set(id, socket);              //  Link user to ws connection
+  connected.push(tempUser);
 
 
   socket.on('message', (message) => {
@@ -64,13 +91,7 @@ server.on('connection', (socket) => {
         fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error' }));   // Throw an error message to the sender
         break;
       case toSocket == fromSocket:    //If sender and receiver coincide set the username sent in the message
-        users.forEach(u => {
-          if (u.id == data.from) {
-            u.setUsername(data.message); ///BRO LO HAI FATTO
-            console.log(u);
-          };
-        });
-        break;
+      /**Define user */
     }
   });
 

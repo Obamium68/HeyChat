@@ -65,8 +65,12 @@ if (isset($_SESSION["Username"])) {
         </div>
     </div>
     <div id="chat-box">
-
-        <div id="hellocontainer" class="mostra">
+        <div id="messaggi">
+            <input type="text" placeholder="message" id="message">
+            <input type="text" placeholder="to" id="to">
+            <button onclick="sendMessage()"></button>
+        </div>
+        <div id="hellocontainer" class="nascondi">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
                 <img src="../img/ui/hey.png">
@@ -107,6 +111,11 @@ if (isset($_SESSION["Username"])) {
     </div>
 </body>
 <script>
+    function getUsers() {
+        $.post('../php/get_all_users.php', function (response) {
+            return (JSON.parse(response));
+        });
+    }
 
     var isNew = '<?php echo $newSession; ?>';
     setUsername('<?php echo $my_username; ?>');

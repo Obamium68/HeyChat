@@ -1,8 +1,11 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE SERVER     -Loaded in chat.php*/
 
-var connectedHosts = [];    //Host connected to the same server
 
+var connectedHosts = [];    //Host connected to the same server
 var myUsername = "UNDEFINED";
+
+
+
 
 /**Set the username of the client
  * 
@@ -20,6 +23,7 @@ if (socket) {
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
+    console.log(data);
     switch (true) {
         case data.from == 'كنية':             // If server is sending you your ID
             myUsername = data.message;              // Set your id
