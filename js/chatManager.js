@@ -2,9 +2,20 @@
 
 var connectedHosts = [];    //Host connected to the same server
 
+var myUsername = "UNDEFINED";
+
+/**Set the username of the client
+ * 
+ * @param {*} username 
+ */
+function setUsername(username) {
+    myUsername = username;
+}
+
+
 const socket = new WebSocket('ws://localhost:8080');
 if (socket) {
-    sendUsername()
+    sendData()
 }
 
 socket.onmessage = (event) => {
@@ -56,7 +67,7 @@ function formatMessage(from, type, message, to) {
 /**
  * Sends the server the username
  */
-function sendUsername(user) {
+function sendData(user) {
     socket.send(JSON.stringify(formatMessage(myUsername, 'text', user, myUsername)));
 }
 

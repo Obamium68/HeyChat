@@ -1,17 +1,7 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE PHP PAGES     -Loaded in chat.php*/
 
 
-var myUsername = "UNDEFINED";
 var myID = 0;
-
-/**Set the username of the client
- * 
- * @param {*} username 
- */
-function setUsername(username) {
-    console.log(username);
-    myUsername = username;
-}
 
 /**Set the id of the client
  * 
