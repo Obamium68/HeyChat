@@ -4,30 +4,6 @@ const http = require('http');
 const server = new WebSocket.Server({ port: 8080 });
 const debug = true;
 
-
-function fetchData() {
-
-  const options = {
-    hostname: 'localhost',
-    port: 80,
-    path: '/heychat/php/get_all_users.php',
-    method: 'GET'
-  };
-
-  const req = http.request(options, (res) => {
-
-    res.on('data', (chunk) => {
-      return JSON.parse(chunk);
-    });
-  });
-
-  req.on('error', (error) => {
-    window.location.replace("../views/error_page.html");
-  });
-
-  req.end();
-}
-
 class User {
   constructor(name, surname, username, id, online, LastAccess, pwd) {
     this.name = name;
@@ -59,11 +35,8 @@ function getUserByID(id) {
 //console.log(users.map(users => users.username));
 // We'll use a Map to keep track of connected clients
 
-const users = [];
 const clients = new Map();
 const connected = [];
-
-console.log(users);
 
 
 server.on('connection', (socket) => {

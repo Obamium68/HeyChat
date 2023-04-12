@@ -65,12 +65,12 @@ if (isset($_SESSION["Username"])) {
         </div>
     </div>
     <div id="chat-box">
-        <div id="messaggi">
+        <!-- <div id="messaggi">
             <input type="text" placeholder="message" id="message">
             <input type="text" placeholder="to" id="to">
             <button onclick="sendMessage()"></button>
-        </div>
-        <div id="hellocontainer" class="nascondi">
+        </div> -->
+        <div id="hellocontainer" class="mostra">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
                 <img src="../img/ui/hey.png">
@@ -139,7 +139,7 @@ if (isset($_SESSION["Username"])) {
 
     function showFormGroup() {
         svuotaChatBox();
-        getMyContacts()
+        getMyContacts();
         $('#group-box').removeClass('nascondi');
         $('#group-box').addClass('mostra');
     }
