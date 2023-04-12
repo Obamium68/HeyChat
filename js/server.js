@@ -1,5 +1,4 @@
 const WebSocket = require('ws');
-const http = require('http');
 
 const server = new WebSocket.Server({ port: 8080 });
 const debug = true;
@@ -37,7 +36,30 @@ function getUserByID(id) {
 
 const clients = new Map();
 const connected = [];
+const users = [];
+run();
+//!!!!!!!!Il print del risultato è corretto ma non si può accedere ai dati!!!!!!!!!!!!!!!
+console.log(users);
 
+async function run() {
+  await fetchData();
+}
+
+async function fetchData() {
+  fetch('http://localhost/heychat/php/get_all_users.php')
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      data.forEach(dat => {
+        users.push(dat.Username);
+      })
+      return;
+    })
+    .catch(error => {
+      console.log(error)
+    });
+}
 
 server.on('connection', (socket) => {
   const id = Date.now().toString();     //  Client id actually is timestamp of its start connection 
