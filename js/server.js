@@ -54,8 +54,8 @@ const connected = [];
 const users = [];
 
 fetchData().then(() => startServer());
-function startServer(){
-  console.log('Server Started at '+ new Date(Date.now()));
+function startServer() {
+  console.log('Server Started at ' + new Date(Date.now()));
   server.on('connection', (socket) => {
     const id = Date.now().toString();     //  Client id actually is timestamp of its start connection 
     let tempUser = new User("TempName", "TempSurname", "TempUser" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
