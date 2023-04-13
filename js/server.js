@@ -37,28 +37,23 @@ function getUserByID(id) {
 const clients = new Map();
 const connected = [];
 const users = [];
-run();
-//!!!!!!!!Il print del risultato è corretto ma non si può accedere ai dati!!!!!!!!!!!!!!!
-console.log(users);
+run().then(() => console.log(users.length));
 
 async function run() {
   await fetchData();
 }
 
 async function fetchData() {
-  fetch('http://localhost/heychat/php/get_all_users.php')
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      data.forEach(dat => {
-        users.push(dat.Username);
-      })
-      return;
-    })
-    .catch(error => {
-      console.log(error)
+  try {
+    const response = await fetch('http://localhost/heychat/php/get_all_users.php');
+    const data = await response.json();
+    data.forEach(dat => {
+      users.push(dat.Username);
     });
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 server.on('connection', (socket) => {
