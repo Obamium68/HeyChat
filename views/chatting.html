@@ -1,170 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/chatting.css">
-    <link rel="stylesheet" href="../css/styleChat.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/chatting.css" />
+    <link rel="stylesheet" href="../css/styleChat.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="../js/getemoji.js"></script>
     <script src="../js/client.js"></script>
-    <link rel="icon" href="../img/ui/logo.png">
+    <link rel="icon" href="../img/ui/logo.png" />
     <title>HeyChat</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="lat-bar">
-        <div id="logo">
-            <img src="../img/logo.png">
-            <span>HeyChat</span>
-        </div>
+      <div id="logo">
+        <img src="../img/logo.png" />
+        <span>HeyChat</span>
+      </div>
 
-        <div id="contatti-box">
-            <span>Contatti</span>
-            <div id="list-chat">
-                <div class="chat">
-                    <div class="user">
-                        <img src="https://random.imagecdn.app/65/65">
-                        <div class="dati">
-                            <div class="nome">Mario Rossi</div>
-                            <div class="nickname">@mario_rossi</div>
-                        </div>
-                    </div>
-                    <div class="state">
-                        <div class="point-state">&nbsp;</div>
-                    </div>
-                </div>
+      <div id="contatti-box">
+        <span>Contatti</span>
+        <div id="list-chat">
+          <div class="chat">
+            <div class="user">
+              <img src="https://random.imagecdn.app/65/65" />
+              <div class="dati">
+                <div class="nome">Mario Rossi</div>
+                <div class="nickname">@mario_rossi</div>
+              </div>
             </div>
+            <div class="state">
+              <div class="point-state">&nbsp;</div>
+            </div>
+          </div>
         </div>
-        <div id="actions">
-            <div id="newContatto">
-                <div class="buttonaction"><img src="../img/ui/newCont.png" /></div>
-                <span>Nuovo contatto</span>
-            </div>
-            <div id="newGruppo">
-                <div class="buttonaction"><img src="../img/ui/newGroup.png" /></div>
-                <span>Nuovo gruppo</span>
-            </div>
+      </div>
+      <div id="actions">
+        <div id="newContatto">
+          <div class="buttonaction"><img src="../img/ui/newCont.png" /></div>
+          <span>Nuovo contatto</span>
         </div>
+        <div id="newGruppo">
+          <div class="buttonaction"><img src="../img/ui/newGroup.png" /></div>
+          <span>Nuovo gruppo</span>
+        </div>
+      </div>
     </div>
     <div id="chat-box">
-        <div id="chat">
-
-            <div id="messages">
-                <div class="mymessage">
-                    <div>A nè</div>
-                </div>
-                <div class="fmessage">
-                    <div>babaji</div>
-                </div>
-                <div class="mymessage">
-                    <div>kdjbdkjbdckjdbckjdbdkjcb</div>
-                </div>
-                <div class="fmessage">
-                    <div>kjcdndjbndoldnvdlo</div>
-                </div>
-                <div class="mymessage">
-                    <div>dsfkjbdskjb</div>
-                </div>
-                <div class="fmessage">
-                    <div>afjdbdsibdkjbdkjbfskfbhskdjfbskdjbfksjdbfkjsbskdfjbsdkfbksjdbksdbfkjbsdkfjvbdkjfbksdjfbvsdkjb
-                    </div>
-                </div>
-                <div class="mymessage">
-                    <div>skcjbsakjcbkasj</div>
-                </div>
-                <div class="fmessage">
-                    <div>a</div>
-                </div>
-                <div class="mymessage">
-                    <div>AAAAAAAAAAAaa</div>
-                </div>
-                <div class="fmessage">
-                    <div>afndshlinhyfvsdijh</div>
-                </div>
-                <div class="mymessage">
-                    <div>AAAAAAAAAAAaa</div>
-                </div>
-                <div class="fmessage">
-                    <div>afndshlinhyfvsdijh</div>
-                </div>
-                <div class="mymessage">
-                    <div>AAAAAAAAAAAaa</div>
-                </div>
-                <div class="fmessage">
-                    <div>afndshlinhyfvsdijh</div>
-                </div>
-                <div class="mymessage">
-                    <div>AAAAAAAAAAAaa</div>
-                </div>
-                <div class="fmessage">
-                    <div>afndshlinhyfvsdijh</div>
-                </div>
-                <div class="fmessage">
-                    <div>AAAAAAAAAAAaa</div>
-                </div>
-                <div class="fmessage">
-                    <div>afndshlinhyfvsdijh</div>
-                </div>
+      <div id="chat">
+        <div id="messages">
+          <div class="mymessage">
+            <div>A nè</div>
+          </div>
+          <div class="fmessage">
+            <div>babaji</div>
+          </div>
+          <div class="mymessage">
+            <div>kdjbdkjbdckjdbckjdbdkjcb</div>
+          </div>
+          <div class="fmessage">
+            <div>kjcdndjbndoldnvdlo</div>
+          </div>
+          <div class="mymessage">
+            <div>dsfkjbdskjb</div>
+          </div>
+          <div class="fmessage">
+            <div>
+              afjdbdsibdkjbdkjbfskfbhskdjfbskdjbfksjdbfkjsbskdfjbsdkfbksjdbksdbfkjbsdkfjvbdkjfbksdjfbvsdkjb
             </div>
-
+          </div>
+          <div class="mymessage">
+            <div>skcjbsakjcbkasj</div>
+          </div>
+          <div class="fmessage">
+            <div>a</div>
+          </div>
+          <div class="mymessage">
+            <div>AAAAAAAAAAAaa</div>
+          </div>
+          <div class="fmessage">
+            <div>afndshlinhyfvsdijh</div>
+          </div>
+          <div class="mymessage">
+            <div>AAAAAAAAAAAaa</div>
+          </div>
+          <div class="fmessage">
+            <div>afndshlinhyfvsdijh</div>
+          </div>
+          <div class="mymessage">
+            <div>AAAAAAAAAAAaa</div>
+          </div>
+          <div class="fmessage">
+            <div>afndshlinhyfvsdijh</div>
+          </div>
+          <div class="mymessage">
+            <div>AAAAAAAAAAAaa</div>
+          </div>
+          <div class="fmessage">
+            <div>afndshlinhyfvsdijh</div>
+          </div>
+          <div class="fmessage">
+            <div>AAAAAAAAAAAaa</div>
+          </div>
+          <div class="fmessage">
+            <div>afndshlinhyfvsdijh</div>
+          </div>
         </div>
+      </div>
 
-        <div id="sendbox">
-            <div id="dataMessage">
-                <div id="other">
-                    <img src="../img/ui/smile.png" id="newEmoji" />
-                    <img src="../img/ui/photo.png" id="newImg" />
-                </div>
-                <input type="text" placeholder="Digita qui il tuo messaggio">
-            </div>
-            <div id="sendButton">
-                <img src="../img/ui/send.png" />
-            </div>
+      <div id="sendbox">
+        <div id="dataMessage">
+          <div id="other">
+            <img src="../img/ui/smile.png" id="newEmoji" />
+            <img src="../img/ui/photo.png" id="newImg" />
+          </div>
+          <input type="text" placeholder="Digita qui il tuo messaggio" />
         </div>
-
-        <div id="contatto">
-            <div id="utente">
-                <img src="https://random.imagecdn.app/65/65" />
-                <span>Mario Rossi</span>
-            </div>
-            <div id="status">
-                <div id="online" class="isonline">&Eacute; online</div>
-                <div id="nickname">@mario_rossi</div>
-            </div>
+        <div id="sendButton">
+          <img src="../img/ui/send.png" />
         </div>
+      </div>
 
-        <div id="emojibox" class="nascondi">
-            <div id="titoloEmo">
-                <h3>&nbsp;&nbsp; Aggiungi emoji</h3>
-                <div style="margin-right: 15px; color: red; font-weight: 700; cursor: pointer;" id="chiudiemoji">X</div>
-            </div>
-            <div id="containeremoji"></div>
+      <div id="contatto">
+        <div id="utente">
+          <img src="https://random.imagecdn.app/65/65" />
+          <span>Mario Rossi</span>
         </div>
-
-        <div id="imagebox" class="nascondi">
-            <div id="titoloImg">
-                <h3>&nbsp;&nbsp; Carica immagine</h3>
-                <div style="margin-right: 15px; color: red; font-weight: 700; cursor: pointer;" id="chiudiImg">X</div>
-            </div>
-            <div id="containerImg">
-                <label for="inserisciImg" class="mostra centra" id="caricafirst">Clicca qui per inserire
-                    un'immagine</label>
-                <input type="file" id="inserisciImg">
-                <label id="moreImg" class="nascondi" for="inserisciImg">+</label>
-            </div>
-            <div id="footerImgbox" class="nascondi">
-                <div id="sendImg">Invia foto</div>
-            </div>
+        <div id="status">
+          <div id="online" class="isonline">&Eacute; online</div>
+          <div id="nickname">@mario_rossi</div>
         </div>
+      </div>
 
+      <div id="emojibox" class="nascondi">
+        <div id="titoloEmo">
+          <h3>&nbsp;&nbsp; Aggiungi emoji</h3>
+          <div
+            style="
+              margin-right: 15px;
+              color: red;
+              font-weight: 700;
+              cursor: pointer;
+            "
+            id="chiudiemoji"
+          >
+            X
+          </div>
+        </div>
+        <div id="containeremoji"></div>
+      </div>
+
+      <div id="imagebox" class="nascondi">
+        <div id="titoloImg">
+          <h3>&nbsp;&nbsp; Carica immagine</h3>
+          <div
+            style="
+              margin-right: 15px;
+              color: red;
+              font-weight: 700;
+              cursor: pointer;
+            "
+            id="chiudiImg"
+          >
+            X
+          </div>
+        </div>
+        <div id="containerImg">
+          <label for="inserisciImg" class="mostra centra" id="caricafirst"
+            >Clicca qui per inserire un'immagine</label
+          >
+          <input type="file" id="inserisciImg" />
+          <label id="moreImg" class="nascondi" for="inserisciImg">+</label>
+        </div>
+        <div id="footerImgbox" class="nascondi">
+          <div id="sendImg">Invia foto</div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
+  <script>
+    const users = [];
+    run().then(console.log(users));
 
+    async function run() {
+      await fetchData();
+    }
+
+    async function fetchData() {
+      fetch("http://localhost/github/heychat/php/get_all_users.php")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          data.forEach((dat) => {
+            users.push(dat.Username);
+          });
+          console.log("in function: " + users);
+          return;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  </script>
 </html>
