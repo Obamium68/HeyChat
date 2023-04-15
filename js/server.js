@@ -20,7 +20,7 @@ class User {
  * @param {*} id 
  */
 function getUserByID(id) {
-  connected.forEach(user => {
+  connectedUsers.forEach(user => {
     try {
       if (user.id == id) return user;
     } catch (error) {
@@ -38,7 +38,7 @@ async function fetchData() {
     const response = await fetch('http://localhost/heychat/php/get_all_users.php');
     const data = await response.json();
     data.forEach(dat => {
-      users.push(dat.Username);
+      allUsers.push(dat.Username);
     });
     return;
   } catch (error) {
@@ -50,8 +50,8 @@ async function fetchData() {
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 const clients = new Map();
-const connected = [];
-const users = [];
+const connectedUsers = [];
+const allUsers = [];
 
 fetchData().then(() => startServer());
 function startServer() {
@@ -60,7 +60,7 @@ function startServer() {
     const id = Date.now().toString();     //  Client id actually is timestamp of its start connection 
     let tempUser = new User("TempName", "TempSurname", "TempUser" + Math.floor(Math.random() * 100), id)    //  Create new user object using its info
     clients.set(id, socket);              //  Link user to ws connection
-    connected.push(tempUser);
+    connectedUsers.push(tempUser);
 
 
     socket.on('message', (message) => {
