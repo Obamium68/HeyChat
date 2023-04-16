@@ -13,7 +13,7 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->execute($data);
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 $chatId = $conn->lastInsertId();
 $query = "INSERT INTO participations(UserID, ChatID) VALUES (:userId,:chatId)";
@@ -35,7 +35,6 @@ try {
     }
 
 } catch (PDOException $e) {
-    echo $e;
     die($e);
 }
 

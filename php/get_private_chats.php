@@ -13,6 +13,6 @@ try {
     $stmt->execute($myID);
     echo (json_encode($stmt->fetchAll()));
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 ?>

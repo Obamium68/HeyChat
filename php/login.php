@@ -10,7 +10,8 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);
 } catch (PDOException $e) {
-    echo $e;
+    header('Location: ../views/Index.html?err=1');
+    die();
 }
 switch ($stmt->rowCount()) {
     case 0:

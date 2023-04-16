@@ -51,7 +51,7 @@ function loadChats() {
                 displayGroupBar(chat["Id"], chat["Name"]);
             }
         });
-        
+
     });
 }
 
@@ -59,11 +59,23 @@ function loadChats() {
  * 
  * @param {*} chatID 
  */
-function fetchMessages(chatID){
-    $.post('../php/get_chat_message.php', {chatID: chatID}, function (response) {
-        //!!!!!GIANLU FAI LE TUE COSE :)))
+function fetchMessages(chatID) {
+    $.post('../php/get_chat_message.php', { chatID: chatID }, function (response) {
+        console.log(JSON.parse(response));
     });
+}
 
+/** Save the message into the db
+ * 
+ * @param {String} content 
+ * @param {String} format 'text'|'image' 
+ * @param {Int} userid 
+ * @param {Int} chatid 
+ */
+function saveMessage(content, format, userid, chatid) {
+    $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
+        console.log(JSON.parse(response));
+    });
 }
 
 function displayChatBar(id, nome, username, state) {

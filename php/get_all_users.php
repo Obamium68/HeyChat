@@ -6,7 +6,7 @@ try {
     $stmt->execute();
     echo json_encode($stmt->fetchAll());
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 $conn = null;
 ?>

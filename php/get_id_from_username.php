@@ -12,7 +12,7 @@ try {
     }
     echo json_encode($stmt->fetch());
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 
 $conn = null;

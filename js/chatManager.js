@@ -5,8 +5,6 @@ var connectedHosts = [];    //Host connected to the same server
 var myUsername = "UNDEFINED";
 
 
-
-
 /**Set the username of the client
  * 
  * @param {*} username 
@@ -34,7 +32,7 @@ socket.onmessage = (event) => {
             console.log(connectedHosts);
             break;
         default:
-            const messages = document.getElementById('messages');
+            const messages = document.getElementById('messages');       //TO-DO gestisci il render
             console.log(data);
             switch (data.type) {
                 case 'text':
@@ -76,12 +74,17 @@ function sendData(user) {
 }
 
 /**
- * Takes the input message in #message and the receiver in #to (optional)
+ * Takes the input message in #message and the receiver in #to, send the message and sends it
  */
-function sendMessage() {
-    const to = document.getElementById('to').value;
-    const message = document.getElementById('message').value;
-    socket.send(JSON.stringify(formatMessage(myUsername, 'text', message, to)));
+function sendMessage(chatid) {
+    const message = document.getElementById('textMessage').value;
+
+    socket.send(JSON.stringify(formatMessage(myUsername, 'text', message, chatid)), (err) => {
+        if (err) {
+            throw err;
+        }
+        saveMessage(message, 'text', myID, chatid);
+    });
 }
 
 
@@ -89,16 +92,34 @@ function sendMessage() {
  * send to #to the image loaded from the input form
  * @returns null if not image charged
  */
-function sendImage() {
+function sendImage(chatid) {
     const file = document.getElementById('file').files[0];
     if (!file) {
+        //TO-DO Gianluca gestisci errore :)
         return;
     }
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        const to = document.getElementById('to').value;
-        socket.send(JSON.stringify(formatMessage(myUsername, 'image', reader.result, to)));
-    };
+        socket.send(JSON.stringify(formatMessage(myUsername, 'image', reader.result, chatid)), (err) => {
+            if (err) {
+                throw err;
+            }
+            const path = myID + "->" + chatid + "_" + Date.now();
+
+            $.ajax({
+                type: 'post',
+                url: '../php/save_image.php',
+                data: { path: path },
+                success: function (data) {
+                    saveMessage(path, 'image', myID, chatid);
+                },
+                error: function () {
+
+                }
+            });
+            return false;
+        });
+    }
 }
 

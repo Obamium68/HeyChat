@@ -12,7 +12,7 @@ try {
     $stmt->execute($myID);
     $result1 = $stmt->fetchAll();
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 
 $query = "SELECT participations.ChatID ,users.Username, users.Name, users.Surname
@@ -26,7 +26,7 @@ try {
     $stmt->execute($myID);
     $result2 = $stmt->fetchAll();
 } catch (PDOException $e) {
-    echo $e;
+    die($e);
 }
 
 // Concatena i due risultati in un unico array
