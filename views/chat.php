@@ -76,16 +76,16 @@ if (isset($_SESSION["Username"])) {
                     </div>
                     <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" />
                 </div>
-                <div id="sendButton">
+                <div id="sendButton" onclick="sendMessage(this.parentElement.parentElement.getAttribute('data-chatid'))">
                     <img src="../img/ui/send.png" />
                 </div>
             </div>
-            
+
             <div id="messages">
-                
+
             </div>
-                
-                
+
+
             <div id="contatto">
                 <div id="utente">
                     <img src="../img/data/propics/LowRes/default.png" />
@@ -148,7 +148,6 @@ if (isset($_SESSION["Username"])) {
     var isNew = '<?php echo $newSession; ?>';
     setUsername('<?php echo $my_username; ?>');
     setID('<?php echo $my_id; ?>');
-
 
     if (isNew) {
         $('#helloMessage').html('Benvenuto!');

@@ -2,22 +2,14 @@
 
 
 var connectedHosts = [];    //Host connected to the same server
-var myUsername = "UNDEFINED";
 
-
-/**Set the username of the client
- * 
- * @param {*} username 
- */
-function setUsername(username) {
-    myUsername = username;
-}
 
 
 const socket = new WebSocket('ws://localhost:8080');
-if (socket) {
-    sendData()
-}
+
+socket.onopen = () => {
+    sendData();
+};
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -33,7 +25,6 @@ socket.onmessage = (event) => {
             break;
         default:
             const messages = document.getElementById('messages');       //TO-DO gestisci il render
-            console.log(data);
             switch (data.type) {
                 case 'text':
                     const li = document.createElement('li');
@@ -69,8 +60,9 @@ function formatMessage(from, type, message, to) {
 /**
  * Sends the server the username
  */
-function sendData(user) {
-    socket.send(JSON.stringify(formatMessage(myUsername, 'text', user, myUsername)));
+function sendData() {
+
+    socket.send(JSON.stringify(formatMessage(myUsername, 'text', myUsername + "~" + myID, myUsername)));
 }
 
 /**

@@ -1,15 +1,24 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE PHP PAGES     -Loaded in chat.php*/
 
-
+var myUsername = "";
 var myID = 0;
 
 /**Set the id of the client
  * 
- * @param {*} id 
+ * @param {int} id 
  */
 function setID(id) {
     myID = id;
 }
+
+/**Set the username of the client
+ * 
+ * @param {String} username 
+ */
+function setUsername(username) {
+    myUsername = username;
+}
+
 
 
 /**
@@ -56,7 +65,7 @@ function loadChats() {
 }
 
 /* load chat */
-function renderChat(){
+function renderChat() {
     $("#contatto")
 }
 
@@ -67,16 +76,18 @@ function renderChat(){
 function fetchMessages(chatID) {
     $("#chat").removeClass("nascondi");
     $("#chat").addClass("mostra");
+    $("#chat").addClass("mostra");
+    $("#chat").attr("data-chatid", chatID);
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
         let messages = JSON.parse(response);
         $("#messages").empty();
         messages.forEach(message => {
-            if(message["UserID"]==myID){
+            if (message["UserID"] == myID) {
 
-                let messag = $("<div class='mymessage'><div>"+message["Content"]+"</div></div>");
+                let messag = $("<div class='mymessage'><div>" + message["Content"] + "</div></div>");
                 $("#messages").append(messag);
-            }else{
-                let messag = $("<div class='fmessage'><div>"+message["Content"]+"</div></div>");
+            } else {
+                let messag = $("<div class='fmessage'><div>" + message["Content"] + "</div></div>");
                 $("#messages").append(messag);
             }
         });
