@@ -7,8 +7,10 @@
 #chat {
     width: 90%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     height: 90vh;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*---   BOTTONI DI AZIONE   ---*/
@@ -192,6 +194,8 @@
 #messages {
     width: 80%;
     overflow-y: scroll;
+    height: 80vh;
+    margin-bottom: 18px;
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;

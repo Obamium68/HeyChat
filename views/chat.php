@@ -23,6 +23,7 @@ if (isset($_SESSION["Username"])) {
     <link rel="stylesheet" href="../css/newuser.css">
     <link rel="stylesheet" href="../css/chatSearch.css">
     <link rel="stylesheet" href="../css/newGroup.css">
+    <link rel="stylesheet" href="../css/chatting.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -65,12 +66,39 @@ if (isset($_SESSION["Username"])) {
         </div>
     </div>
     <div id="chat-box">
-        <!-- <div id="messaggi">
-            <input type="text" placeholder="message" id="message">
-            <input type="text" placeholder="to" id="to">
-            <button onclick="sendMessage()"></button>
-        </div> -->
-        <div id="hellocontainer" class="mostra">
+
+        <div id="chat" data-chatid="0" class="nascondi">
+            <div id="sendbox">
+                <div id="dataMessage">
+                    <div id="other">
+                        <img src="../img/ui/smile.png" id="newEmoji" />
+                        <img src="../img/ui/photo.png" id="newImg" />
+                    </div>
+                    <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" />
+                </div>
+                <div id="sendButton">
+                    <img src="../img/ui/send.png" />
+                </div>
+            </div>
+            
+            <div id="messages">
+                
+            </div>
+                
+                
+            <div id="contatto">
+                <div id="utente">
+                    <img src="../img/data/propics/LowRes/default.png" />
+                    <span>Mario Rossi</span>
+                </div>
+                <div id="status">
+                    <div id="online" class="isonline">&Eacute; online</div>
+                    <div id="nickname">@mario_rossi</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="hellocontainer" class="nascondi">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
                 <img src="../img/ui/hey.png">

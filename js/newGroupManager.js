@@ -75,7 +75,7 @@ function getMyContacts() {
     $.post('../php/get_private_chats.php', { myID: myID }, function (response) {
         chats = JSON.parse(response);
         chats.forEach(chat => {
-            displayItemGroup(chat["Id"], "https://random.imagecdn.app/42/42", chat["Name"] + " " + chat["Surname"], chat["Username"], 0);
+            displayItemGroup(chat["Id"], "../img/data/propics/LowRes/default.png", chat["Name"] + " " + chat["Surname"], chat["Username"], 0);
         });
         renderAnimation();
     });

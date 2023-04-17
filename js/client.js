@@ -55,13 +55,32 @@ function loadChats() {
     });
 }
 
+/* load chat */
+function renderChat(){
+    $("#contatto")
+}
+
 /** Given a chat id manage all messages sent in that chat
  * 
  * @param {*} chatID 
  */
 function fetchMessages(chatID) {
-    $.post('../php/get_chat_message.php', { chatID: chatID }, function (response) {
-        console.log(JSON.parse(response));
+    $("#chat").removeClass("nascondi");
+    $("#chat").addClass("mostra");
+    $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
+        let messages = JSON.parse(response);
+        $("#messages").empty();
+        messages.forEach(message => {
+            if(message["UserID"]==myID){
+
+                let messag = $("<div class='mymessage'><div>"+message["Content"]+"</div></div>");
+                $("#messages").append(messag);
+            }else{
+                let messag = $("<div class='fmessage'><div>"+message["Content"]+"</div></div>");
+                $("#messages").append(messag);
+            }
+        });
+
     });
 }
 
@@ -80,11 +99,11 @@ function saveMessage(content, format, userid, chatid) {
 
 function displayChatBar(id, nome, username, state) {
     //bisogna gestire lo state
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state'>&nbsp;</div></div></div>");
 }
 
 function displayGroupBar(id, nome) {
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group'><img src='https://random.imagecdn.app/65/65'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'><div class='point-state'>&nbsp;</div></div> </div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'><div class='point-state'>&nbsp;</div></div> </div>");
 }
 
 /** Takes the following parameters and 
@@ -107,5 +126,4 @@ function saveChat(partecipants, ownerID, receiverID, chatName) {
         $("#searchTAG").fadeOut(600);
     });
 }
-
 
