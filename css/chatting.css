@@ -237,9 +237,11 @@
     margin: 20px 0px 20px 0px;
     background: #5798DA;
     border-radius: 20px 0px 20px 20px;
+    position: relative;
 
     word-wrap: break-word;
 }
+
 
 .fmessage>div {
     width: auto;
