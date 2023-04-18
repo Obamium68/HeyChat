@@ -76,7 +76,7 @@ if (isset($_SESSION["Username"])) {
                     </div>
                     <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" />
                 </div>
-                <div id="sendButton" onclick="sendMessage(this.parentElement.parentElement.getAttribute('data-chatid'))">
+                <div id="sendButton" onclick="alert(this.parentElement.parentElement.getAttribute('data-chatid'))">
                     <img src="../img/ui/send.png" />
                 </div>
             </div>

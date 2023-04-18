@@ -61,8 +61,7 @@ function formatMessage(from, type, message, to) {
  * Sends the server the username
  */
 function sendData() {
-
-    socket.send(JSON.stringify(formatMessage(myUsername, 'text', myUsername + "~" + myID, myUsername)));
+    socket.send(JSON.stringify(formatMessage(myID, 'text', 'online', "server")));
 }
 
 /**
@@ -71,7 +70,7 @@ function sendData() {
 function sendMessage(chatid) {
     const message = document.getElementById('textMessage').value;
 
-    socket.send(JSON.stringify(formatMessage(myUsername, 'text', message, chatid)), (err) => {
+    socket.send(JSON.stringify(formatMessage(myID, 'text', message, chatid)), (err) => {
         if (err) {
             throw err;
         }
@@ -93,7 +92,7 @@ function sendImage(chatid) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        socket.send(JSON.stringify(formatMessage(myUsername, 'image', reader.result, chatid)), (err) => {
+        socket.send(JSON.stringify(formatMessage(myID, 'image', reader.result, chatid)), (err) => {
             if (err) {
                 throw err;
             }

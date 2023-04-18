@@ -1,6 +1,6 @@
 <?php
 require('connection.php');
-$query = "SELECT Username FROM users";
+$query = "SELECT Username, Id FROM users";
 try {
     $stmt = $conn->prepare($query);
     $stmt->execute();
