@@ -46,7 +46,7 @@ function startChat(name, receiver) {
 }
 
 function loadChats() {
-    $.post('../php/get_chats.php', { myID: myID }, function (response) {
+    $.post('../php/get_chats_from_id.php', { myID: myID }, function (response) {
         chats = JSON.parse(response);
         if (chats.length > 0) {
             $("#list-chat").empty();

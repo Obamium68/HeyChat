@@ -38,9 +38,15 @@ async function fetchDataAndStartServer() {
   try {
     const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
     const users = await responseUsers.json();
+    const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    const participations = await responseParticipations.json();
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
     });
+    participations.forEach(participation =>{
+      
+    });
+    console.log(chats);
     startServer();
   } catch (error) {
     console.log(error);
@@ -52,6 +58,7 @@ async function fetchDataAndStartServer() {
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 const clients = new Map();    //Links users to the socket they're connected on
+const chats = new Map();
 
 fetchDataAndStartServer();
 
