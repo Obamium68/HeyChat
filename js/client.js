@@ -73,6 +73,7 @@ function renderChat() {
  * 
  * @param {*} chatID 
  */
+
 function fetchMessages(chatID) {
     $("#chat").removeClass("nascondi");
     $("#chat").addClass("mostra");
@@ -83,7 +84,6 @@ function fetchMessages(chatID) {
         $("#messages").empty();
         messages.forEach(message => {
             if (message["UserID"] == myID) {
-
                 let messag = $("<div class='mymessage'><div>" + message["Content"] + "</div></div>");
                 $("#messages").append(messag);
             } else {
