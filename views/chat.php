@@ -32,6 +32,7 @@ if (isset($_SESSION["Username"])) {
     <script src="../js/newGroupManager.js"></script>
     <script src="../js/client.js"></script>
     <script src="../js/chatManager.js"></script>
+    <script src="../js/getemoji.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <title>HeyChat</title>
@@ -71,12 +72,12 @@ if (isset($_SESSION["Username"])) {
             <div id="sendbox">
                 <div id="dataMessage">
                     <div id="other">
-                        <img src="../img/ui/smile.png" id="newEmoji" />
-                        <img src="../img/ui/photo.png" id="newImg" />
+                        <img src="../img/ui/smile.png" id="newEmoji" onclick="showEmojiBox()"/>
+                        <img src="../img/ui/photo.png" id="newImg" onclick="showSendPhotoBox()"/>
                     </div>
-                    <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" />
+                    <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" onsubmit="sendMessage()" />
                 </div>
-                <div id="sendButton" onclick="alert(this.parentElement.parentElement.getAttribute('data-chatid'))">
+                <div id="sendButton" onclick="sendMessage()">
                     <img src="../img/ui/send.png" />
                 </div>
             </div>
@@ -108,7 +109,42 @@ if (isset($_SESSION["Username"])) {
             <div id="addUser" onclick="showInput()">+ &nbsp;&nbsp;Aggiungi contatto</div>
         </div>
 
+        <div id="emojibox" class="nascondi">
+            <div id="titoloEmo">
+                <h3>&nbsp;&nbsp; Aggiungi emoji</h3>
+                <div style="
+                    margin-right: 15px;
+                    color: red;
+                    font-weight: 700;
+                    cursor: pointer;
+                    " id="chiudiemoji">
+                X
+                </div>
+            </div>
+            <div id="containeremoji"></div>
+        </div>
 
+        <div id="imagebox" class="nascondi">
+            <div id="titoloImg">
+                <h3>&nbsp;&nbsp; Carica immagine</h3>
+                <div style="
+                    margin-right: 15px;
+                    color: red;
+                    font-weight: 700;
+                    cursor: pointer;
+                    " id="chiudiImg">
+                X
+                </div>
+            </div>
+            <div id="containerImg">
+                <label for="inserisciImg" class="mostra centra" id="caricafirst">Clicca qui per inserire un'immagine</label>
+                <input type="file" id="inserisciImg" />
+                <label id="moreImg" class="nascondi" for="inserisciImg">+</label>
+            </div>
+            <div id="footerImgbox" class="nascondi">
+                <div id="sendImg">Invia foto</div>
+            </div>
+        </div>
 
         <div id="searchTAG" class="nascondi">
             <span>Cerca tramite tag</span>

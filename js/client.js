@@ -65,8 +65,8 @@ function loadChats() {
 }
 
 /* load chat */
-function renderChat() {
-    $("#contatto")
+function renderChat(chatId) {
+    $("#utente span").html($('div.chat[data-id="'+chatId+'"] .group .dati .nome').html());
 }
 
 /** Given a chat id manage all messages sent in that chat
@@ -75,24 +75,27 @@ function renderChat() {
  */
 
 function fetchMessages(chatID) {
+    renderChat(chatID);
     $("#chat").removeClass("nascondi");
-    $("#chat").addClass("mostra");
     $("#chat").addClass("mostra");
     $("#chat").attr("data-chatid", chatID);
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
         let messages = JSON.parse(response);
         $("#messages").empty();
         messages.forEach(message => {
-            if (message["UserID"] == myID) {
-                let messag = $("<div class='mymessage'><div>" + message["Content"] + "</div></div>");
-                $("#messages").append(messag);
-            } else {
-                let messag = $("<div class='fmessage'><div>" + message["Content"] + "</div></div>");
-                $("#messages").append(messag);
-            }
+            appendMessage( message["Content"] ,message["UserID"]);
         });
-
     });
+}
+
+function appendMessage(content,owner){
+    if (owner == myID) {
+        let messag = $("<div class='mymessage'><div>" + content + "</div></div>");
+        $("#messages").append(messag);
+    } else {
+        let messag = $("<div class='fmessage'><div>" + message["Content"] + "</div></div>");
+        $("#messages").append(messag);
+    }
 }
 
 /** Save the message into the db
@@ -103,6 +106,7 @@ function fetchMessages(chatID) {
  * @param {Int} chatid 
  */
 function saveMessage(content, format, userid, chatid) {
+    console.log("AAA");
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
         console.log(JSON.parse(response));
     });
@@ -136,5 +140,9 @@ function saveChat(partecipants, ownerID, receiverID, chatName) {
         });
         $("#searchTAG").fadeOut(600);
     });
+}
+
+function showEmojiBox() {
+
 }
 

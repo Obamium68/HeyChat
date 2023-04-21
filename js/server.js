@@ -37,9 +37,12 @@ function getUserFromID(id) {
 async function fetchDataAndStartServer() {
   try {
     const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
+    console.log(responseUsers);
     const users = await responseUsers.json();
     const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    console.log(responseParticipations);
     const participations = await responseParticipations.json();
+    console.log(participations);
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
     });
@@ -49,6 +52,7 @@ async function fetchDataAndStartServer() {
     console.log(chats);
     startServer();
   } catch (error) {
+    console.log("QUA");
     console.log(error);
   }
 }

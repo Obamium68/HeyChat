@@ -67,14 +67,16 @@ function sendData() {
 /**
  * Takes the input message in #message and the receiver in #to, send the message and sends it
  */
-function sendMessage(chatid) {
+function sendMessage() {
     const message = document.getElementById('textMessage').value;
+    const chatid = $("#chat").attr("data-chatid");
 
     socket.send(JSON.stringify(formatMessage(myID, 'text', message, chatid)), (err) => {
         if (err) {
             throw err;
         }
         saveMessage(message, 'text', myID, chatid);
+        appendMessage(message, myID);
     });
 }
 
