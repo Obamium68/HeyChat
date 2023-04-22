@@ -22,7 +22,7 @@ try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);
 } catch (PDOException $e) {
-    die($e);
+    echo json_encode($e);
 }
 $conn = null;
 ?>

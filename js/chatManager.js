@@ -22,14 +22,13 @@ socket.onmessage = (event) => {
             const messages = document.getElementById('messages');       //TO-DO gestisci il render
             switch (data.type) {
                 case 'text':
-                    const li = document.createElement('li');
-                    li.textContent = `${data.from == myUsername ? "You" : data.from}: ${data.message}`;
-                    messages.appendChild(li);
+                    //**TODO GIANLUCA GESTISCI LA VISUALIZZAZIONE MESSAGGI. QUESTO DEVE ESSERE L'UNICA GESTIONE */
                     break;
                 case 'image':
                     const img = document.createElement('img');
                     img.src = data.message;
                     messages.appendChild(img);
+                    /**SEGUE QUI MA DEVO FINIRE IMPLEMENTAZIONE IMAGES */
                     break;
             }
             break;
@@ -68,12 +67,12 @@ function sendMessage() {
 
     socket.send(JSON.stringify(formatMessage(myID, 'text', message, chatid)), (err) => {
         if (err) {
-            throw err;
+            console.log(err);
         }
-        saveMessage(message, 'text', myID, chatid);
-        appendMessage(message, myID);
     });
+    saveMessage(message, 'text', myID, chatid);
 }
+
 
 
 /**

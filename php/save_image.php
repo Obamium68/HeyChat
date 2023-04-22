@@ -8,7 +8,7 @@ try {
         //Caricamento file sul server nel percorso indicato come 2° parametro
         move_uploaded_file($nome_tmp, "../img/data/chats/" . $_POST['path']);
     else
-        die('tuo padre');
+        die();
 } catch (Exception $e) {
     die($e);
 }

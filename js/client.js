@@ -66,7 +66,7 @@ function loadChats() {
 
 /* load chat */
 function renderChat(chatId) {
-    $("#utente span").html($('div.chat[data-id="'+chatId+'"] .group .dati .nome').html());
+    $("#utente span").html($('div.chat[data-id="' + chatId + '"] .group .dati .nome').html());
 }
 
 /** Given a chat id manage all messages sent in that chat
@@ -83,17 +83,17 @@ function fetchMessages(chatID) {
         let messages = JSON.parse(response);
         $("#messages").empty();
         messages.forEach(message => {
-            appendMessage( message["Content"] ,message["UserID"]);
+            appendMessage(message["Content"], message["UserID"]);
         });
     });
 }
 
-function appendMessage(content,owner){
+function appendMessage(content, owner) {
     if (owner == myID) {
         let messag = $("<div class='mymessage'><div>" + content + "</div></div>");
         $("#messages").append(messag);
     } else {
-        let messag = $("<div class='fmessage'><div>" + message["Content"] + "</div></div>");
+        let messag = $("<div class='fmessage'><div>" + messag["Content"] + "</div></div>");
         $("#messages").append(messag);
     }
 }
@@ -106,7 +106,6 @@ function appendMessage(content,owner){
  * @param {Int} chatid 
  */
 function saveMessage(content, format, userid, chatid) {
-    console.log("AAA");
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
         console.log(JSON.parse(response));
     });
