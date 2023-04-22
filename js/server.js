@@ -4,18 +4,22 @@ class User {
     this.id = id;
     this.online = online;
   }
-
 }
-/** Return the user having the username
- * 
- * @param {String} usern 
- */
-function getUserFromUsername(usern) {
-  let toReturn;
-  Array.from(clients.keys()).forEach((user) => {
-    if (user.username == usern) toReturn = user;
-  });
-  return toReturn;
+
+class Chat {
+  constructor(chatID, partecipations) {
+    this.chatID = chatID;
+    this.partecipations = [];
+    this.partecipations.push(partecipations);
+  }
+
+  setChatID(cID) {
+    this.chatID = cID;
+  }
+
+  addPartecipant(part) {
+    this.partecipations.push(part);
+  }
 }
 
 /** Return the user having the ID
@@ -37,32 +41,41 @@ function getUserFromID(id) {
 async function fetchDataAndStartServer() {
   try {
     const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
-    console.log(responseUsers);
     const users = await responseUsers.json();
     const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
-    console.log(responseParticipations);
     const participations = await responseParticipations.json();
-    console.log(participations);
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
     });
-    participations.forEach(participation =>{
-      
+    participations.forEach(participation => {
+      /*
+      CODICE MENO OTTIMIZZATO AL MONDO PER AVERE
+      chats = [
+        { chadID: n0, participations: [p01, p02, p03] },
+        { chadID: n1, participations: [p11, p12, p13] },
+        ...
+      ]
+      */
+      let added = false;
+      chats.forEach(chat => {
+        if (chat.chatID == participation.ChatID) {
+          chat.addPartecipant(participation.UserID);
+          added = true;
+        }
+      });
+      if (!added) chats.push(new Chat(participation.ChatID, participation.UserID));
     });
-    console.log(chats);
     startServer();
   } catch (error) {
-    console.log("QUA");
     console.log(error);
   }
 }
 
 
-
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8080 });
 const clients = new Map();    //Links users to the socket they're connected on
-const chats = new Map();
+const chats = []; //list of chats
 
 fetchDataAndStartServer();
 
@@ -74,27 +87,36 @@ function startServer() {
 
     socket.on('message', (message) => {
       const data = JSON.parse(message);
-
-      const fromSocket = clients.get(getUserFromID(data.from));    // Get sender ws from its id
-      const toSocket = clients.get(getUserFromID(data.to));        // Get receiver ws from its id
-
-      errormsg = "[Error] Client not found";
-
       let senderID = data.from;
       let senderUser = getUserFromID(senderID);
+      let receivers = null;
+      let foundReceivers = false;
+      chats.forEach(chat => {
+        if (chat.chatID == data.to) {
+          receivers = chat.partecipations;
+          foundReceivers = true;
+        }
+      });
 
       switch (true) {
         case data.to == 'server' && data.message == 'online':
           senderUser.online = true;
           clients.set(senderUser, socket);
+          notifyOnline();
           break;
-        case toSocket != null:        // If receiver ws exists
-          toSocket.send(JSON.stringify({ from: senderID, message: data.message, type: data.type }));       // Send the message
-          if (fromSocket != toSocket) fromSocket.send(JSON.stringify({ from: senderID, message: data.message, type: data.type }));   // If I'm not sending the message to myself resend the message to me
+        case !foundReceivers:
+          fromSocket.send(JSON.stringify({ from: 'server', message: 'Error, client not found', type: 'error' }));   // Throw an error message to the sender
           break;
-        case data.to && toSocket == null:   // If the user gave in input the receiver but it doesnt exists
-          fromSocket.send(JSON.stringify({ from: id, message: errormsg, type: 'error' }));   // Throw an error message to the sender
+        case foundReceivers:
+          receivers.forEach(receiver => {
+            try {
+              clients.get(getUserFromID(receiver)).send(JSON.stringify({ from: data.from, message: data.message, type: data.type }));
+            } catch (err) {
+
+            }
+          });
           break;
+
       }
     });
 
@@ -102,6 +124,7 @@ function startServer() {
       let disconnectingUser = getByValue(clients, socket);
       disconnectingUser.online = false;
       clients.set(disconnectingUser, null);
+      notifyOnline()
       console.log(disconnectingUser.username + " disconnected from the server");
     });
   });
@@ -126,4 +149,15 @@ function getOnlineUsers() {
     if (user.online) users.push(user);
   });
   return users;
+}
+
+function notifyOnline() {
+  const onlineUsers = getOnlineUsers();
+  const onlineUsersID = [];
+  onlineUsers.forEach(onlineUser => {
+    onlineUsersID.push(onlineUser.id);
+  })
+  onlineUsers.forEach(onlineUser => {
+    clients.get(onlineUser).send(JSON.stringify({ from: 'server', message: onlineUsersID, type: 'хозяева' }));
+  })
 }

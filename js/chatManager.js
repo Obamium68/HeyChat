@@ -15,13 +15,8 @@ socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log(data);
     switch (true) {
-        case data.from == 'كنية':             // If server is sending you your ID
-            myUsername = data.message;              // Set your id
-            break;
-        case data.from == 'хозяева':          // If server is sending you the connected hosts
-            const hosts = data.message.split(',');
-            connectedHosts = hosts;
-            console.log(connectedHosts);
+        case data.type == 'хозяева':          // If server is sending you the connected hosts
+            //**TODO GIANLUCA GESTISCI GLI USER ONLINE CHE SI TROVANO IN 'data.message' sottoforma di arrayy :)))))!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
             break;
         default:
             const messages = document.getElementById('messages');       //TO-DO gestisci il render
