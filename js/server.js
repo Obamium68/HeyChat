@@ -67,7 +67,6 @@ function startServer() {
   console.log('Server Started at ' + new Date(Date.now()));
   server.on('connection', (socket) => {
     console.log(`[@${Date.now()}] someone connected`);
-
     socket.on('message', (message) => {
       const data = JSON.parse(message);
       let senderID = data.from;
