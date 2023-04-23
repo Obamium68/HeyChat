@@ -7,10 +7,10 @@ class User {
 }
 
 class Chat {
-  constructor(chatID, partecipations) {
+  constructor(chatID, participations) {
     this.chatID = chatID;
-    this.partecipations = [];
-    this.partecipations.push(partecipations);
+    this.participations = [];
+    this.participations.push(participations);
   }
 
   setChatID(cID) {
@@ -18,7 +18,7 @@ class Chat {
   }
 
   addPartecipant(part) {
-    this.partecipations.push(part);
+    this.participations.push(part);
   }
 }
 
@@ -47,24 +47,7 @@ async function fetchDataAndStartServer() {
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
     });
-    participations.forEach(participation => {
-      /*
-      CODICE MENO OTTIMIZZATO AL MONDO PER AVERE
-      chats = [
-        { chadID: n0, participations: [p01, p02, p03] },
-        { chadID: n1, participations: [p11, p12, p13] },
-        ...
-      ]
-      */
-      let added = false;
-      chats.forEach(chat => {
-        if (chat.chatID == participation.ChatID) {
-          chat.addPartecipant(participation.UserID);
-          added = true;
-        }
-      });
-      if (!added) chats.push(new Chat(participation.ChatID, participation.UserID));
-    });
+    updateChats(participations);
     startServer();
   } catch (error) {
     console.log(error);
@@ -93,7 +76,7 @@ function startServer() {
       let foundReceivers = false;
       chats.forEach(chat => {
         if (chat.chatID == data.to) {
-          receivers = chat.partecipations;
+          receivers = chat.participations;
           foundReceivers = true;
         }
       });
@@ -126,7 +109,7 @@ function startServer() {
       let disconnectingUser = getByValue(clients, socket);
       disconnectingUser.online = false;
       clients.set(disconnectingUser, null);
-      notifyOnline()
+      notifyOnline();
       console.log(disconnectingUser.username + " disconnected from the server");
     });
   });
@@ -154,15 +137,45 @@ function getOnlineUsers() {
 }
 
 /**
- * Sends the list of online users to all online users
+ * Sends the list of online users chat to all online users
  */
 function notifyOnline() {
   const onlineUsers = getOnlineUsers();
-  const onlineUsersID = [];
-  onlineUsers.forEach(onlineUser => {
-    onlineUsersID.push(onlineUser.id);
+  const onlineChatsID = [];
+  chats.forEach(chat => {
+    let usersOnline = 0;
+    onlineUsers.forEach(onlineUser => {
+      if (chat.participations.length == 2 && (chat.participations).includes(onlineUser.id.toString())) {
+        if (usersOnline == 0) {
+          ++usersOnline;
+        } else if (usersOnline == 1) {
+          onlineChatsID.push(chat.chatID);
+        }
+      }
+    });
   })
   onlineUsers.forEach(onlineUser => {
-    clients.get(onlineUser).send(JSON.stringify({ from: 'server', message: onlineUsersID, type: 'хозяева' }));
+    clients.get(onlineUser).send(JSON.stringify({ from: 'server', message: onlineChatsID, type: 'хозяева' }));
   })
+}
+
+/*
+CODICE MENO OTTIMIZZATO AL MONDO PER AVERE
+chats = [
+  { chadID: n0, participations: [p01, p02, p03] },
+  { chadID: n1, participations: [p11, p12, p13] },
+  ...
+]
+*/
+function updateChats(participations) {
+  participations.forEach(participation => {
+    let added = false;
+    chats.forEach(chat => {
+      if (chat.chatID == participation.ChatID) {
+        chat.addPartecipant(participation.UserID);
+        added = true;
+      }
+    });
+    if (!added) chats.push(new Chat(participation.ChatID, participation.UserID));
+  });
 }

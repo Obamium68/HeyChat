@@ -35,7 +35,7 @@ function startChat(name, receiver) {
             receivers = receiver;
             partecipants = receivers.length + 1;
         } else {
-            console.log($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
+            //console.log($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
             receivers.push($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
             chatName = "Private chat";
             partecipants = 2;
@@ -93,7 +93,7 @@ function appendMessage(content, owner) {
         let messag = $("<div class='mymessage'><div>" + content + "</div></div>");
         $("#messages").append(messag);
     } else {
-        let messag = $("<div class='fmessage'><div>" + messag["Content"] + "</div></div>");
+        let messag = $("<div class='fmessage'><div>" + content + "</div></div>");
         $("#messages").append(messag);
     }
 }
@@ -107,7 +107,7 @@ function appendMessage(content, owner) {
  */
 function saveMessage(content, format, userid, chatid) {
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
-        console.log(response);
+        //console.log(response);
     });
 }
 
@@ -128,7 +128,7 @@ function displayGroupBar(id, nome) {
  */
 function saveChat(partecipants, ownerID, receiverID, chatName) {
     $.post('../php/create_chat.php', { participants: partecipants, ownerId: ownerID, receivers: receiverID, chatName: chatName }, function (response) {
-        console.log(response);
+        //console.log(response);
         // Gestire la risposta del server qui
         Swal.fire({
             position: 'center',

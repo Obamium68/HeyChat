@@ -177,6 +177,7 @@ if (isset($_SESSION["Username"])) {
     </div>
 </body>
 <script>
+    
     function getUsers() {
         $.post('../php/get_all_users.php', function (response) {
             return (JSON.parse(response));

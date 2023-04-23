@@ -14,6 +14,8 @@ unset($_POST['userid']);
 unset($_POST['chatid']);
 
 if ($_POST[':format'] == 'image') {
+    session_start();
+    $_SESSION['path'] = $_POST[':userid'] . '->' . $_POST[':chatid'] . '_' . time();
     require('save_image.php');
 }
 

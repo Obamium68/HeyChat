@@ -1,12 +1,5 @@
 //**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE SERVER     -Loaded in chat.php*/
-
-
-var connectedHosts = [];    //Host connected to the same server
-
-
-
 const socket = new WebSocket('ws://localhost:8080');
-
 socket.onopen = () => {
     sendData();
 };
@@ -16,7 +9,15 @@ socket.onmessage = (event) => {
     switch (true) {
         case data.type == 'хозяева':          // If server is sending you the connected hosts
             let contactList = document.getElementsByClassName("chat");
-            console.log(contactList);   //GIANLU VEDI IL CONSOLE LOG DI STA COSA
+            console.log(data.message);
+            for (var i = 0; i < contactList.length; ++i) {
+                if ((data.message).includes(contactList[i].getAttribute('data-id'))) {
+                    let state=contactList[i].querySelector('.point-state-offline');
+                    state.classList.remove("point-state-offline");
+                    state.classList.add("point-state-online");
+                }
+            }
+            break;
         default:
             const messages = document.getElementById('messages');       //TO-DO gestisci il render
             switch (data.type) {
@@ -71,7 +72,6 @@ function sendMessage() {
     });
     return [message, 'text', myID, chatid];
 }
-
 
 
 /**
