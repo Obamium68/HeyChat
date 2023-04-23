@@ -70,7 +70,7 @@ function sendMessage() {
             console.log(err);
         }
     });
-    saveMessage(message, 'text', myID, chatid);
+    return [message, 'text', myID, chatid];
 }
 
 

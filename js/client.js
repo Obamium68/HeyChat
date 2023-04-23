@@ -107,7 +107,7 @@ function appendMessage(content, owner) {
  */
 function saveMessage(content, format, userid, chatid) {
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
-        console.log(JSON.parse(response));
+        console.log(response);
     });
 }
 

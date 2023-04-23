@@ -72,12 +72,13 @@ if (isset($_SESSION["Username"])) {
             <div id="sendbox">
                 <div id="dataMessage">
                     <div id="other">
-                        <img src="../img/ui/smile.png" id="newEmoji" onclick="showEmojiBox()"/>
-                        <img src="../img/ui/photo.png" id="newImg" onclick="showSendPhotoBox()"/>
+                        <img src="../img/ui/smile.png" id="newEmoji" onclick="showEmojiBox()" />
+                        <img src="../img/ui/photo.png" id="newImg" onclick="showSendPhotoBox()" />
                     </div>
-                    <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio" onsubmit="sendMessage()" />
+                    <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio"
+                        onsubmit="sendAndSaveMessage()" />
                 </div>
-                <div id="sendButton" onclick="sendMessage()">
+                <div id="sendButton" onclick="sendAndSaveMessage()">
                     <img src="../img/ui/send.png" />
                 </div>
             </div>
@@ -118,7 +119,7 @@ if (isset($_SESSION["Username"])) {
                     font-weight: 700;
                     cursor: pointer;
                     " id="chiudiemoji">
-                X
+                    X
                 </div>
             </div>
             <div id="containeremoji"></div>
@@ -133,11 +134,12 @@ if (isset($_SESSION["Username"])) {
                     font-weight: 700;
                     cursor: pointer;
                     " id="chiudiImg">
-                X
+                    X
                 </div>
             </div>
             <div id="containerImg">
-                <label for="inserisciImg" class="mostra centra" id="caricafirst">Clicca qui per inserire un'immagine</label>
+                <label for="inserisciImg" class="mostra centra" id="caricafirst">Clicca qui per inserire
+                    un'immagine</label>
                 <input type="file" id="inserisciImg" />
                 <label id="moreImg" class="nascondi" for="inserisciImg">+</label>
             </div>
@@ -179,6 +181,11 @@ if (isset($_SESSION["Username"])) {
         $.post('../php/get_all_users.php', function (response) {
             return (JSON.parse(response));
         });
+    }
+
+    function sendAndSaveMessage() {
+        let toSave = sendMessage();
+        saveMessage(toSave[0], toSave[1], toSave[2], toSave[3]);
     }
 
     var isNew = '<?php echo $newSession; ?>';

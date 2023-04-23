@@ -7,7 +7,7 @@ require('connection.php');
 $_POST[':content'] = trim($_POST['content']);
 $_POST[':format'] = $_POST['format'];
 $_POST[':userid'] = $_POST['userid'];
-$_POST[':userid'] = $_POST['chatid'];
+$_POST[':chatid'] = $_POST['chatid'];
 unset($_POST['content']);
 unset($_POST['format']);
 unset($_POST['userid']);
