@@ -107,7 +107,7 @@ function startServer() {
         case !foundReceivers:
           fromSocket.send(JSON.stringify({ from: 'server', message: 'Error, client not found', type: 'error' }));   // Throw an error message to the sender
           break;
-        case foundReceivers:
+        case foundReceivers && data.type == 'text':
           receivers.forEach(receiver => {
             try {
               clients.get(getUserFromID(receiver)).send(JSON.stringify({ from: data.from, message: data.message, type: data.type }));
@@ -116,7 +116,9 @@ function startServer() {
             }
           });
           break;
-
+        case foundReceivers && data.type == 'text':
+          console.log(data);
+          break;
       }
     });
 
@@ -151,6 +153,9 @@ function getOnlineUsers() {
   return users;
 }
 
+/**
+ * Sends the list of online users to all online users
+ */
 function notifyOnline() {
   const onlineUsers = getOnlineUsers();
   const onlineUsersID = [];

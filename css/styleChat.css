@@ -167,7 +167,14 @@ body {
     margin-right: 17px;
 }
 
-.point-state {
+.point-state-offline {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+.point-state-online {
     width: 10px;
     height: 10px;
     border-radius: 50%;

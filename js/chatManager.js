@@ -13,11 +13,10 @@ socket.onopen = () => {
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log(data);
     switch (true) {
         case data.type == 'хозяева':          // If server is sending you the connected hosts
-            //**TODO GIANLUCA GESTISCI GLI USER ONLINE CHE SI TROVANO IN 'data.message' sottoforma di arrayy :)))))!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            break;
+            let contactList = document.getElementsByClassName("chat");
+            console.log(contactList);   //GIANLU VEDI IL CONSOLE LOG DI STA COSA
         default:
             const messages = document.getElementById('messages');       //TO-DO gestisci il render
             switch (data.type) {
