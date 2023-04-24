@@ -9,14 +9,28 @@ socket.onmessage = (event) => {
     switch (true) {
         case data.type == 'хозяева':          // If server is sending you the connected hosts
             let contactList = document.getElementsByClassName("chat");
-            console.log(data.message);
-            for (var i = 0; i < contactList.length; ++i) {
-                if ((data.message).includes(contactList[i].getAttribute('data-id'))) {
-                    let state=contactList[i].querySelector('.point-state-offline');
-                    state.classList.remove("point-state-offline");
-                    state.classList.add("point-state-online");
-                }
-            }
+            try {
+                setTimeout(function () {
+                    for (var i = 0; i < contactList.length; ++i) {
+                        let currentDiv = contactList[i].getElementsByClassName('nickname');
+                        let currentUsername = 'nobody';
+                        if (currentDiv.length) {
+                            currentUsername = currentDiv[0].innerHTML.substring(1,);
+                        }
+                        if (data.message.includes(currentUsername)) {
+                            let state = contactList[i].querySelector('.point-state-offline');
+                            state.classList.remove('point-state-offline');
+                            state.classList.add('point-state-online');
+                        } else {
+                            let state = contactList[i].querySelector('.point-state-online');
+                            if (state) {
+                                state.classList.remove('point-state-online');
+                                state.classList.add('point-state-offline');
+                            }
+                        }
+                    }
+                }, 250);
+            } catch (err) { console.log(err) }
             break;
         default:
             const messages = document.getElementById('messages');       //TO-DO gestisci il render

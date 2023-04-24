@@ -68,6 +68,7 @@ function startServer() {
   server.on('connection', (socket) => {
     console.log(`[@${Date.now()}] someone connected`);
     socket.on('message', (message) => {
+      notifyOnline();
       const data = JSON.parse(message);
       let senderID = data.from;
       let senderUser = getUserFromID(senderID);
@@ -140,22 +141,13 @@ function getOnlineUsers() {
  */
 function notifyOnline() {
   const onlineUsers = getOnlineUsers();
-  const onlineChatsID = [];
-  chats.forEach(chat => {
-    let usersOnline = 0;
-    onlineUsers.forEach(onlineUser => {
-      if (chat.participations.length == 2 && (chat.participations).includes(onlineUser.id.toString())) {
-        if (usersOnline == 0) {
-          ++usersOnline;
-        } else if (usersOnline == 1) {
-          onlineChatsID.push(chat.chatID);
-        }
-      }
-    });
-  })
+  const onlineUsersUsernames = [];
+  onlineUsers.forEach(user => {
+    onlineUsersUsernames.push(user.username);
+  });
   onlineUsers.forEach(onlineUser => {
-    clients.get(onlineUser).send(JSON.stringify({ from: 'server', message: onlineChatsID, type: 'хозяева' }));
-  })
+    clients.get(onlineUser).send(JSON.stringify({ from: 'server', message: onlineUsersUsernames, type: 'хозяева' }));
+  });
 }
 
 /*

@@ -31,7 +31,7 @@ if (isset($_SESSION["Username"])) {
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="../js/newGroupManager.js"></script>
     <script src="../js/client.js"></script>
-    <script src="../js/chatManager.js"></script>
+    <script type='text/javascript' src="../js/chatManager.js"></script>
     <script src="../js/getemoji.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
