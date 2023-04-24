@@ -7,7 +7,8 @@ $_POST[':chatID'] = $_POST['chatID'];
 unset($_POST['chatID']);
 $query = "SELECT Content, Format, SendDate, UserID, Name, Surname, Username
         FROM messages JOIN users ON messages.UserID=users.Id
-        WHERE ChatID =:chatID";
+        WHERE ChatID =:chatID
+        ORDER BY SendDate";
 try {
     $stmt = $conn->prepare($query);
     $stmt->execute($_POST);

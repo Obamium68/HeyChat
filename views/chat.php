@@ -177,7 +177,7 @@ if (isset($_SESSION["Username"])) {
     </div>
 </body>
 <script>
-    
+
     function getUsers() {
         $.post('../php/get_all_users.php', function (response) {
             return (JSON.parse(response));
@@ -185,8 +185,11 @@ if (isset($_SESSION["Username"])) {
     }
 
     function sendAndSaveMessage() {
-        let toSave = sendMessage();
-        saveMessage(toSave[0], toSave[1], toSave[2], toSave[3]);
+        if ($('#textMessage').val()) {
+            let toSave = sendMessage();
+            saveMessage(toSave[0], toSave[1], toSave[2], toSave[3]);
+            $('#textMessage').val('');
+        }
     }
 
     var isNew = '<?php echo $newSession; ?>';
