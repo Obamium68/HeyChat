@@ -117,3 +117,14 @@
     text-align: left;
     width: max-content;
 }
+
+#annullaNewContatto{
+    padding: 8px;
+    text-align: center;
+    color: #FAFAFA;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #e44545;
+    cursor: pointer;
+    margin-top: 10px;
+}

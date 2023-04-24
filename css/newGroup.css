@@ -1,6 +1,5 @@
 /*---- Stile per popup per creazione nuovo gruppo ----*/
 
-/*DA ELIMINARE*/
 #group-box {
     display: flex;
     align-items: center;
@@ -197,6 +196,13 @@
     }
 }
 
+#buttonsNewGroupContainer{
+    width: 69%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
 #createNewGruop {
     padding: 8px;
     text-align: center;
@@ -204,6 +210,15 @@
     font-size: 16px;
     border-radius: 4px;
     background-color: #2f3f5a;
-    margin-top: 10px;
+    cursor: pointer;
+}
+
+#annullaNewGroup{
+    padding: 8px;
+    text-align: center;
+    color: #FAFAFA;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #e44545;
     cursor: pointer;
 }

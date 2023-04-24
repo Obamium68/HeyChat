@@ -89,10 +89,8 @@
 }
 
 #sendbox #other img {
-    width: 4vh;
-    min-width: 3vh;
-    height: 4vh;
-    min-height: 3vh;
+    width: 27px;
+    height: 27px;
     margin-left: 8px;
     cursor: pointer;
 }
@@ -102,11 +100,16 @@
     background-color: transparent;
     border: none;
     outline: none;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 300;
     width: 100%;
     color: #757585;
     padding: 2px;
+}
+
+#textMessage::placeholder{
+    font-size: 20px;
+    font-weight: 200;
 }
 
 #sendButton {
@@ -120,6 +123,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 #sendButton img {
@@ -194,8 +198,8 @@
 #messages {
     width: 80%;
     overflow-y: scroll;
-    height: 80vh;
-    margin-bottom: 18px;
+    height: 78vh;
+    margin-bottom: 30px;
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
@@ -238,14 +242,12 @@
     max-width: 30%;
 
     padding: 10px;
-    margin: 20px 0px 20px 0px;
     background: #5798DA;
     border-radius: 20px 0px 20px 20px;
     position: relative;
 
     word-wrap: break-word;
 }
-
 
 .fmessage>div {
     width: auto;
@@ -259,6 +261,21 @@
     word-wrap: break-word;
 }
 
+.mymessage .timemymessage{
+    text-align: right;
+    font-size: 10px;
+    font-weight: 300;
+    color: #FAFAFA;
+    margin-top: 3px;
+}
+
+.fmessage .timefmessage{
+    text-align: left;
+    font-size: 10px;
+    font-weight: 300;
+    color: #000;
+    margin-top: 3px;
+}
 
 /*---   BOX EMOJI   ---*/
 

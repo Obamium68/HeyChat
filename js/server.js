@@ -40,9 +40,11 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
+    //const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
+    const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
     const users = await responseUsers.json();
-    const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    //const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
     const participations = await responseParticipations.json();
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);

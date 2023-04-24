@@ -3,7 +3,6 @@
  * Save onto the db the chat newly created and the partecipation of two ginven members
  */
 require('connection.php');
-var_dump($_POST);
 $data[':participants'] = trim($_POST['participants']);
 $data[':ownerId'] = $_POST['ownerId'];
 $data[':chatName'] = trim($_POST['chatName']);
@@ -34,6 +33,7 @@ try {
         $stmt->execute();
     }
 
+    echo json_encode($chatId);
 } catch (PDOException $e) {
     die($e);
 }

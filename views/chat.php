@@ -76,7 +76,7 @@ if (isset($_SESSION["Username"])) {
                         <img src="../img/ui/photo.png" id="newImg" onclick="showSendPhotoBox()" />
                     </div>
                     <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio"
-                        onsubmit="sendAndSaveMessage()" />
+                    onkeydown="if(event.keyCode === 13) sendAndSaveMessage()" />
                 </div>
                 <div id="sendButton" onclick="sendAndSaveMessage()">
                     <img src="../img/ui/send.png" />
@@ -94,13 +94,13 @@ if (isset($_SESSION["Username"])) {
                     <span>Mario Rossi</span>
                 </div>
                 <div id="status">
-                    <div id="online" class="isonline">&Eacute; online</div>
-                    <div id="nickname">@mario_rossi</div>
+                    <div id="online" class="isonline"></div>
+                    <div id="nickname"></div>
                 </div>
             </div>
         </div>
 
-        <div id="hellocontainer" class="nascondi">
+        <div id="hellocontainer" class="mostra">
             <div id="hellotopbox">
                 <div id="helloMessage">Benvenuto!</div>
                 <img src="../img/ui/hey.png">
@@ -159,6 +159,7 @@ if (isset($_SESSION["Username"])) {
             <div id="userTrovati">
 
             </div>
+            <div id="annullaNewContatto" onclick="closeBoxNewContatto()">Annulla</div>
         </div>
 
         <div id="group-box" class="nascondi">
@@ -170,7 +171,10 @@ if (isset($_SESSION["Username"])) {
                 </div>
 
                 <div id="peopleList"></div>
-                <div id="createNewGruop" onclick="startGroup()">Crea nuovo gruppo</div>
+                <div id="buttonsNewGroupContainer">
+                    <div id="createNewGruop" onclick="startGroup()">Crea nuovo gruppo</div>
+                    <div id="annullaNewGroup" onclick="closeBoxNewGroup()">Annulla</div>
+                </div>
             </div>
         </div>
 
@@ -211,39 +215,38 @@ if (isset($_SESSION["Username"])) {
         $('#searchTAG').addClass('mostra');
     }
 
-    function showFormGroup() {
-        svuotaChatBox();
-        getMyContacts();
-        $('#group-box').removeClass('nascondi');
-        $('#group-box').addClass('mostra');
-    }
-
     function svuotaChatBox() {
         $('#chat-box > div').removeClass('mostra');
         $('#chat-box > div').addClass('nascondi');
+        closeBoxNewContatto();
+        closeBoxNewGroup();
     }
-
 
     function displayUsers() {
-        let data = $("#inputTag").val();
-        $.post('../php/get_user.php', { search: data }, function (response) {
-            // Gestire la risposta del server qui
-            console.log(response);
-            utenti = JSON.parse(response);
-            $("#userTrovati").empty();
-            utenti.forEach(utente => {
-                id = utente['Id'];
-                nomeUser = utente["Name"] + " " + utente["Surname"];
-                nickUser = utente["Username"];
-                //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
-                image = "../img/data/propics/lowRes/default.png";
-                $("#userTrovati").append("<div data-id='" + id + "' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
-            });
+    let data = $("#inputTag").val();
+    $.post('../php/get_user.php', { search: data }, function (response) {
+        utenti = JSON.parse(response);
+        $("#userTrovati").empty();
+        utenti.forEach(utente => {
+            id = utente['Id'];
+            nomeUser = utente["Name"] + " " + utente["Surname"];
+            nickUser = utente["Username"];
+            //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
+            image = "../img/data/propics/lowRes/default.png";
+            $("#userTrovati").append("<div data-id='" + id + "' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
         });
-    }
+    });
+}
 
     function riempiCampo(name) {
         $("#inputTag").val(name);
+    }
+
+    function closeBoxNewContatto(){
+        $('#searchTAG').removeClass('mostra');
+        $('#searchTAG').addClass('nascondi');
+        $("#userTrovati").empty();
+        $("#inputTag").val('');
     }
 
 

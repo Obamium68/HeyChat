@@ -2,6 +2,7 @@
 
 var myUsername = "";
 var myID = 0;
+var openChat = -1;
 
 /**Set the id of the client
  * 
@@ -66,7 +67,26 @@ function loadChats() {
 
 /* load chat */
 function renderChat(chatId) {
-    $("#utente span").html($('div.chat[data-id="' + chatId + '"] .group .dati .nome').html());
+    svuotaChatBox();
+    openChat = chatId;
+    $("#utente span").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nome').html());
+    
+    //Se il div della chat non ha il div dello state (il pallino colorato) significa che è un gruppo
+    const pallino = $('div.chat[data-id="' + chatId + '"] .state ');
+    if(pallino.length==1){
+        if($(pallino[0].children[0]).hasClass("point-state-online")){
+            $("#online").html("Online");
+            $("#online").removeClass("notonline");
+            $("#online").addClass("isonline");
+        }else{
+            $("#online").html("Offline");
+            $("#online").removeClass("isonline");
+            $("#online").addClass("notonline");
+        }
+        $("#nickname").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nickname').html());
+    }else{
+        
+    }
 }
 
 /** Given a chat id manage all messages sent in that chat
@@ -83,19 +103,23 @@ function fetchMessages(chatID) {
         let messages = JSON.parse(response);
         $("#messages").empty();
         messages.forEach(message => {
-            appendMessage(message["Content"], message["UserID"]);
+            appendMessage(message["Content"], message["SendDate"], message["UserID"]);
         });
     });
 }
 
-function appendMessage(content, owner) {
+function appendMessage(content,time, owner) {
+    const [dateString, timeString] = time.split(' ');
+    const date = new Date(dateString + 'T' + timeString);
+    const formattedTime = date.toLocaleTimeString().slice(0, -3); // Rimuove gli ultimi tre caratteri (i secondi)
     if (owner == myID) {
-        let messag = $("<div class='mymessage'><div>" + content + "</div></div>");
+        let messag = $("<div class='mymessage'><div><div class='contentmessage'>" + content + "</div> <div class='timemymessage'>"+formattedTime+"</div></div></div>");
         $("#messages").append(messag);
     } else {
-        let messag = $("<div class='fmessage'><div>" + content + "</div></div>");
+        let messag = $("<div class='fmessage'><div><div class='contentmessage'>" + content + "</div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
         $("#messages").append(messag);
     }
+    $("#messages").scrollTop($("#messages")[0].scrollHeight);
 }
 
 /** Save the message into the db
@@ -113,11 +137,11 @@ function saveMessage(content, format, userid, chatid) {
 
 function displayChatBar(id, nome, username, state) {
     //bisogna gestire lo state
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state-offline'>&nbsp;</div></div></div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state-offline'>&nbsp;</div></div></div>");
 }
 
 function displayGroupBar(id, nome) {
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'></div> </div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> </div>");
 }
 
 /** Takes the following parameters and 
@@ -128,8 +152,12 @@ function displayGroupBar(id, nome) {
  */
 function saveChat(partecipants, ownerID, receiverID, chatName) {
     $.post('../php/create_chat.php', { participants: partecipants, ownerId: ownerID, receivers: receiverID, chatName: chatName }, function (response) {
-        //console.log(response);
-        // Gestire la risposta del server qui
+
+        if(partecipants>2)  displayGroupBar(response,chatName);
+        else{
+            displayChatBar(response,$('div[data-id="' + receiverID + '"].newUser .newUserData .newUserName').html(),$('div[data-id="' + receiverID + '"].newUser .newUserData .newUserNick').html().substring(1),0);
+        }
+
         Swal.fire({
             position: 'center',
             icon: 'success',
@@ -137,7 +165,7 @@ function saveChat(partecipants, ownerID, receiverID, chatName) {
             showConfirmButton: false,
             timer: 1500
         });
-        $("#searchTAG").fadeOut(600);
+        svuotaChatBox();
     });
 }
 

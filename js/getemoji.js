@@ -39,23 +39,32 @@ $(document).ready(function () {
   });
 
   $("#imagebox input").on("change", function () {
-    console.log($("#imagebox input").val());
+    //console.log($("#imagebox input").val());
 
-    if ($("#imagebox input").val() != "") {
-      $("#imagebox #caricafirst").removeClass("mostra");
-      $("#imagebox #caricafirst").removeClass("centra");
-      $("#imagebox #caricafirst").addClass("nascondi");
-      $("#moreImg").removeClass("nascondi");
-      $("#moreImg").addClass("mostra");
-      $("#footerImgbox").removeClass("nascondi");
-      $("#footerImgbox").addClass("mostra");
-      $("#sendImg").removeClass("nascondi");
-      $("#sendImg").addClass("mostra");
+    const file = $(this).prop('files')[0];
+    const reader = new FileReader();
 
-      let img = $("<div class='photo'><img src='https://random.imagecdn.app/200/300' widht='200px' height='300px'/><span class='nophoto'>Elimina foto</span></div>");
-      $("#containerImg").prepend(img);
-    }
+    reader.onload = function() {
+      const imageData = reader.result;
+      // Utilizza i dati dell'immagine (imageData) qui
+        $("#imagebox #caricafirst").removeClass("mostra");
+        $("#imagebox #caricafirst").removeClass("centra");
+        $("#imagebox #caricafirst").addClass("nascondi");
+  
+        $("#moreImg").removeClass("nascondi");
+        $("#moreImg").addClass("mostra");
+  
+        $("#footerImgbox").removeClass("nascondi");
+        $("#footerImgbox").addClass("mostra");
+  
+        $("#sendImg").removeClass("nascondi");
+        $("#sendImg").addClass("mostra");
+  
+        let img = $("<div class='photo'><img src='"+imageData+"'/><span class='nophoto'>Elimina foto</span></div>");
+        $("#containerImg").prepend(img);
+    };
 
+    reader.readAsDataURL(file);
   });
 });
 

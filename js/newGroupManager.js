@@ -1,3 +1,10 @@
+function showFormGroup() {
+    svuotaChatBox();
+    getMyContacts();
+    $('#group-box').removeClass('nascondi');
+    $('#group-box').addClass('mostra');
+}
+
 /*
 * Questa funzione è necessario richiamarla solo dopo aver creato i div all'interno
 * del box, sennò l'animazione non sarà visibile
@@ -144,4 +151,11 @@ function startGroup() {
     }
 
 
+}
+
+function closeBoxNewGroup(){
+    $('#group-box').removeClass('mostra');
+    $('#group-box').addClass('nascondi');
+    $('#peopleList').empty();
+    $("#inputNameGroup").val('');
 }

@@ -6,9 +6,11 @@ socket.onopen = () => {
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    switch (true) {
-        case data.type == 'хозяева':          // If server is sending you the connected hosts
+    console.log(data);
+    switch (data.type) {
+        case 'хозяева':          // If server is sending you the connected hosts
             let contactList = document.getElementsByClassName("chat");
+            console.log(contactList);
             try {
                 setTimeout(function () {
                     for (var i = 0; i < contactList.length; ++i) {
@@ -17,6 +19,7 @@ socket.onmessage = (event) => {
                         if (currentDiv.length) {
                             currentUsername = currentDiv[0].innerHTML.substring(1,);
                         }
+
                         if (data.message.includes(currentUsername)) {
                             let state = contactList[i].querySelector('.point-state-offline');
                             state.classList.remove('point-state-offline');
@@ -27,24 +30,26 @@ socket.onmessage = (event) => {
                                 state.classList.remove('point-state-online');
                                 state.classList.add('point-state-offline');
                             }
+
+                        }
+
+                        //Se l'utente cambia stato mentre ho la chat aperta, aggiorno anche lo stato nel div in alto
+                        if($('div.chat[data-id="' + openChat + '"] .dataGroup .dati .nickname').html() == "@"+currentUsername){
+                            renderChat(openChat);
                         }
                     }
                 }, 250);
             } catch (err) { console.log(err) }
             break;
-        default:
-            const messages = document.getElementById('messages');       //TO-DO gestisci il render
-            switch (data.type) {
-                case 'text':
-                    //**TODO GIANLUCA GESTISCI LA VISUALIZZAZIONE MESSAGGI. QUESTO DEVE ESSERE L'UNICA GESTIONE */
-                    break;
-                case 'image':
-                    const img = document.createElement('img');
-                    img.src = data.message;
-                    messages.appendChild(img);
-                    /**SEGUE QUI MA DEVO FINIRE IMPLEMENTAZIONE IMAGES */
-                    break;
-            }
+        case 'text':
+            console.log(new Date().toLocaleString('sv-SE').replace(/\s/g, ' '));
+            appendMessage(data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '),data.from);
+            break;
+        case 'image':
+            const img = document.createElement('img');
+            img.src = data.message;
+            messages.appendChild(img);
+            /**SEGUE QUI MA DEVO FINIRE IMPLEMENTAZIONE IMAGES */
             break;
     }
 }
