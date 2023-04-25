@@ -100,7 +100,7 @@ function sendData() {
 }
 
 /**
- * Takes the input message in #message and the receiver in #to, send the message and sends it
+ * Takes the input message in #textMessage and the receiver in #chat.attr(data-chatid) send data and return data to be saved
  */
 function sendMessage() {
     const message = document.getElementById('textMessage').value;
@@ -116,16 +116,13 @@ function sendMessage() {
 
 
 /**
- * send to #to the image loaded from the input form
- * @returns null if not image charged
+ * send the image loaded from the input form and save it
+ * @returns null if not image loaded
  */
 function sendImage() {
     const file = document.getElementById('inserisciImg').files[0];
-    console.log('in');
     const chatid = $("#chat").attr("data-chatid");
     if (!file) {
-        //TO-DO Gianluca gestisci errore :)
-        //È impossiblie che si verifichi perchè se nessun file è caricato il tasto invia non è mostrato all'utente
         return;
     }
     const reader = new FileReader();
@@ -133,14 +130,12 @@ function sendImage() {
     reader.onload = () => {
 
         const path = myID + "to" + chatid + "_" + Date.now();
-        console.log(path);
 
         $.ajax({
             type: "POST",
             url: "../php/save_image.php",
             data: { image: reader.result, name: path },
             success: function (response) {
-                console.log(response);
                 saveMessage(path, 'image', myID, chatid);
 
                 socket.send(JSON.stringify(formatMessage(myID, 'image', path, chatid)))
