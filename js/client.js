@@ -68,25 +68,46 @@ function loadChats() {
 /* load chat */
 function renderChat(chatId) {
     svuotaChatBox();
+
     openChat = chatId;
     $("#utente span").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nome').html());
     
-    //Se il div della chat non ha il div dello state (il pallino colorato) significa che è un gruppo
-    const pallino = $('div.chat[data-id="' + chatId + '"] .state ');
-    if(pallino.length==1){
+    //Svuoto il pallino dei messaggi da leggere
+    $('div.chat[data-id="' + chatId+'"] .state > div').html('');
+    $('div.chat[data-id="' + chatId+'"] .state > div').removeClass('newMessages');
+    
+    const checkChat = $('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nickname');
+    if(checkChat.length==0){
+        $("#status").removeClass("mostra");
+        $("#status").addClass("nascondi");
+
+        $("#infoGroup").removeClass("nascondi");
+        $("#infoGroup").addClass("mostra");
+    }else{
+        $("#infoGroup").removeClass("mostra");
+        $("#infoGroup").addClass("nascondi");
+
+        $("#status").removeClass("nascondi");
+        $("#status").addClass("mostra");
+        //Se il div della chat non ha il div dello state (il pallino colorato) significa che è un gruppo
+        const pallino = $('div.chat[data-id="' + chatId + '"] .state ');
+
         if($(pallino[0].children[0]).hasClass("point-state-online")){
             $("#online").html("Online");
             $("#online").removeClass("notonline");
             $("#online").addClass("isonline");
+            console.log("È onimi");
         }else{
             $("#online").html("Offline");
             $("#online").removeClass("isonline");
             $("#online").addClass("notonline");
+            console.log("È off");
         }
         $("#nickname").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nickname').html());
-    }else{
-        
+
     }
+    $("#chat").removeClass("nascondi");
+    $("#chat").addClass("mostra");
 }
 
 /** Given a chat id manage all messages sent in that chat
@@ -99,27 +120,55 @@ function fetchMessages(chatID) {
     $("#chat").removeClass("nascondi");
     $("#chat").addClass("mostra");
     $("#chat").attr("data-chatid", chatID);
+    
+
+    const checkChat = $('div.chat[data-id="' + chatID + '"] .dataGroup .dati .nickname');
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
-        let messages = JSON.parse(response);
         $("#messages").empty();
-        messages.forEach(message => {
-            appendMessage(message["Content"], message["SendDate"], message["UserID"]);
-        });
+        if(checkChat.length==0){
+        
+        }else{
+            let messages = JSON.parse(response);
+            
+            messages.forEach(message => {
+                if(message["Format"]=="text") appendMessage('',message["Content"], message["SendDate"], message["UserID"]);
+                if(message["Format"]=="image") appendImage('',"http://localhost/GitHub/HeyChat/img/data/chats/"+message["Content"]+".png", message["SendDate"], message["UserID"])
+            });
+            setTimeout(function () {
+                $("#messages").resize();
+                $("#messages").scrollTop($("#messages")[0].scrollHeight);
+            },1);
+        }
     });
 }
 
-function appendMessage(content,time, owner) {
+function formattaOrario(time){
     const [dateString, timeString] = time.split(' ');
     const date = new Date(dateString + 'T' + timeString);
     const formattedTime = date.toLocaleTimeString().slice(0, -3); // Rimuove gli ultimi tre caratteri (i secondi)
+    return formattedTime
+}
+
+function appendMessage(sender,content,time, owner) {
+    formattedTime = formattaOrario(time);
     if (owner == myID) {
         let messag = $("<div class='mymessage'><div><div class='contentmessage'>" + content + "</div> <div class='timemymessage'>"+formattedTime+"</div></div></div>");
         $("#messages").append(messag);
     } else {
-        let messag = $("<div class='fmessage'><div><div class='contentmessage'>" + content + "</div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
+        let messag = $("<div class='fmessage'><div><div class='sender'>"+sender+"</div><div class='contentmessage'>" + content + "</div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
         $("#messages").append(messag);
     }
-    $("#messages").scrollTop($("#messages")[0].scrollHeight);
+}
+
+function appendImage(sender, path, time, owner){
+    formattedTime = formattaOrario(time);
+    if (owner == myID) {
+        let photo = $("<div class='mymessage'><div><div class='imageMessage'><img src='" + path + "'></div> <div class='timemymessage'>"+formattedTime+"</div></div></div>");
+        $("#messages").append(photo);
+    } else {
+        let photo = $("<div class='fmessage'><div><div class='sender'>"+sender+"</div><div class='imageMessage'><img src='" + path + "'></div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
+        $("#messages").append(photo);
+    }
 }
 
 /** Save the message into the db
@@ -131,17 +180,17 @@ function appendMessage(content,time, owner) {
  */
 function saveMessage(content, format, userid, chatid) {
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
-        //console.log(response);
+        console.log(response);
     });
 }
 
 function displayChatBar(id, nome, username, state) {
     //bisogna gestire lo state
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state-offline'>&nbsp;</div></div></div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='user dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> <div class='nickname'>@" + username + "</div></div></div><div class='state'><div class='point-state-offline'></div></div></div>");
 }
 
 function displayGroupBar(id, nome) {
-    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> </div>");
+    $("#list-chat").append("<div data-id='" + id + "' class='chat' onclick='fetchMessages(" + id + ")'> <div class='group dataGroup'><img src='../img/data/propics/LowRes/default.png'> <div class='dati'> <div class='nome'>" + nome + "</div> </div></div> <div class='state'><div></div></div> </div>");
 }
 
 /** Takes the following parameters and 

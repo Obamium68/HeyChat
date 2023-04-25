@@ -121,6 +121,7 @@ body {
 .group {
     margin-left: 15px;
     display: flex;
+    align-items: center;
 }
 
 .user img,
@@ -170,15 +171,32 @@ body {
 .point-state-offline {
     width: 10px;
     height: 10px;
-    border-radius: 50%;
-    background-color: red;
+    background-color: red !important;
 }
 
 .point-state-online {
     width: 10px;
     height: 10px;
+    background-color: green !important;
+}
+
+.newMessages{
+    width: 12px;
+    height: 12px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    font-weight: 500;
+    font-size: 13px;
+    color: white;
+    padding: 2px;
+}
+
+.state > div{
+    background-color: #0B192F;
     border-radius: 50%;
-    background-color: green;
 }
 
 /*---   BOTTONI DI AZIONE   ---*/
@@ -224,3 +242,4 @@ body {
     width: 25px;
     height: 25px;
 }
+

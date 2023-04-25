@@ -172,6 +172,16 @@
     text-align: center;
 }
 
+#infoGroup{
+    margin-right: 3%;
+    font-size: 15px;
+    border-radius: 20px;
+    background-color: #0B192F;
+    padding: 10px;
+    color: #FAFAFA;
+    cursor: pointer;
+}
+
 .isonline {
     color: #267020;
 }
@@ -239,7 +249,7 @@
 .mymessage>div {
     width: auto;
     height: auto;
-    max-width: 30%;
+    max-width: 300px;
 
     padding: 10px;
     background: #5798DA;
@@ -253,7 +263,7 @@
     width: auto;
     height: auto;
 
-    max-width: 30%;
+    max-width: 300px;
     padding: 10px;
 
     background: #FAFAFA;
@@ -275,6 +285,11 @@
     font-weight: 300;
     color: #000;
     margin-top: 3px;
+}
+
+.imageMessage > img{
+    max-width: 300px;
+    max-height: 600px;
 }
 
 /*---   BOX EMOJI   ---*/
@@ -395,6 +410,11 @@
     text-align: right;
     padding: 5px;
     margin-bottom: 25px;
+}
+
+.photo > img{
+    max-width: 200px;
+    max-height: 300px;
 }
 
 .nophoto {

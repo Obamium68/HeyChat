@@ -34,8 +34,7 @@ $(document).ready(function () {
   });
 
   $("#chiudiImg").click(function () {
-    $("#imagebox").removeClass("mostra");
-    $("#imagebox").addClass("nascondi");
+    chiudiBoxSendImage();
   });
 
   $("#imagebox input").on("change", function () {
@@ -48,7 +47,6 @@ $(document).ready(function () {
       const imageData = reader.result;
       // Utilizza i dati dell'immagine (imageData) qui
         $("#imagebox #caricafirst").removeClass("mostra");
-        $("#imagebox #caricafirst").removeClass("centra");
         $("#imagebox #caricafirst").addClass("nascondi");
   
         $("#moreImg").removeClass("nascondi");
@@ -91,3 +89,15 @@ $(document).on('click', '.nophoto', function (e) {
   }
 });
 
+function chiudiBoxSendImage(){
+  $("#imagebox").removeClass("mostra");
+  $("#imagebox").addClass("nascondi");
+  $("#inserisciImg").val(null);
+  $("#containerImg .photo").remove();
+
+  $("#caricafirst").removeClass("nascondi");
+  $("#caricafirst").addClass("mostra");
+  
+  $("#moreImg").removeClass("mostra");
+  $("#moreImg").addClass("nascondi");
+}

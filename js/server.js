@@ -40,11 +40,11 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
-    //const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
+    //const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
+    const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
     const users = await responseUsers.json();
-    const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
-    //const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
+    //const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
     const participations = await responseParticipations.json();
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
@@ -94,7 +94,7 @@ function startServer() {
         case foundReceivers:
           receivers.forEach(receiver => {
             try {
-              clients.get(getUserFromID(receiver)).send(JSON.stringify({ from: data.from, message: data.message, type: data.type }));
+              clients.get(getUserFromID(receiver)).send(JSON.stringify({chat: data.to, from: data.from, message: data.message, type: data.type }));
             } catch (err) {
 
             }

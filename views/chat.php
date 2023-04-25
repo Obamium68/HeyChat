@@ -29,6 +29,7 @@ if (isset($_SESSION["Username"])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js"></script>
     <script src="../js/newGroupManager.js"></script>
     <script src="../js/client.js"></script>
     <script type='text/javascript' src="../js/chatManager.js"></script>
@@ -93,10 +94,12 @@ if (isset($_SESSION["Username"])) {
                     <img src="../img/data/propics/LowRes/default.png" />
                     <span>Mario Rossi</span>
                 </div>
-                <div id="status">
+                <div id="status" class="nascondi">
                     <div id="online" class="isonline"></div>
                     <div id="nickname"></div>
                 </div>
+
+                <div id="infoGroup" class="mostra">Mostra partecipanti</div>
             </div>
         </div>
 
@@ -131,7 +134,7 @@ if (isset($_SESSION["Username"])) {
                 <div style="
                     margin-right: 15px;
                     color: red;
-                    font-weight: 700;
+                    font-weight: 700; 
                     cursor: pointer;
                     " id="chiudiImg">
                     X
