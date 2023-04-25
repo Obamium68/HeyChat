@@ -125,15 +125,60 @@ function fetchMessages(chatID) {
     const checkChat = $('div.chat[data-id="' + chatID + '"] .dataGroup .dati .nickname');
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
         $("#messages").empty();
+        let messages = JSON.parse(response);
+        
+        //Se è un gruppo, quindi nel div della chat non c'è il nickname
         if (checkChat.length == 0) {
 
+            let listUserGroup = [];
+
+            messages.forEach(message => {
+                let sender = '';
+
+                //Controllo se "conosco già il mittente"
+                let amico = $('.nickname').filter(function() {
+                    return $(this).html() === "@"+message["Username"];
+                });
+
+                //Se lo trovo, scrivo il nome, sennò uso lo username
+                if(amico.length>0) sender = message["Name"]+" "+message["Surname"];
+                else sender = message["Username"];
+
+                console.log(sender);
+                if ($.inArray(sender, listUserGroup) == -1 && sender!=myUsername) listUserGroup.push(sender); //Se non c'è lo salvo nell'array
+
+                if (message["Format"] == "text") appendMessage(sender, message["Content"], message["SendDate"], message["UserID"]);
+                if (message["Format"] == "image") appendImage(sender, "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+            });
+            setTimeout(function () {
+                console.log(listUserGroup);
+                listUserGroup.forEach(user => {
+                    
+                    console.log(user);
+                    let messaggi = [];
+                    messaggi = $("div.sender:contains('"+user+"')");
+                    console.log(messaggi);
+                    let randomColor = '#'+ Math.floor(Math.random()*16777215).toString(16);
+    
+                    messaggi.each(function() {
+                        $(this).css('color', randomColor);
+                    });
+    
+                });
+
+                $("#messages").resize();
+                $("#messages").scrollTop($("#messages")[0].scrollHeight);
+            }, 100);
+
+            
+
         } else {
-            let messages = JSON.parse(response);
 
             messages.forEach(message => {
                 if (message["Format"] == "text") appendMessage('', message["Content"], message["SendDate"], message["UserID"]);
-                //if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
-                if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
             setTimeout(function () {
                 $("#messages").resize();

@@ -292,6 +292,11 @@
     max-height: 600px;
 }
 
+.sender{
+    font-size: 13px;
+    font-weight: 500;
+}
+
 /*---   BOX EMOJI   ---*/
 
 #emojibox,
