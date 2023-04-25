@@ -1,14 +1,13 @@
-//**IN THIS FILE IS STORED THE CODE NEEDED TO INTERFACE WITH THE SERVER     -Loaded in chat.php*/
-const socket = new WebSocket('ws://localhost:8080');
+const socket = new WebSocket('ws://localhost:8080');            //connection to the server
 socket.onopen = () => {
-    sendData();
+    sendData();                //when connecting to the server send needed data to be acknowledged
 };
 
 socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log(data);
     switch (data.type) {
-        case 'хозяева':          // If server is sending you the connected hosts
+        // If server, by protocol, is sending you the list of online hosts set the online flag on all your online contacts
+        case 'хозяева':
             let contactList = document.getElementsByClassName("chat");
             try {
                 setTimeout(function () {
@@ -40,6 +39,7 @@ socket.onmessage = (event) => {
                 }, 250);
             } catch (err) { console.log(err) }
             break;
+        //If you have received a text message, append it if the chat is opened. Otherwise, throw a notification
         case 'text':
             if (openChat == data.chat) {
                 appendMessage('', data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
@@ -55,10 +55,10 @@ socket.onmessage = (event) => {
                 pallino.addClass("newMessages");
             }
             break;
+        //If you have received an image, render and append it if the chat is opened. Otherwise, throw a notification
         case 'image':
             if (openChat == data.chat) {
                 appendImage('', "http://localhost/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
-                // appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 setTimeout(function () {
                     $("#messages").resize();
                     $("#messages").scrollTop($("#messages")[0].scrollHeight);
@@ -76,7 +76,7 @@ socket.onmessage = (event) => {
     }
 }
 
-/**
+/**Format the text message to be sent
  * 
  * @param {String} from sender ID
  * @param {String} type what does the message contains [text|image]
@@ -93,7 +93,7 @@ function formatMessage(from, type, message, to) {
 }
 
 /**
- * Sends the server the username
+ * Send your data to be acknowledged
  */
 function sendData() {
     socket.send(JSON.stringify(formatMessage(myID, 'text', 'online', "server")));
