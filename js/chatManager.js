@@ -34,7 +34,7 @@ socket.onmessage = (event) => {
                         }
 
                         //Se l'utente cambia stato mentre ho la chat aperta, aggiorno anche lo stato nel div in alto
-                        if($('div.chat[data-id="' + openChat + '"] .dataGroup .dati .nickname').html() == "@"+currentUsername){
+                        if ($('div.chat[data-id="' + openChat + '"] .dataGroup .dati .nickname').html() == "@" + currentUsername) {
                             renderChat(openChat);
                         }
                     }
@@ -43,9 +43,10 @@ socket.onmessage = (event) => {
             break;
         case 'text':
             console.log(new Date().toLocaleString('sv-SE').replace(/\s/g, ' '));
-            appendMessage(data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '),data.from);
+            appendMessage(data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
             break;
         case 'image':
+            console.log('img received');
             const img = document.createElement('img');
             img.src = data.message;
             messages.appendChild(img);
@@ -97,8 +98,10 @@ function sendMessage() {
  * send to #to the image loaded from the input form
  * @returns null if not image charged
  */
-function sendImage(chatid) {
-    const file = document.getElementById('file').files[0];
+function sendImage() {
+    const file = document.getElementById('inserisciImg').files[0];
+    console.log('in');
+    const chatid = $("#chat").attr("data-chatid");
     if (!file) {
         //TO-DO Gianluca gestisci errore :)
         return;

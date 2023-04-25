@@ -40,11 +40,11 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    //const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
-    const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
+    const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
+    //const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
     const users = await responseUsers.json();
-    //const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
-    const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
+    const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    //const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
     const participations = await responseParticipations.json();
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
@@ -70,7 +70,6 @@ function startServer() {
   server.on('connection', (socket) => {
     console.log(`[@${Date.now()}] someone connected`);
     socket.on('message', (message) => {
-      notifyOnline();
       const data = JSON.parse(message);
       let senderID = data.from;
       let senderUser = getUserFromID(senderID);
@@ -92,7 +91,7 @@ function startServer() {
         case !foundReceivers:
           fromSocket.send(JSON.stringify({ from: 'server', message: 'Error, client not found', type: 'error' }));   // Throw an error message to the sender
           break;
-        case foundReceivers && data.type == 'text':
+        case foundReceivers:
           receivers.forEach(receiver => {
             try {
               clients.get(getUserFromID(receiver)).send(JSON.stringify({ from: data.from, message: data.message, type: data.type }));

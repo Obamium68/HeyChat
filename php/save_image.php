@@ -1,6 +1,7 @@
 <?php
 try {
     session_start();
+    echo 'i in';
     $f = $_FILES['file_caricato']['type']; //Tipo file
     $nome = $_FILES['file_caricato']['name']; //Nome file
     $nome_tmp = $_FILES['file_caricato']['tmp_name']; //Percorso file

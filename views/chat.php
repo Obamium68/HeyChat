@@ -73,10 +73,10 @@ if (isset($_SESSION["Username"])) {
                 <div id="dataMessage">
                     <div id="other">
                         <img src="../img/ui/smile.png" id="newEmoji" onclick="showEmojiBox()" />
-                        <img src="../img/ui/photo.png" id="newImg" onclick="showSendPhotoBox()" />
+                        <img src="../img/ui/photo.png" id="newImg" />
                     </div>
                     <input type="text" id="textMessage" placeholder="Digita qui il tuo messaggio"
-                    onkeydown="if(event.keyCode === 13) sendAndSaveMessage()" />
+                        onkeydown="if(event.keyCode === 13) sendAndSaveMessage()" />
                 </div>
                 <div id="sendButton" onclick="sendAndSaveMessage()">
                     <img src="../img/ui/send.png" />
@@ -144,7 +144,7 @@ if (isset($_SESSION["Username"])) {
                 <label id="moreImg" class="nascondi" for="inserisciImg">+</label>
             </div>
             <div id="footerImgbox" class="nascondi">
-                <div id="sendImg">Invia foto</div>
+                <div id="sendImg" onclick="sendImage()">Invia foto</div>
             </div>
         </div>
 
@@ -223,26 +223,26 @@ if (isset($_SESSION["Username"])) {
     }
 
     function displayUsers() {
-    let data = $("#inputTag").val();
-    $.post('../php/get_user.php', { search: data }, function (response) {
-        utenti = JSON.parse(response);
-        $("#userTrovati").empty();
-        utenti.forEach(utente => {
-            id = utente['Id'];
-            nomeUser = utente["Name"] + " " + utente["Surname"];
-            nickUser = utente["Username"];
-            //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
-            image = "../img/data/propics/lowRes/default.png";
-            $("#userTrovati").append("<div data-id='" + id + "' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
+        let data = $("#inputTag").val();
+        $.post('../php/get_user.php', { search: data }, function (response) {
+            utenti = JSON.parse(response);
+            $("#userTrovati").empty();
+            utenti.forEach(utente => {
+                id = utente['Id'];
+                nomeUser = utente["Name"] + " " + utente["Surname"];
+                nickUser = utente["Username"];
+                //image = "../img/data/propics/lowRes/" + utente["PropicPath"];
+                image = "../img/data/propics/lowRes/default.png";
+                $("#userTrovati").append("<div data-id='" + id + "' data-name='" + nickUser + "' class='newUser' onclick='riempiCampo(this.dataset.name)'> <div class='newUserImage'><img src='" + image + "'></div> <div class='newUserData'> <div class='newUserName'>" + nomeUser + "</div> <div class='newUserNick'>@" + nickUser + "</div> </div> </div>");
+            });
         });
-    });
-}
+    }
 
     function riempiCampo(name) {
         $("#inputTag").val(name);
     }
 
-    function closeBoxNewContatto(){
+    function closeBoxNewContatto() {
         $('#searchTAG').removeClass('mostra');
         $('#searchTAG').addClass('nascondi');
         $("#userTrovati").empty();
