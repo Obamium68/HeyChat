@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
 session_start();
+$data = $_SESSION;
 if (isset($_SESSION["Username"])) {
     $my_username = $_SESSION["Username"];
     $my_id = $_SESSION['Id'];
@@ -29,7 +30,6 @@ if (isset($_SESSION["Username"])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.3/jquery.scrollTo.min.js"></script>
     <script src="../js/newGroupManager.js"></script>
     <script src="../js/client.js"></script>
     <script type='text/javascript' src="../js/chatManager.js"></script>
@@ -99,7 +99,7 @@ if (isset($_SESSION["Username"])) {
                     <div id="nickname"></div>
                 </div>
 
-                <div id="infoGroup" class="mostra">Mostra partecipanti</div>
+                <div id="infoGroup" class="nascondi">Mostra partecipanti</div>
             </div>
         </div>
 
@@ -169,7 +169,7 @@ if (isset($_SESSION["Username"])) {
             <div id="newGroup">
                 <span>Crea nuovo gruppo</span>
                 <div id="nameGroup">
-                    <span>Nome: </span>
+                    <span>Nome:</span>
                     <input type="text" id="inputNameGroup" oninput="checkNewButton()">
                 </div>
 
@@ -184,7 +184,6 @@ if (isset($_SESSION["Username"])) {
     </div>
 </body>
 <script>
-
     function getUsers() {
         $.post('../php/get_all_users.php', function (response) {
             return (JSON.parse(response));

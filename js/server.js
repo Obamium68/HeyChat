@@ -1,3 +1,6 @@
+/**
+ * Class User represetn
+ */
 class User {
   constructor(username, id, online) {
     this.username = username;
@@ -40,11 +43,12 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    //const responseUsers = await fetch('http://localhost/heychat/php/get_all_users.php');
-    const responseUsers = await fetch('http://localhost/GitHub/HeyChat/php/get_all_users.php');
+    //const path = 'http://localhost/GitHub/HeyChat/php/get_all_users.php';
+    const path = 'http://localhost/heychat/php/get_all_users.php';
+    const responseUsers = await fetch(path);
     const users = await responseUsers.json();
-    //const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
-    const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
+    const responseParticipations = await fetch('http://localhost/heychat/php/get_all_participations.php');
+    //const responseParticipations = await fetch('http://localhost/GitHub/HeyChat/php/get_all_participations.php');
     const participations = await responseParticipations.json();
     users.forEach(user => {
       clients.set(new User(user.Username, user.Id, false), null);
@@ -72,6 +76,7 @@ function startServer() {
     socket.on('message', (message) => {
       const data = JSON.parse(message);
       let senderID = data.from;
+      console.log(senderID);
       let senderUser = getUserFromID(senderID);
       let receivers = null;
       let foundReceivers = false;
@@ -89,12 +94,12 @@ function startServer() {
           notifyOnline();
           break;
         case !foundReceivers:
-          fromSocket.send(JSON.stringify({ from: 'server', message: 'Error, client not found', type: 'error' }));   // Throw an error message to the sender
+          clients.get(senderUser).send(JSON.stringify({ from: 'server', message: 'Error, client not found', type: 'error' }));   // Throw an error message to the sender
           break;
         case foundReceivers:
           receivers.forEach(receiver => {
             try {
-              clients.get(getUserFromID(receiver)).send(JSON.stringify({chat: data.to, from: data.from, message: data.message, type: data.type }));
+              clients.get(getUserFromID(receiver)).send(JSON.stringify({ chat: data.to, from: data.from, message: data.message, type: data.type }));
             } catch (err) {
 
             }

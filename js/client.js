@@ -41,8 +41,8 @@ function startChat(name, receiver) {
             chatName = "Private chat";
             partecipants = 2;
         }
-
         saveChat(partecipants, ownerID, receivers, chatName);
+        setTimeout(function () { location.reload() }, 1500);
     }
 }
 
@@ -71,19 +71,19 @@ function renderChat(chatId) {
 
     openChat = chatId;
     $("#utente span").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nome').html());
-    
+
     //Svuoto il pallino dei messaggi da leggere
-    $('div.chat[data-id="' + chatId+'"] .state > div').html('');
-    $('div.chat[data-id="' + chatId+'"] .state > div').removeClass('newMessages');
-    
+    $('div.chat[data-id="' + chatId + '"] .state > div').html('');
+    $('div.chat[data-id="' + chatId + '"] .state > div').removeClass('newMessages');
+
     const checkChat = $('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nickname');
-    if(checkChat.length==0){
+    if (checkChat.length == 0) {
         $("#status").removeClass("mostra");
         $("#status").addClass("nascondi");
 
         $("#infoGroup").removeClass("nascondi");
         $("#infoGroup").addClass("mostra");
-    }else{
+    } else {
         $("#infoGroup").removeClass("mostra");
         $("#infoGroup").addClass("nascondi");
 
@@ -92,12 +92,12 @@ function renderChat(chatId) {
         //Se il div della chat non ha il div dello state (il pallino colorato) significa che è un gruppo
         const pallino = $('div.chat[data-id="' + chatId + '"] .state ');
 
-        if($(pallino[0].children[0]).hasClass("point-state-online")){
+        if ($(pallino[0].children[0]).hasClass("point-state-online")) {
             $("#online").html("Online");
             $("#online").removeClass("notonline");
             $("#online").addClass("isonline");
             console.log("È onimi");
-        }else{
+        } else {
             $("#online").html("Offline");
             $("#online").removeClass("isonline");
             $("#online").addClass("notonline");
@@ -120,53 +120,54 @@ function fetchMessages(chatID) {
     $("#chat").removeClass("nascondi");
     $("#chat").addClass("mostra");
     $("#chat").attr("data-chatid", chatID);
-    
+
 
     const checkChat = $('div.chat[data-id="' + chatID + '"] .dataGroup .dati .nickname');
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
         $("#messages").empty();
-        if(checkChat.length==0){
-        
-        }else{
+        if (checkChat.length == 0) {
+
+        } else {
             let messages = JSON.parse(response);
-            
+
             messages.forEach(message => {
-                if(message["Format"]=="text") appendMessage('',message["Content"], message["SendDate"], message["UserID"]);
-                if(message["Format"]=="image") appendImage('',"http://localhost/GitHub/HeyChat/img/data/chats/"+message["Content"]+".png", message["SendDate"], message["UserID"])
+                if (message["Format"] == "text") appendMessage('', message["Content"], message["SendDate"], message["UserID"]);
+                //if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
             setTimeout(function () {
                 $("#messages").resize();
                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
-            },1);
+            }, 1);
         }
     });
 }
 
-function formattaOrario(time){
+function formattaOrario(time) {
     const [dateString, timeString] = time.split(' ');
     const date = new Date(dateString + 'T' + timeString);
     const formattedTime = date.toLocaleTimeString().slice(0, -3); // Rimuove gli ultimi tre caratteri (i secondi)
     return formattedTime
 }
 
-function appendMessage(sender,content,time, owner) {
+function appendMessage(sender, content, time, owner) {
     formattedTime = formattaOrario(time);
     if (owner == myID) {
-        let messag = $("<div class='mymessage'><div><div class='contentmessage'>" + content + "</div> <div class='timemymessage'>"+formattedTime+"</div></div></div>");
+        let messag = $("<div class='mymessage'><div><div class='contentmessage'>" + content + "</div> <div class='timemymessage'>" + formattedTime + "</div></div></div>");
         $("#messages").append(messag);
     } else {
-        let messag = $("<div class='fmessage'><div><div class='sender'>"+sender+"</div><div class='contentmessage'>" + content + "</div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
+        let messag = $("<div class='fmessage'><div><div class='sender'>" + sender + "</div><div class='contentmessage'>" + content + "</div> <div class='timefmessage'>" + formattedTime + "</div></div></div>");
         $("#messages").append(messag);
     }
 }
 
-function appendImage(sender, path, time, owner){
+function appendImage(sender, path, time, owner) {
     formattedTime = formattaOrario(time);
     if (owner == myID) {
-        let photo = $("<div class='mymessage'><div><div class='imageMessage'><img src='" + path + "'></div> <div class='timemymessage'>"+formattedTime+"</div></div></div>");
+        let photo = $("<div class='mymessage'><div><div class='imageMessage'><img src='" + path + "'></div> <div class='timemymessage'>" + formattedTime + "</div></div></div>");
         $("#messages").append(photo);
     } else {
-        let photo = $("<div class='fmessage'><div><div class='sender'>"+sender+"</div><div class='imageMessage'><img src='" + path + "'></div> <div class='timefmessage'>"+formattedTime+"</div></div></div>");
+        let photo = $("<div class='fmessage'><div><div class='sender'>" + sender + "</div><div class='imageMessage'><img src='" + path + "'></div> <div class='timefmessage'>" + formattedTime + "</div></div></div>");
         $("#messages").append(photo);
     }
 }
@@ -202,9 +203,9 @@ function displayGroupBar(id, nome) {
 function saveChat(partecipants, ownerID, receiverID, chatName) {
     $.post('../php/create_chat.php', { participants: partecipants, ownerId: ownerID, receivers: receiverID, chatName: chatName }, function (response) {
 
-        if(partecipants>2)  displayGroupBar(response,chatName);
-        else{
-            displayChatBar(response,$('div[data-id="' + receiverID + '"].newUser .newUserData .newUserName').html(),$('div[data-id="' + receiverID + '"].newUser .newUserData .newUserNick').html().substring(1),0);
+        if (partecipants > 2) displayGroupBar(response, chatName);
+        else {
+            displayChatBar(response, $('div[data-id="' + receiverID + '"].newUser .newUserData .newUserName').html(), $('div[data-id="' + receiverID + '"].newUser .newUserData .newUserNick').html().substring(1), 0);
         }
 
         Swal.fire({

@@ -41,34 +41,35 @@ socket.onmessage = (event) => {
             } catch (err) { console.log(err) }
             break;
         case 'text':
-            if(openChat == data.chat){
-                appendMessage(data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+            if (openChat == data.chat) {
+                appendMessage('', data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 $("#messages").resize();
                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
-            }else{
-                const pallino = $('div.chat[data-id="' + data.chat+'"] .state > div');
+            } else {
+                const pallino = $('div.chat[data-id="' + data.chat + '"] .state > div');
                 let nMssgs = pallino.html();
-                if(nMssgs=="") nMssgs=0;
-                else nMssgs=parseInt(nMssgs);
+                if (nMssgs == "") nMssgs = 0;
+                else nMssgs = parseInt(nMssgs);
                 nMssgs++;
-                pallino.html(""+nMssgs);
+                pallino.html("" + nMssgs);
                 pallino.addClass("newMessages");
             }
             break;
         case 'image':
-            if(openChat == data.chat){
-                appendImage("http://localhost/GitHub/HeyChat/img/data/chats/"+data.message+".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+            if (openChat == data.chat) {
+                appendImage('', "http://localhost/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+                // appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 setTimeout(function () {
                     $("#messages").resize();
                     $("#messages").scrollTop($("#messages")[0].scrollHeight);
-                },100);
-            }else{
-                const pallino = $('div.chat[data-id="' + data.chat+'"] .state > div');
+                }, 100);
+            } else {
+                const pallino = $('div.chat[data-id="' + data.chat + '"] .state > div');
                 let nMssgs = pallino.html();
-                if(nMssgs=="") nMssgs=0;
-                else nMssgs=parseInt(nMssgs);
+                if (nMssgs == "") nMssgs = 0;
+                else nMssgs = parseInt(nMssgs);
                 nMssgs++;
-                pallino.html(""+nMssgs);
+                pallino.html("" + nMssgs);
                 pallino.addClass("newMessages");
             }
             break;
@@ -130,7 +131,7 @@ function sendImage() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-        
+
         const path = myID + "to" + chatid + "_" + Date.now();
         console.log(path);
 
@@ -138,12 +139,12 @@ function sendImage() {
             type: "POST",
             url: "../php/save_image.php",
             data: { image: reader.result, name: path },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
                 saveMessage(path, 'image', myID, chatid);
-                
+
                 socket.send(JSON.stringify(formatMessage(myID, 'image', path, chatid)))
-                
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'center',
@@ -154,15 +155,15 @@ function sendImage() {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
-                    })
-                    
+                })
+
                 Toast.fire({
                     icon: 'success',
                     title: 'Foto inviata'
                 })
 
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'center',
@@ -173,8 +174,8 @@ function sendImage() {
                         toast.addEventListener('mouseenter', Swal.stopTimer)
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
-                    })
-                    
+                })
+
                 Toast.fire({
                     icon: 'error',
                     title: 'Errore nel salvataggio sul server'
