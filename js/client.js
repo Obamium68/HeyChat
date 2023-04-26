@@ -37,7 +37,6 @@ function startChat(name, receiver) {
             receivers = receiver;
             partecipants = receivers.length + 1;
         } else {
-            //console.log($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
             receivers.push($('div[data-name="' + receiver + '"].newUser').attr('data-id'));
             chatName = "Private chat";
             partecipants = 2;
@@ -97,12 +96,10 @@ function renderChat(chatId) {
             $("#online").html("Online");
             $("#online").removeClass("notonline");
             $("#online").addClass("isonline");
-            console.log("È onimi");
         } else {
             $("#online").html("Offline");
             $("#online").removeClass("isonline");
             $("#online").addClass("notonline");
-            console.log("È off");
         }
         $("#nickname").html($('div.chat[data-id="' + chatId + '"] .dataGroup .dati .nickname').html());
 
@@ -135,48 +132,46 @@ function fetchMessages(chatID) {
                 let sender = '';
 
                 //Controllo se "conosco già il mittente"
-                let amico = $('.nickname').filter(function() {
-                    return $(this).html() === "@"+message["Username"];
+                let amico = $('.nickname').filter(function () {
+                    return $(this).html() === "@" + message["Username"];
                 });
 
                 //Se lo trovo, scrivo il nome, sennò uso lo username
-                if(amico.length>0) sender = message["Name"]+" "+message["Surname"];
+                if (amico.length > 0) sender = message["Name"] + " " + message["Surname"];
                 else sender = message["Username"];
 
-                console.log(sender);
-                if (!colorOpenChat.has(sender) && sender!=myUsername) {
-                    colorOpenChat.set(sender, '#'+ Math.floor(Math.random()*16777215).toString(16));
+        
+                if (!colorOpenChat.has(sender) && sender != myUsername) {
+                    colorOpenChat.set(sender, '#' + Math.floor(Math.random() * 16777215).toString(16));
                 }
 
                 if (message["Format"] == "text") appendMessage(sender, message["Content"], message["SendDate"], message["UserID"]);
-                //if (message["Format"] == "image") appendImage(sender, "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage(sender, "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
                 if (message["Format"] == "image") appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
 
             setTimeout(function () {
-                console.log(colorOpenChat);
-                colorOpenChat.forEach(function(colore, user) {
+                colorOpenChat.forEach(function (colore, user) {
                     let messaggi = [];
-                    messaggi = $("div.sender:contains('"+user+"')");
-                    console.log(messaggi);
-    
-                    messaggi.each(function() {
+                    messaggi = $("div.sender:contains('" + user + "')");
+
+                    messaggi.each(function () {
                         $(this).css('color', colore);
                     });
-    
+
                 });
 
                 $("#messages").resize();
                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
             }, 100);
 
-            
+
 
         } else {
 
             messages.forEach(message => {
                 if (message["Format"] == "text") appendMessage('', message["Content"], message["SendDate"], message["UserID"]);
-                //if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
                 if (message["Format"] == "image") appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
             setTimeout(function () {
@@ -225,7 +220,6 @@ function appendImage(sender, path, time, owner) {
  */
 function saveMessage(content, format, userid, chatid) {
     $.post('../php/save_message.php', { content: content, format: format, userid: userid, chatid: chatid }, function (response) {
-        console.log(response);
     });
 }
 

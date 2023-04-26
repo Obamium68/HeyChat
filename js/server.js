@@ -29,13 +29,6 @@ class Chat {
   setChatID(cID) {
     this.chatID = cID;
   }
-  /**
-   * Set user state
-   * @param {boolean} state 
-   */
-  setOnline(state){
-    this.online=state;
-  }
 
   /** Add a participant into the chat
    * 
@@ -64,30 +57,20 @@ function getUserFromID(id) {
  * 
  * @returns 
  */
-async function fetchDataAndStartServer() {
+function fetchData() {
   try {
-    const path = '192.168.1.69/HeyChat/php/';
-    const responseUsers = await fetch(path + 'get_all_users.php');
-    const users = await responseUsers.json();
-    const responseParticipations = await fetch(path + 'get_all_participations.php');
-    const participations = await responseParticipations.json();
-    users.forEach(user => {
-      clients.set(new User(user.Username, user.Id, false), null);
-    });
-    updateChats(participations);
-    startServer();
+    updateChats();
   } catch (error) {
     console.log(error);
   }
 }
 
-
 const WebSocket = require('ws');      //Importing WebSocket
 const server = new WebSocket.Server({ port: 6942 });    //Port on which the server will work
 const clients = new Map();             //A map to keep track of users and their connection sockets
 const chats = [];                     //list of chats
-fetchDataAndStartServer();
-
+fetchData()
+startServer();
 
 /**
  * Main function of the ws server. It starts the service
@@ -114,11 +97,10 @@ function startServer() {
       switch (true) {
         //If, by protocol, the user is sending 'online' to 'server' the client is sending his data to be acknowledged by the server
         case data.to == 'server' && data.message == 'online':
-          console.log(senderUser);
-          senderUser.online=true;
+          senderUser.online = true;
           clients.set(senderUser, socket);
           notifyOnline();
-          console.log(`[@${Date.now()}] '` + senderUser.username + "' authenticated");
+          fetchData();
           break;
         //If no receivers are found, send an error message to the client
         case !foundReceivers:
@@ -128,7 +110,7 @@ function startServer() {
         case foundReceivers:
           receivers.forEach(receiver => {
             try {
-              clients.get(getUserFromID(receiver)).send(JSON.stringify({ chat: data.to, from: data.from,fromUsern: data.fromUsern, message: data.message, type: data.type }));
+              clients.get(getUserFromID(receiver)).send(JSON.stringify({ chat: data.to, from: data.from, fromUsern: data.fromUsern, message: data.message, type: data.type }));
             } catch (err) {
               console.log(err);
             }
@@ -140,7 +122,7 @@ function startServer() {
     //if someone having socket as socket connections close interaction with server
     socket.on('close', () => {
       let disconnectingUser = getByValue(clients, socket);    //get the user that is disconnecting
-      disconnectingUser.online=false;       //set offline
+      disconnectingUser.online = false;       //set offline
       clients.set(disconnectingUser, null);   //remove its connection link
       notifyOnline();                         //notify all of the changes
       console.log(`[@${Date.now()}] '` + disconnectingUser.username + "' disconnected");
@@ -201,7 +183,19 @@ format it as
   ]
 and update the chat list
 */
-function updateChats(participations) {
+async function updateChats() {
+  const path = '192.168.1.69/HeyChat/php/';
+  //const path = 'http://localhost/HeyChat/php/';
+  let responseUsers = await fetch(path + 'get_all_users.php');
+  let users = await responseUsers.json();
+  users.forEach(user => {
+    if (clients.get(getUserFromID(user.Id))) { }
+    else clients.set(new User(user.Username, user.Id, false), null);
+  });
+
+  let responseParticipations = await fetch(path + 'get_all_participations.php');
+  clearArray(chats);
+  let participations = await responseParticipations.json();
   participations.forEach(participation => {
     let added = false;
     chats.forEach(chat => {
@@ -212,4 +206,9 @@ function updateChats(participations) {
     });
     if (!added) chats.push(new Chat(participation.ChatID, participation.UserID));
   });
+}
+function clearArray(array) {
+  while (array.length > 0) {
+    array.pop();
+  }
 }

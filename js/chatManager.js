@@ -1,4 +1,5 @@
 const socket = new WebSocket('ws://696969.ddns.net:6942');            //connection to the server
+//const socket = new WebSocket('ws://localhost:6942');            //connection to the server
 socket.onopen = () => {
     sendData();                //when connecting to the server send needed data to be acknowledged
 };
@@ -9,7 +10,6 @@ socket.onmessage = (event) => {
         // If server, by protocol, is sending you the list of online hosts set the online flag on all your online contacts
         case 'хозяева':
             let contactList = document.getElementsByClassName("chat");
-            
             try {
                 setTimeout(function () {
                     for (var i = 0; i < contactList.length; ++i) {
@@ -42,37 +42,33 @@ socket.onmessage = (event) => {
             break;
         //If you have received a text message, append it if the chat is opened. Otherwise, throw a notification
         case 'text':
+            console.log(data);
             if (openChat == data.chat) {
                 let sender = '';
 
                 const checkChat = $('div.chat[data-id="' + data.chat + '"] .dataGroup .dati .nickname');
-                if(checkChat.length==0){
+                if (checkChat.length == 0) {
                     //Controllo se "conosco già il mittente"
-                    let amico = $('.nickname').filter(function() {
-                        return $(this).html() === "@"+data.fromUsern;
+                    let amico = $('.nickname').filter(function () {
+                        return $(this).html() === "@" + data.fromUsern;
                     });
-                    
-                    console.log(amico);
-                    //Se lo trovo, scrivo il nome, sennò uso lo username
-                    if(amico.length>0){
-                        sender = amico.siblings('.nome').first().html();
-                        console.log(amico.siblings('.nome').first());
-                    }else sender = "@"+data.fromUsern;
 
-                    if (!colorOpenChat.has(sender) && data.fromUsern!=myUsername) {
-                        colorOpenChat.set(sender,'#'+ Math.floor(Math.random()*16777215).toString(16));
-                        console.log(colorOpenChat);
+                    //Se lo trovo, scrivo il nome, sennò uso lo username
+                    if (amico.length > 0) {
+                        sender = amico.siblings('.nome').first().html();
+                    } else sender = "@" + data.fromUsern;
+
+                    if (!colorOpenChat.has(sender) && data.fromUsern != myUsername) {
+                        colorOpenChat.set(sender, '#' + Math.floor(Math.random() * 16777215).toString(16));
                     }
 
-                    setTimeout(() =>{
+                    setTimeout(() => {
                         let ultimoMess = $('#messages').children().last().find('.sender');
-                        console.log(ultimoMess);
                         let colore = colorOpenChat.get(sender);
-                        console.log(colore);
                         $(ultimoMess).css('color', colore);
-                    },100);
+                    }, 100);
                 }
-                
+
                 appendMessage(sender, data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 $("#messages").resize();
                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
@@ -90,6 +86,7 @@ socket.onmessage = (event) => {
         case 'image':
             if (openChat == data.chat) {
                 appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+                //appendImage('', "http://localhost/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 setTimeout(function () {
                     $("#messages").resize();
                     $("#messages").scrollTop($("#messages")[0].scrollHeight);
@@ -124,7 +121,7 @@ function formatMessage(from, fromUsern, type, message, to) {
  * Send your data to be acknowledged
  */
 function sendData() {
-    socket.send(JSON.stringify(formatMessage(myID,myUsername, 'text', 'online', "server")));
+    socket.send(JSON.stringify(formatMessage(myID, myUsername, 'text', 'online', "server")));
 }
 
 /**
@@ -134,7 +131,7 @@ function sendMessage() {
     const message = document.getElementById('textMessage').value;
     const chatid = $("#chat").attr("data-chatid");
 
-    socket.send(JSON.stringify(formatMessage(myID,myUsername, 'text', message, chatid)), (err) => {
+    socket.send(JSON.stringify(formatMessage(myID, myUsername, 'text', message, chatid)), (err) => {
         if (err) {
             console.log(err);
         }
@@ -166,7 +163,7 @@ function sendImage() {
             success: function (response) {
                 saveMessage(path, 'image', myID, chatid);
 
-                socket.send(JSON.stringify(formatMessage(myID,myUsername, 'image', path, chatid)))
+                socket.send(JSON.stringify(formatMessage(myID, myUsername, 'image', path, chatid)))
 
                 const Toast = Swal.mixin({
                     toast: true,
