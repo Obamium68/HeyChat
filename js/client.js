@@ -149,8 +149,8 @@ function fetchMessages(chatID) {
                 }
 
                 if (message["Format"] == "text") appendMessage(sender, message["Content"], message["SendDate"], message["UserID"]);
-                if (message["Format"] == "image") appendImage(sender, "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
-                //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage(sender, "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                if (message["Format"] == "image") appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
 
             setTimeout(function () {
@@ -176,8 +176,8 @@ function fetchMessages(chatID) {
 
             messages.forEach(message => {
                 if (message["Format"] == "text") appendMessage('', message["Content"], message["SendDate"], message["UserID"]);
-                if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
-                //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                //if (message["Format"] == "image") appendImage('', "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
+                if (message["Format"] == "image") appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
             setTimeout(function () {
                 $("#messages").resize();

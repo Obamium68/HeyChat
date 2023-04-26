@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost:8080');            //connection to the server
+const socket = new WebSocket('ws://696969.ddns.net:6942');            //connection to the server
 socket.onopen = () => {
     sendData();                //when connecting to the server send needed data to be acknowledged
 };
@@ -89,7 +89,7 @@ socket.onmessage = (event) => {
         //If you have received an image, render and append it if the chat is opened. Otherwise, throw a notification
         case 'image':
             if (openChat == data.chat) {
-                appendImage('', "http://localhost/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+                appendImage('', "http://696969.ddns.net/HeyChat/img/data/chats/" + data.message + ".png", new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 setTimeout(function () {
                     $("#messages").resize();
                     $("#messages").scrollTop($("#messages")[0].scrollHeight);

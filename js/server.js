@@ -66,7 +66,7 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    const path = 'http://localhost/GitHub/HeyChat/php/';
+    const path = '192.168.1.69/HeyChat/php/';
     const responseUsers = await fetch(path + 'get_all_users.php');
     const users = await responseUsers.json();
     const responseParticipations = await fetch(path + 'get_all_participations.php');
@@ -83,7 +83,7 @@ async function fetchDataAndStartServer() {
 
 
 const WebSocket = require('ws');      //Importing WebSocket
-const server = new WebSocket.Server({ port: 8080 });    //Port on which the server will work
+const server = new WebSocket.Server({ port: 6942 });    //Port on which the server will work
 const clients = new Map();             //A map to keep track of users and their connection sockets
 const chats = [];                     //list of chats
 fetchDataAndStartServer();
