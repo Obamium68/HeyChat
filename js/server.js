@@ -29,6 +29,13 @@ class Chat {
   setChatID(cID) {
     this.chatID = cID;
   }
+  /**
+   * Set user state
+   * @param {boolean} state 
+   */
+  setOnline(state){
+    this.online=state;
+  }
 
   /** Add a participant into the chat
    * 
@@ -107,7 +114,8 @@ function startServer() {
       switch (true) {
         //If, by protocol, the user is sending 'online' to 'server' the client is sending his data to be acknowledged by the server
         case data.to == 'server' && data.message == 'online':
-          senderUser.online = true;
+          console.log(senderUser);
+          senderUser.online=true;
           clients.set(senderUser, socket);
           notifyOnline();
           console.log(`[@${Date.now()}] '` + senderUser.username + "' authenticated");
@@ -132,7 +140,7 @@ function startServer() {
     //if someone having socket as socket connections close interaction with server
     socket.on('close', () => {
       let disconnectingUser = getByValue(clients, socket);    //get the user that is disconnecting
-      disconnectingUser.online = false;       //set offline
+      disconnectingUser.online=false;       //set offline
       clients.set(disconnectingUser, null);   //remove its connection link
       notifyOnline();                         //notify all of the changes
       console.log(`[@${Date.now()}] '` + disconnectingUser.username + "' disconnected");

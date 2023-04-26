@@ -3,7 +3,7 @@
 var myUsername = "";
 var myID = 0;
 var openChat = -1;
-var colorOpenChat = Map();
+var colorOpenChat = new Map();
 
 /**Set the id of the client
  * 
@@ -127,7 +127,7 @@ function fetchMessages(chatID) {
     $.post('../php/get_chat_messages.php', { chatID: chatID }, function (response) {
         $("#messages").empty();
         let messages = JSON.parse(response);
-        
+        colorOpenChat.clear();
         //Se è un gruppo, quindi nel div della chat non c'è il nickname
         if (checkChat.length == 0) {
 
@@ -144,24 +144,24 @@ function fetchMessages(chatID) {
                 else sender = message["Username"];
 
                 console.log(sender);
-                if ($.inArray(sender, listUserGroup) == -1 && sender!=myUsername) listUserGroup.push(sender); //Se non c'è lo salvo nell'array
+                if (!colorOpenChat.has(sender) && sender!=myUsername) {
+                    colorOpenChat.set(sender, '#'+ Math.floor(Math.random()*16777215).toString(16));
+                }
 
                 if (message["Format"] == "text") appendMessage(sender, message["Content"], message["SendDate"], message["UserID"]);
                 if (message["Format"] == "image") appendImage(sender, "http://localhost/GitHub/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
                 //if (message["Format"] == "image") appendImage('', "http://localhost/HeyChat/img/data/chats/" + message["Content"] + ".png", message["SendDate"], message["UserID"])
             });
+
             setTimeout(function () {
-                console.log(listUserGroup);
-                listUserGroup.forEach(user => {
-                    
-                    console.log(user);
+                console.log(colorOpenChat);
+                colorOpenChat.forEach(function(colore, user) {
                     let messaggi = [];
                     messaggi = $("div.sender:contains('"+user+"')");
                     console.log(messaggi);
-                    let randomColor = '#'+ Math.floor(Math.random()*16777215).toString(16);
     
                     messaggi.each(function() {
-                        $(this).css('color', randomColor);
+                        $(this).css('color', colore);
                     });
     
                 });

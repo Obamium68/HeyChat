@@ -43,7 +43,37 @@ socket.onmessage = (event) => {
         //If you have received a text message, append it if the chat is opened. Otherwise, throw a notification
         case 'text':
             if (openChat == data.chat) {
-                appendMessage('', data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
+                let sender = '';
+
+                const checkChat = $('div.chat[data-id="' + data.chat + '"] .dataGroup .dati .nickname');
+                if(checkChat.length==0){
+                    //Controllo se "conosco già il mittente"
+                    let amico = $('.nickname').filter(function() {
+                        return $(this).html() === "@"+data.fromUsern;
+                    });
+                    
+                    console.log(amico);
+                    //Se lo trovo, scrivo il nome, sennò uso lo username
+                    if(amico.length>0){
+                        sender = amico.siblings('.nome').first().html();
+                        console.log(amico.siblings('.nome').first());
+                    }else sender = "@"+data.fromUsern;
+
+                    if (!colorOpenChat.has(sender) && data.fromUsern!=myUsername) {
+                        colorOpenChat.set(sender,'#'+ Math.floor(Math.random()*16777215).toString(16));
+                        console.log(colorOpenChat);
+                    }
+
+                    setTimeout(() =>{
+                        let ultimoMess = $('#messages').children().last().find('.sender');
+                        console.log(ultimoMess);
+                        let colore = colorOpenChat.get(sender);
+                        console.log(colore);
+                        $(ultimoMess).css('color', colore);
+                    },100);
+                }
+                
+                appendMessage(sender, data.message, new Date().toLocaleString('sv-SE').replace(/\s/g, ' '), data.from);
                 $("#messages").resize();
                 $("#messages").scrollTop($("#messages")[0].scrollHeight);
             } else {
