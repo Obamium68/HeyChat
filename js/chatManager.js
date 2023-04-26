@@ -9,6 +9,7 @@ socket.onmessage = (event) => {
         // If server, by protocol, is sending you the list of online hosts set the online flag on all your online contacts
         case 'хозяева':
             let contactList = document.getElementsByClassName("chat");
+            
             try {
                 setTimeout(function () {
                     for (var i = 0; i < contactList.length; ++i) {
@@ -84,11 +85,8 @@ socket.onmessage = (event) => {
  * @param {*} to receiver(s) of the message
  * @returns 
  */
-function formatMessage(from, type, message, to) {
-    const data = { from, type, message };
-    if (to) {
-        data.to = to;
-    }
+function formatMessage(from, fromUsern, type, message, to) {
+    const data = { from, fromUsern, type, message, to };
     return data;
 }
 
@@ -96,7 +94,7 @@ function formatMessage(from, type, message, to) {
  * Send your data to be acknowledged
  */
 function sendData() {
-    socket.send(JSON.stringify(formatMessage(myID, 'text', 'online', "server")));
+    socket.send(JSON.stringify(formatMessage(myID,myUsername, 'text', 'online', "server")));
 }
 
 /**
@@ -106,7 +104,7 @@ function sendMessage() {
     const message = document.getElementById('textMessage').value;
     const chatid = $("#chat").attr("data-chatid");
 
-    socket.send(JSON.stringify(formatMessage(myID, 'text', message, chatid)), (err) => {
+    socket.send(JSON.stringify(formatMessage(myID,myUsername, 'text', message, chatid)), (err) => {
         if (err) {
             console.log(err);
         }
@@ -138,7 +136,7 @@ function sendImage() {
             success: function (response) {
                 saveMessage(path, 'image', myID, chatid);
 
-                socket.send(JSON.stringify(formatMessage(myID, 'image', path, chatid)))
+                socket.send(JSON.stringify(formatMessage(myID,myUsername, 'image', path, chatid)))
 
                 const Toast = Swal.mixin({
                     toast: true,

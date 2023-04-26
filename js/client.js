@@ -3,6 +3,7 @@
 var myUsername = "";
 var myID = 0;
 var openChat = -1;
+var colorOpenChat = Map();
 
 /**Set the id of the client
  * 
@@ -129,8 +130,6 @@ function fetchMessages(chatID) {
         
         //Se è un gruppo, quindi nel div della chat non c'è il nickname
         if (checkChat.length == 0) {
-
-            let listUserGroup = [];
 
             messages.forEach(message => {
                 let sender = '';

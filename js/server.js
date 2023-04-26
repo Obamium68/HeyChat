@@ -59,7 +59,7 @@ function getUserFromID(id) {
  */
 async function fetchDataAndStartServer() {
   try {
-    const path = 'http://localhost/heychat/php/';
+    const path = 'http://localhost/GitHub/HeyChat/php/';
     const responseUsers = await fetch(path + 'get_all_users.php');
     const users = await responseUsers.json();
     const responseParticipations = await fetch(path + 'get_all_participations.php');
@@ -120,7 +120,7 @@ function startServer() {
         case foundReceivers:
           receivers.forEach(receiver => {
             try {
-              clients.get(getUserFromID(receiver)).send(JSON.stringify({ chat: data.to, from: data.from, message: data.message, type: data.type }));
+              clients.get(getUserFromID(receiver)).send(JSON.stringify({ chat: data.to, from: data.from,fromUsern: data.fromUsern, message: data.message, type: data.type }));
             } catch (err) {
               console.log(err);
             }
