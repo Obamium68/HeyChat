@@ -51,9 +51,7 @@ function getUserFromID(id) {
   return toReturn;
 }
 
-/** Fetch asynchronously the users and the participations to chat
- * add the users to the clients list (mapped with the socket they will be connected on)
- * Starts server
+/** uploads chats and participations
  * 
  * @returns 
  */
@@ -166,7 +164,8 @@ function notifyOnline() {
   });
 }
 
-/*
+/*Update chats and participations
+format the chats in the following way:
 Given the array:
 participations = [
   { chatID: 0, UserID: 01 },
@@ -207,6 +206,10 @@ async function updateChats() {
     if (!added) chats.push(new Chat(participation.ChatID, participation.UserID));
   });
 }
+/**Autoesplicativa
+ * 
+ * @param {*} array 
+ */
 function clearArray(array) {
   while (array.length > 0) {
     array.pop();
